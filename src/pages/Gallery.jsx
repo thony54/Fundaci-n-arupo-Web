@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import PageTransition from '../components/motion/PageTransition';
 import Reveal from '../components/motion/Reveal';
+import { supabase } from '../lib/supabase';
 
 const DEFAULT_GALLERY_DATA = {
     "Fundación Arupo": [
@@ -29,16 +30,35 @@ export default function Gallery() {
     const [activeSection, setActiveSection] = useState('All');
     const [galleryState, setGalleryState] = useState(DEFAULT_GALLERY_DATA);
 
+    const [loading, setLoading] = useState(true);
+
     useEffect(() => {
-        const savedData = localStorage.getItem('arupo_gallery_data');
-        if (savedData) {
-            try {
-                setGalleryState(JSON.parse(savedData));
-            } catch (e) {
-                console.error("Error loading gallery data", e);
-            }
-        }
+        fetchGallery();
     }, []);
+
+    const fetchGallery = async () => {
+        setLoading(true);
+        try {
+            const { data, error } = await supabase
+                .from('gallery_items')
+                .select('*')
+                .order('created_at', { ascending: false });
+
+            if (error) throw error;
+
+            if (data && data.length > 0) {
+                const organized = {
+                    "Fundación Arupo": data.filter(item => item.section === "Fundación Arupo"),
+                    "Centro Terapéutico Integral Arupo": data.filter(item => item.section === "Centro Terapéutico Integral Arupo")
+                };
+                setGalleryState(organized);
+            }
+        } catch (e) {
+            console.error("Error loading gallery data:", e);
+        } finally {
+            setLoading(false);
+        }
+    };
 
     const sections = Object.keys(galleryState);
 
@@ -86,9 +106,9 @@ export default function Gallery() {
                                         <Reveal key={item.id} delay={index * 0.1}>
                                             <div className="group relative overflow-hidden rounded-2xl bg-dark-900 border border-dark-800 transition-all duration-300 hover:border-accent-500/30 hover:shadow-2xl hover:shadow-accent-500/10 h-full flex flex-col">
                                                 <div className="aspect-[9/16] relative flex items-center justify-center overflow-hidden flex-shrink-0">
-                                                    {item.imageUrl ? (
+                                                    {item.image_url ? (
                                                         <img
-                                                            src={item.imageUrl}
+                                                            src={item.image_url}
                                                             alt={item.title}
                                                             className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
                                                         />

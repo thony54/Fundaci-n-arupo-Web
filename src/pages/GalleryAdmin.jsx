@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
+import { supabase } from '../lib/supabase';
 import PageTransition from '../components/motion/PageTransition';
 
 const DEFAULT_GALLERY_DATA = {
@@ -32,146 +33,115 @@ export default function GalleryAdmin() {
     const [showConfig, setShowConfig] = useState(false);
     const navigate = useNavigate();
 
+    const [loading, setLoading] = useState(true);
+
     useEffect(() => {
-        const savedData = localStorage.getItem('arupo_gallery_data');
-        if (savedData) {
-            try {
-                const parsed = JSON.parse(savedData);
-                if (parsed && typeof parsed === 'object' && !Array.isArray(parsed)) {
-                    setGalleryData({
-                        "Fundación Arupo": Array.isArray(parsed["Fundación Arupo"]) ? parsed["Fundación Arupo"] : DEFAULT_GALLERY_DATA["Fundación Arupo"],
-                        "Centro Terapéutico Integral Arupo": Array.isArray(parsed["Centro Terapéutico Integral Arupo"]) ? parsed["Centro Terapéutico Integral Arupo"] : DEFAULT_GALLERY_DATA["Centro Terapéutico Integral Arupo"]
-                    });
-                } else {
-                    setGalleryData(DEFAULT_GALLERY_DATA);
-                }
-            } catch (e) {
-                console.error("Error loading gallery data", e);
-                setGalleryData(DEFAULT_GALLERY_DATA);
-            }
-        }
+        fetchGallery();
     }, []);
 
-    const saveChanges = (data) => {
+    const fetchGallery = async () => {
+        setLoading(true);
         try {
-            const json = JSON.stringify(data);
-            localStorage.setItem('arupo_gallery_data', json);
-            setGalleryData(data);
-            showStatus('Galería actualizada correctamente', 'success');
-        } catch (e) {
-            console.error("Error saving gallery data", e);
-            if (e.name === 'QuotaExceededError' || e.code === 22) {
-                showStatus('Error: Espacio insuficiente en el navegador. Intente con una imagen más pequeña o elimine elementos antiguos.', 'error');
-            } else {
-                showStatus('Error al guardar los cambios en el navegador.', 'error');
-            }
-        }
-    };
+            const { data, error } = await supabase
+                .from('gallery_items')
+                .select('*')
+                .order('created_at', { ascending: false });
 
-    const handleLogout = () => {
-        sessionStorage.removeItem('arupo_admin_auth');
-        navigate('/login');
-    };
+            if (error) throw error;
 
-    const handleChangePassword = (e) => {
-        e.preventDefault();
-        const envPassword = import.meta.env.VITE_ADMIN_PASSWORD;
-        const storedPassword = localStorage.getItem('arupo_admin_password') || envPassword || 'arupo2026';
-
-        if (passwords.current !== storedPassword) {
-            showStatus('La contraseña actual es incorrecta', 'error');
-            return;
-        }
-
-        if (passwords.new.length < 6) {
-            showStatus('La nueva contraseña debe tener al menos 6 caracteres', 'error');
-            return;
-        }
-
-        if (passwords.new !== passwords.confirm) {
-            showStatus('Las nuevas contraseñas no coinciden', 'error');
-            return;
-        }
-
-        localStorage.setItem('arupo_admin_password', passwords.new);
-        showStatus('Contraseña actualizada con éxito', 'success');
-        setPasswords({ current: '', new: '', confirm: '' });
-    };
-
-    const showStatus = (text, type) => {
-        setStatusMessage({ text, type });
-        setTimeout(() => setStatusMessage({ text: '', type: '' }), 5000);
-    };
-
-    const handleFileChange = (e) => {
-        const file = e.target.files[0];
-        if (file) {
-            if (file.size > 5 * 1024 * 1024) {
-                showStatus('La imagen original es demasiado grande. Use una de menos de 5MB.', 'error');
-                return;
-            }
-
-            const reader = new FileReader();
-            reader.onloadend = () => {
-                const img = new Image();
-                img.onload = () => {
-                    const canvas = document.createElement('canvas');
-                    // Optimizamos para dispositivos móviles y web rápida (Max 600px de ancho)
-                    const MAX_WIDTH = 600;
-                    const MAX_HEIGHT = 1066; // Proporción 9:16 approx
-                    let width = img.width;
-                    let height = img.height;
-
-                    if (width > height) {
-                        if (width > MAX_WIDTH) {
-                            height = Math.round(height * (MAX_WIDTH / width));
-                            width = MAX_WIDTH;
-                        }
-                    } else {
-                        if (height > MAX_HEIGHT) {
-                            width = Math.round(width * (MAX_HEIGHT / height));
-                            height = MAX_HEIGHT;
-                        }
-                    }
-
-                    canvas.width = width;
-                    canvas.height = height;
-                    const ctx = canvas.getContext('2d');
-                    ctx.drawImage(img, 0, 0, width, height);
-
-                    // Calidad 0.5 para balance perfecto entre peso y nitidez (Aprox 50-100KB)
-                    const dataUrl = canvas.toDataURL('image/jpeg', 0.5);
-                    setNewItem({ ...newItem, imageUrl: dataUrl });
-                };
-                img.src = reader.result;
+            // Organizamos los datos en las dos secciones
+            const organized = {
+                "Fundación Arupo": data.filter(item => item.section === "Fundación Arupo"),
+                "Centro Terapéutico Integral Arupo": data.filter(item => item.section === "Centro Terapéutico Integral Arupo")
             };
-            reader.readAsDataURL(file);
+            setGalleryData(organized);
+        } catch (e) {
+            console.error("Error fetching gallery:", e);
+            showStatus('Error al cargar la galería desde la nube', 'error');
+            setGalleryData(DEFAULT_GALLERY_DATA);
+        } finally {
+            setLoading(false);
         }
     };
 
-    const handleAddItem = (e) => {
+    // Centralizamos el guardado en Supabase
+    const handleAddItem = async (e) => {
         e.preventDefault();
         if (!newItem.title || !newItem.category || !newItem.imageUrl) {
             showStatus('Por favor, complete todos los campos y suba una imagen', 'error');
             return;
         }
 
-        const newId = Date.now();
-        const updatedData = { ...galleryData };
-        updatedData[newItem.section] = [
-            ...updatedData[newItem.section],
-            { ...newItem, id: newId }
-        ];
+        setLoading(true);
+        try {
+            // 1. Convertir Base64 a Blob para subir a Storage
+            const response = await fetch(newItem.imageUrl);
+            const blob = await response.blob();
+            const fileName = `${Date.now()}-${Math.random().toString(36).substring(7)}.jpg`;
+            const filePath = `gallery/${fileName}`;
 
-        saveChanges(updatedData);
-        setNewItem({ ...newItem, title: '', category: '', imageUrl: '' });
-        // Reset file input if needed (handled by controlled state mostly)
+            // 2. Subir a Supabase Storage
+            const { error: uploadError } = await supabase.storage
+                .from('gallery-images')
+                .upload(filePath, blob, { contentType: 'image/jpeg' });
+
+            if (uploadError) throw uploadError;
+
+            // 3. Obtener URL Pública
+            const { data: { publicUrl } } = supabase.storage
+                .from('gallery-images')
+                .getPublicUrl(filePath);
+
+            // 4. Guardar en la Base de Datos
+            const { error: dbError } = await supabase
+                .from('gallery_items')
+                .insert([{
+                    section: newItem.section,
+                    category: newItem.category,
+                    title: newItem.title,
+                    image_url: publicUrl,
+                    color: newItem.color
+                }]);
+
+            if (dbError) throw dbError;
+
+            showStatus('¡Elemento guardado en la nube con éxito!', 'success');
+            setNewItem({ ...newItem, title: '', category: '', imageUrl: '' });
+            fetchGallery(); // Recargar datos
+        } catch (e) {
+            console.error("Error saving to Supabase:", e);
+            showStatus('Error al subir a la nube. ¿Creaste el bucket "gallery-images" en Supabase?', 'error');
+        } finally {
+            setLoading(false);
+        }
     };
 
-    const handleDeleteItem = (section, id) => {
-        const updatedData = { ...galleryData };
-        updatedData[section] = updatedData[section].filter(item => item.id !== id);
-        saveChanges(updatedData);
+    const handleDeleteItem = async (id, imageUrl) => {
+        if (!confirm('¿Estás seguro de eliminar este elemento para siempre?')) return;
+
+        setLoading(true);
+        try {
+            // 1. Eliminar de la Database
+            const { error: dbError } = await supabase
+                .from('gallery_items')
+                .delete()
+                .eq('id', id);
+
+            if (dbError) throw dbError;
+
+            // 2. Eliminar del Storage (opcional pero recomendado)
+            // Extraer el nombre del archivo de la URL
+            const fileName = imageUrl.split('/').pop();
+            await supabase.storage.from('gallery-images').remove([`gallery/${fileName}`]);
+
+            showStatus('Elemento eliminado de la nube', 'success');
+            fetchGallery();
+        } catch (e) {
+            console.error("Error deleting from Supabase:", e);
+            showStatus('Error al eliminar el elemento', 'error');
+        } finally {
+            setLoading(false);
+        }
     };
 
     const colors = [
@@ -382,8 +352,8 @@ export default function GalleryAdmin() {
                                                 <tr key={item.id} className="group hover:bg-dark-800/30 transition-colors">
                                                     <td className="px-6 py-4">
                                                         <div className="w-12 h-12 rounded-lg overflow-hidden bg-dark-800 flex items-center justify-center border border-dark-700">
-                                                            {item.imageUrl ? (
-                                                                <img src={item.imageUrl} className="w-full h-full object-cover" />
+                                                            {item.image_url ? (
+                                                                <img src={item.image_url} className="w-full h-full object-cover" />
                                                             ) : (
                                                                 <svg className="w-6 h-6 text-dark-600" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 3c1.66 0 3 1.34 3 3s-1.34 3-3 3-3-1.34-3-3 1.34-3 3-3zm0 14.2c-2.5 0-4.71-1.28-6-3.22.03-1.99 4-3.08 6-3.08 1.99 0 5.97 1.09 6 3.08-1.29 1.94-3.5 3.22-6 3.22z" /></svg>
                                                             )}
@@ -391,7 +361,7 @@ export default function GalleryAdmin() {
                                                     </td>
                                                     <td className="px-6 py-4">
                                                         <p className="font-bold text-sm text-white">{item.title}</p>
-                                                        <p className="text-xs text-dark-500 mt-1 truncate max-w-[200px]">{item.imageUrl || 'Usa silueta predeterminada'}</p>
+                                                        <p className="text-xs text-dark-500 mt-1 truncate max-w-[200px]">{item.image_url || 'Usa silueta predeterminada'}</p>
                                                     </td>
                                                     <td className="px-6 py-4">
                                                         <span className="text-[10px] font-bold uppercase tracking-wider px-2 py-1 rounded bg-dark-800 border border-dark-700 text-dark-300">
@@ -400,7 +370,7 @@ export default function GalleryAdmin() {
                                                     </td>
                                                     <td className="px-6 py-4 text-right">
                                                         <button
-                                                            onClick={() => handleDeleteItem(sectionTitle, item.id)}
+                                                            onClick={() => handleDeleteItem(item.id, item.image_url)}
                                                             className="text-dark-500 hover:text-red-400 p-2 transition-colors rounded-lg hover:bg-red-400/10"
                                                             title="Eliminar elemento"
                                                         >
