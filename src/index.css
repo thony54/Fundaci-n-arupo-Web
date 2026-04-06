@@ -1,0 +1,290 @@
+@import "tailwindcss";
+@variant dark (&:where(.dark, .dark *));
+
+@theme {
+  --font-sans: "Inter", system-ui, sans-serif;
+
+  /* New Primary - Earthy Orange */
+  --color-primary-50: #fff7ed;
+  --color-primary-100: #ffedd5;
+  --color-primary-200: #fed7aa;
+  --color-primary-300: #fdba74;
+  --color-primary-400: #fb923c;
+  --color-primary-500: #e77512;
+  --color-primary-600: #ea580c;
+  --color-primary-700: #c2410c;
+  --color-primary-800: #9a3412;
+  --color-primary-900: #7c2d12;
+
+  /* Therapeutic Center - Original Teal */
+  --color-therapeutic-50: #f0fdfa;
+  --color-therapeutic-100: #ccfbf1;
+  --color-therapeutic-200: #99f6e4;
+  --color-therapeutic-300: #5eead4;
+  --color-therapeutic-400: #2dd4bf;
+  --color-therapeutic-500: #14b8a6;
+  --color-therapeutic-600: #0d9488;
+  --color-therapeutic-700: #0f766e;
+  --color-therapeutic-800: #115e59;
+  --color-therapeutic-900: #134e4a;
+
+  /* Specific Brand Colors */
+  --color-arupo-brown: #6d493e;
+  --color-arupo-rust: #b65c1b;
+  --color-arupo-orange: #e77512;
+  --color-arupo-yellow: #edb729;
+  --color-arupo-red: #b80d38;
+  --color-arupo-purple: #823d83;
+  --color-arupo-light-brown: #936763;
+  --color-arupo-dark-rust: #9e4822;
+
+  --color-accent-300: #fcd34d;
+  --color-accent-400: #fbbf24;
+  --color-accent-500: #f59e0b;
+  --color-accent-600: #d97706;
+
+  --color-dark-50: #f8fafc;
+  --color-dark-100: #f1f5f9;
+  --color-dark-200: #e2e8f0;
+  --color-dark-300: #cbd5e1;
+  --color-dark-400: #94a3b8;
+  --color-dark-500: #64748b;
+  --color-dark-600: #475569;
+  --color-dark-700: #334155;
+  --color-dark-800: #1e293b;
+  --color-dark-900: #0f172a;
+  --color-dark-950: #020617;
+}
+
+@layer base {
+  * {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
+
+  html {
+    scroll-behavior: smooth;
+    color-scheme: light;
+  }
+
+  html.dark {
+    color-scheme: dark;
+  }
+
+  body {
+    font-family: var(--font-sans);
+    color: var(--color-dark-800);
+    background-color: white;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  :focus-visible {
+    outline: 3px solid var(--color-primary-500);
+    outline-offset: 2px;
+    border-radius: 4px;
+  }
+}
+
+/* Accessibility Modes */
+.a11y-high-contrast {
+  background-color: #fff !important;
+  color: #000 !important;
+}
+
+.a11y-high-contrast * {
+  border-color: #000 !important;
+  color: #000 !important;
+  background-color: #fff !important;
+  /* Force white background for all elements */
+  background-image: none !important;
+  box-shadow: none !important;
+  text-shadow: none !important;
+}
+
+/* Ensure containers have backgrounds but nested items don't hide each other unreadably */
+.a11y-high-contrast div,
+.a11y-high-contrast section,
+.a11y-high-contrast main,
+.a11y-high-contrast header,
+.a11y-high-contrast footer {
+  background-color: #fff !important;
+}
+
+.a11y-high-contrast a,
+.a11y-high-contrast button {
+  background-color: #000 !important;
+  color: #fff !important;
+  border: 2px solid #000 !important;
+}
+
+.a11y-high-contrast a:hover,
+.a11y-high-contrast button:hover {
+  background-color: #fff !important;
+  color: #000 !important;
+}
+
+.a11y-high-contrast svg {
+  fill: currentColor !important;
+  stroke: currentColor !important;
+}
+
+.a11y-high-contrast img {
+  filter: grayscale(1) !important;
+  opacity: 0.7 !important;
+}
+
+.dark .a11y-high-contrast {
+  background-color: #000 !important;
+  color: #fff !important;
+}
+
+.dark .a11y-high-contrast * {
+  border-color: #fff !important;
+  color: #fff !important;
+  background-color: #000 !important;
+}
+
+.dark .a11y-high-contrast div,
+.dark .a11y-high-contrast section,
+.dark .a11y-high-contrast main,
+.dark .a11y-high-contrast header,
+.dark .a11y-high-contrast footer {
+  background-color: #000 !important;
+}
+
+.dark .a11y-high-contrast a,
+.dark .a11y-high-contrast button {
+  background-color: #fff !important;
+  color: #000 !important;
+  border: 2px solid #fff !important;
+}
+
+.dark .a11y-high-contrast a:hover,
+.dark .a11y-high-contrast button:hover {
+  background-color: #000 !important;
+  color: #fff !important;
+}
+
+.a11y-grayscale {
+  filter: grayscale(1) !important;
+}
+
+.a11y-highlight a,
+.a11y-highlight button {
+  outline: 2px solid #edb729 !important;
+  outline-offset: 2px !important;
+  text-decoration: underline !important;
+  font-weight: 700 !important;
+}
+
+.a11y-reduced-motion * {
+  animation: none !important;
+  transition: none !important;
+  scroll-behavior: auto !important;
+}
+
+/* Total Visual Accessibility Mode */
+.a11y-visual-total {
+  background-color: #000 !important;
+  color: #ff0 !important;
+}
+
+.a11y-visual-total * {
+  background-color: transparent !important;
+  color: #ff0 !important;
+  border-color: #ff0 !important;
+  box-shadow: none !important;
+  text-shadow: none !important;
+  background-image: none !important;
+  animation: none !important;
+  transition: none !important;
+  /* Ensure spacing between elements */
+  margin-bottom: 0.5rem;
+}
+
+.a11y-visual-total .flex,
+.a11y-visual-total .grid {
+  gap: 2rem !important;
+  /* Force large gaps between items */
+}
+
+.a11y-visual-total .flex-row {
+  flex-wrap: wrap !important;
+  /* Prevent overlapping in rows */
+}
+
+.a11y-visual-total nav div,
+.a11y-visual-total header div {
+  gap: 1.5rem !important;
+  align-items: center !important;
+}
+
+.a11y-visual-total h1,
+.a11y-visual-total h2,
+.a11y-visual-total h3 {
+  margin-top: 2rem !important;
+  margin-bottom: 1.5rem !important;
+  line-height: 1.2 !important;
+}
+
+.a11y-visual-total body,
+.a11y-visual-total #root {
+  background-color: #000 !important;
+}
+
+.a11y-visual-total a,
+.a11y-visual-total button {
+  border: 4px solid #ff0 !important;
+  padding: 1rem !important;
+  text-decoration: underline !important;
+  font-weight: 800 !important;
+  background-color: #000 !important;
+}
+
+.a11y-visual-total a:hover,
+.a11y-visual-total button:hover,
+.a11y-visual-total a:focus,
+.a11y-visual-total button:focus {
+  background-color: #ff0 !important;
+  color: #000 !important;
+}
+
+.a11y-visual-total img,
+.a11y-visual-total video,
+.a11y-visual-total canvas,
+.a11y-visual-total svg:not(.a11y-icon) {
+  filter: grayscale(1) contrast(2) !important;
+}
+
+.a11y-visual-total .backdrop-blur-md,
+.a11y-visual-total .backdrop-blur-sm {
+  backdrop-filter: none !important;
+  background-color: #000 !important;
+}
+
+/* Specific fix for Navbar overlaps */
+.a11y-visual-total header {
+  height: auto !important;
+  padding-bottom: 1rem !important;
+}
+
+.a11y-visual-total header .h-16 {
+  height: auto !important;
+  min-height: 5rem !important;
+  padding: 1rem 0 !important;
+  flex-direction: column !important;
+}
+
+@media (min-width: 1024px) {
+  .a11y-visual-total header .h-16 {
+    flex-direction: row !important;
+  }
+}
+
+.a11y-visual-total .hidden.lg\:flex {
+  display: flex !important;
+  flex-wrap: wrap !important;
+  justify-content: center !important;
+}
