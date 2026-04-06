@@ -11,8 +11,9 @@ export default function Login() {
     const handleLogin = (e) => {
         e.preventDefault();
 
-        // Get stored password or use default
-        const storedPassword = localStorage.getItem('arupo_admin_password') || 'arupo2026';
+        // Prioridad: 1. Variable de Entorno Vercel/Vite, 2. LocalStorage (si ya la cambió), 3. Default
+        const envPassword = import.meta.env.VITE_ADMIN_PASSWORD;
+        const storedPassword = envPassword || localStorage.getItem('arupo_admin_password') || 'arupo2026';
 
         if (password === storedPassword) {
             sessionStorage.setItem('arupo_admin_auth', 'true');

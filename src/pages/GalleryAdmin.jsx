@@ -54,12 +54,17 @@ export default function GalleryAdmin() {
 
     const saveChanges = (data) => {
         try {
-            localStorage.setItem('arupo_gallery_data', JSON.stringify(data));
+            const json = JSON.stringify(data);
+            localStorage.setItem('arupo_gallery_data', json);
             setGalleryData(data);
-            showStatus('Galería actualizada', 'success');
+            showStatus('Galería actualizada correctamente', 'success');
         } catch (e) {
             console.error("Error saving gallery data", e);
-            showStatus('Error: La imagen es muy pesada o no hay espacio. Intente con otra o elimine alguna.', 'error');
+            if (e.name === 'QuotaExceededError' || e.code === 22) {
+                showStatus('Error: Espacio insuficiente en el navegador. Intente con una imagen más pequeña o elimine elementos antiguos.', 'error');
+            } else {
+                showStatus('Error al guardar los cambios en el navegador.', 'error');
+            }
         }
     };
 
@@ -70,10 +75,16 @@ export default function GalleryAdmin() {
 
     const handleChangePassword = (e) => {
         e.preventDefault();
-        const storedPassword = localStorage.getItem('arupo_admin_password') || 'arupo2026';
+        const envPassword = import.meta.env.VITE_ADMIN_PASSWORD;
+        const storedPassword = localStorage.getItem('arupo_admin_password') || envPassword || 'arupo2026';
 
         if (passwords.current !== storedPassword) {
             showStatus('La contraseña actual es incorrecta', 'error');
+            return;
+        }
+
+        if (passwords.new.length < 6) {
+            showStatus('La nueva contraseña debe tener al menos 6 caracteres', 'error');
             return;
         }
 
@@ -83,7 +94,7 @@ export default function GalleryAdmin() {
         }
 
         localStorage.setItem('arupo_admin_password', passwords.new);
-        showStatus('Contraseña cambiada con éxito', 'success');
+        showStatus('Contraseña actualizada con éxito', 'success');
         setPasswords({ current: '', new: '', confirm: '' });
     };
 
@@ -95,13 +106,19 @@ export default function GalleryAdmin() {
     const handleFileChange = (e) => {
         const file = e.target.files[0];
         if (file) {
+            if (file.size > 5 * 1024 * 1024) {
+                showStatus('La imagen original es demasiado grande. Use una de menos de 5MB.', 'error');
+                return;
+            }
+
             const reader = new FileReader();
             reader.onloadend = () => {
                 const img = new Image();
                 img.onload = () => {
                     const canvas = document.createElement('canvas');
-                    const MAX_WIDTH = 800;
-                    const MAX_HEIGHT = 1422; // 9:16 approx
+                    // Optimizamos para dispositivos móviles y web rápida (Max 600px de ancho)
+                    const MAX_WIDTH = 600;
+                    const MAX_HEIGHT = 1066; // Proporción 9:16 approx
                     let width = img.width;
                     let height = img.height;
 
@@ -122,7 +139,8 @@ export default function GalleryAdmin() {
                     const ctx = canvas.getContext('2d');
                     ctx.drawImage(img, 0, 0, width, height);
 
-                    const dataUrl = canvas.toDataURL('image/jpeg', 0.6); // Compress
+                    // Calidad 0.5 para balance perfecto entre peso y nitidez (Aprox 50-100KB)
+                    const dataUrl = canvas.toDataURL('image/jpeg', 0.5);
                     setNewItem({ ...newItem, imageUrl: dataUrl });
                 };
                 img.src = reader.result;
