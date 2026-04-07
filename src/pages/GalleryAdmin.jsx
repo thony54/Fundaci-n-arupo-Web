@@ -57,10 +57,91 @@ export default function GalleryAdmin() {
             setGalleryData(organized);
         } catch (e) {
             console.error("Error fetching gallery:", e);
-            showStatus('Error al cargar la galería desde la nube', 'error');
+            if (typeof showStatus === 'function') {
+                showStatus('Error al cargar la galería desde la nube', 'error');
+            }
             setGalleryData(DEFAULT_GALLERY_DATA);
         } finally {
             setLoading(false);
+        }
+    };
+
+    const handleLogout = () => {
+        sessionStorage.removeItem('arupo_admin_auth');
+        navigate('/login');
+    };
+
+    const handleChangePassword = (e) => {
+        e.preventDefault();
+        const envPassword = import.meta.env.VITE_ADMIN_PASSWORD;
+        const storedPassword = localStorage.getItem('arupo_admin_password') || envPassword || 'arupo2026';
+
+        if (passwords.current !== storedPassword) {
+            showStatus('La contraseña actual es incorrecta', 'error');
+            return;
+        }
+
+        if (passwords.new.length < 6) {
+            showStatus('La nueva contraseña debe tener al menos 6 caracteres', 'error');
+            return;
+        }
+
+        if (passwords.new !== passwords.confirm) {
+            showStatus('Las nuevas contraseñas no coinciden', 'error');
+            return;
+        }
+
+        localStorage.setItem('arupo_admin_password', passwords.new);
+        showStatus('Contraseña actualizada con éxito', 'success');
+        setPasswords({ current: '', new: '', confirm: '' });
+    };
+
+    const showStatus = (text, type) => {
+        setStatusMessage({ text, type });
+        setTimeout(() => setStatusMessage({ text: '', type: '' }), 5000);
+    };
+
+    const handleFileChange = (e) => {
+        const file = e.target.files[0];
+        if (file) {
+            if (file.size > 5 * 1024 * 1024) {
+                showStatus('La imagen original es demasiado grande. Use una de menos de 5MB.', 'error');
+                return;
+            }
+
+            const reader = new FileReader();
+            reader.onloadend = () => {
+                const img = new Image();
+                img.onload = () => {
+                    const canvas = document.createElement('canvas');
+                    const MAX_WIDTH = 600;
+                    const MAX_HEIGHT = 1066;
+                    let width = img.width;
+                    let height = img.height;
+
+                    if (width > height) {
+                        if (width > MAX_WIDTH) {
+                            height = Math.round(height * (MAX_WIDTH / width));
+                            width = MAX_WIDTH;
+                        }
+                    } else {
+                        if (height > MAX_HEIGHT) {
+                            width = Math.round(width * (MAX_HEIGHT / height));
+                            height = MAX_HEIGHT;
+                        }
+                    }
+
+                    canvas.width = width;
+                    canvas.height = height;
+                    const ctx = canvas.getContext('2d');
+                    ctx.drawImage(img, 0, 0, width, height);
+
+                    const dataUrl = canvas.toDataURL('image/jpeg', 0.5);
+                    setNewItem({ ...newItem, imageUrl: dataUrl });
+                };
+                img.src = reader.result;
+            };
+            reader.readAsDataURL(file);
         }
     };
 
