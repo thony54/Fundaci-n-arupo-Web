@@ -27,17 +27,17 @@ export default function Navbar() {
                 aria-label="Navegación principal"
                 className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8"
             >
-                <div className="flex h-16 items-center justify-between">
+                <div className="flex py-4 md:py-6 items-center justify-between">
                     {/* Logo */}
                     <Link
                         to="/"
-                        className="flex items-center gap-3"
+                        className="flex items-center gap-3 shrink-0"
                         aria-label="Fundación Arupo – Inicio"
                     >
                         <img
                             src="/logo-white.png"
                             alt="Fundación Arupo"
-                            className="h-10 w-auto"
+                            className="h-16 md:h-20 w-auto object-contain"
                         />
                     </Link>
 
