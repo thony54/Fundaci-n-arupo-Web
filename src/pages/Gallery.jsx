@@ -18,10 +18,10 @@ const DEFAULT_GALLERY_DATA = {
     ]
 };
 
-const SilhouetteIcon = ({ className }) => (
-    <div className={`w-full h-full flex items-center justify-center bg-dark-800 ${className}`}>
-        <svg className="w-24 h-24 text-dark-600 opacity-50" fill="currentColor" viewBox="0 0 24 24">
-            <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 3c1.66 0 3 1.34 3 3s-1.34 3-3 3-3-1.34-3-3 1.34-3 3-3zm0 14.2c-2.5 0-4.71-1.28-6-3.22.03-1.99 4-3.08 6-3.08 1.99 0 5.97 1.09 6 3.08-1.29 1.94-3.5 3.22-6 3.22z" />
+const PlaceholderIcon = ({ className }) => (
+    <div className={`w-full h-full flex items-center justify-center bg-dark-50 dark:bg-dark-900 ${className}`}>
+        <svg className="w-16 h-16 text-dark-300 dark:text-dark-700" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1} d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
         </svg>
     </div>
 );
@@ -64,25 +64,30 @@ export default function Gallery() {
 
     return (
         <PageTransition>
-            <section className="pt-32 pb-20 bg-dark-950 min-h-screen">
+            <section className="pt-32 pb-24 bg-white dark:bg-dark-950 min-h-screen">
                 <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
                     <Reveal>
-                        <header className="mb-16 text-center">
-                            <h1 className="text-4xl md:text-6xl font-bold text-white mb-6">Galería de Impacto</h1>
-                            <p className="text-xl text-dark-300 max-w-3xl mx-auto">
-                                Explorando nuestro trabajo por categorías. Imágenes de siluetas temporales.
+                        <header className="mb-20 text-center">
+                            <span className="inline-block py-1.5 px-4 rounded-full bg-primary-50 dark:bg-primary-900/20 text-primary-600 dark:text-primary-400 text-xs font-bold tracking-[0.2em] uppercase mb-4">
+                                Portafolio Institucional
+                            </span>
+                            <h1 className="text-4xl md:text-5xl lg:text-6xl font-extrabold text-dark-900 dark:text-white mb-6 tracking-tight">
+                                Galería de Impacto
+                            </h1>
+                            <p className="text-xl text-dark-500 dark:text-dark-400 max-w-3xl mx-auto font-light leading-relaxed">
+                                Conoce de cerca los rostros, los talleres y los hitos que construyen una sociedad más inclusiva en Ecuador.
                             </p>
                         </header>
                     </Reveal>
 
-                    <div className="flex flex-wrap justify-center gap-4 mb-16">
+                    <div className="flex flex-wrap justify-center gap-3 mb-20">
                         {['All', ...sections].map((section) => (
                             <button
                                 key={section}
                                 onClick={() => setActiveSection(section)}
-                                className={`px-6 py-2 rounded-full text-sm font-semibold transition-all duration-300 ${activeSection === section
-                                    ? 'bg-accent-500 text-dark-900 scale-105 shadow-lg shadow-accent-500/20'
-                                    : 'bg-dark-800 text-dark-300 hover:text-white hover:bg-dark-700'
+                                className={`px-8 py-3 rounded-full text-sm font-semibold transition-all duration-300 ${activeSection === section
+                                    ? 'bg-primary-600 text-white shadow-lg shadow-primary-500/20'
+                                    : 'bg-white dark:bg-dark-900 border border-dark-200 dark:border-dark-800 text-dark-600 dark:text-dark-300 hover:text-primary-600 dark:hover:text-primary-400 hover:border-primary-200'
                                     }`}
                             >
                                 {section === 'All' ? 'Ver Todo' : section}
@@ -92,44 +97,44 @@ export default function Gallery() {
 
                     {Object.entries(galleryState).map(([sectionTitle, items]) => (
                         (activeSection === 'All' || activeSection === sectionTitle) && (
-                            <div key={sectionTitle} className="mb-20">
+                            <div key={sectionTitle} className="mb-24">
                                 <Reveal>
-                                    <div className="flex items-center gap-4 mb-10">
-                                        <div className="h-px flex-1 bg-gradient-to-r from-transparent to-dark-700" />
-                                        <h2 className="text-3xl font-bold text-white px-4">{sectionTitle}</h2>
-                                        <div className="h-px flex-1 bg-gradient-to-l from-transparent to-dark-700" />
+                                    <div className="flex items-center gap-6 mb-12">
+                                        <div className="h-px flex-1 bg-gradient-to-r from-transparent to-dark-200 dark:to-dark-800" />
+                                        <h2 className="text-2xl md:text-3xl font-extrabold text-dark-900 dark:text-white px-2 tracking-tight">{sectionTitle}</h2>
+                                        <div className="h-px flex-1 bg-gradient-to-l from-transparent to-dark-200 dark:to-dark-800" />
                                     </div>
                                 </Reveal>
 
-                                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+                                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
                                     {items.map((item, index) => (
-                                        <Reveal key={item.id} delay={index * 0.1}>
-                                            <div className="group relative overflow-hidden rounded-2xl bg-dark-900 border border-dark-800 transition-all duration-300 hover:border-accent-500/30 hover:shadow-2xl hover:shadow-accent-500/10 h-full flex flex-col">
-                                                <div className="aspect-[9/16] relative flex items-center justify-center overflow-hidden flex-shrink-0">
+                                        <Reveal key={item.id} delay={index * 0.08}>
+                                            <div className="group relative overflow-hidden rounded-[2rem] bg-white dark:bg-dark-900 shadow-sm hover:shadow-2xl transition-all duration-500 border border-dark-100 dark:border-dark-800 h-full flex flex-col">
+                                                <div className="aspect-[4/5] relative flex items-center justify-center overflow-hidden flex-shrink-0 bg-dark-50 dark:bg-dark-950">
                                                     {item.image_url ? (
                                                         <img
                                                             src={item.image_url}
                                                             alt={item.title}
-                                                            className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
+                                                            className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700 ease-in-out"
                                                         />
                                                     ) : (
-                                                        <SilhouetteIcon className="group-hover:scale-110 transition-transform duration-500" />
+                                                        <PlaceholderIcon className="group-hover:scale-105 transition-transform duration-700 ease-in-out" />
                                                     )}
-                                                    <div className="absolute top-4 left-4">
-                                                        <span className="bg-dark-950/80 backdrop-blur-sm text-[10px] font-bold tracking-widest uppercase text-dark-300 px-3 py-1 rounded-full border border-dark-700">
+                                                    <div className="absolute top-5 left-5">
+                                                        <span className="bg-white/90 dark:bg-dark-900/90 backdrop-blur-md text-[10px] font-bold tracking-widest uppercase text-dark-900 dark:text-white px-4 py-2 rounded-full shadow-sm">
                                                             {item.category}
                                                         </span>
                                                     </div>
                                                 </div>
-                                                <div className="p-5 flex-grow flex flex-col justify-between">
+                                                <div className="p-8 flex-grow flex flex-col justify-between">
                                                     <div>
-                                                        <h3 className="text-lg font-bold text-white group-hover:text-accent-400 transition-colors">
+                                                        <h3 className="text-xl font-bold text-dark-900 dark:text-white group-hover:text-primary-600 dark:group-hover:text-primary-400 transition-colors leading-snug">
                                                             {item.title}
                                                         </h3>
-                                                        <div className="mt-3 flex items-center gap-2">
-                                                            <div className={`w-2 h-2 rounded-full bg-${item.color || 'accent-500'}`} />
-                                                            <span className="text-sm text-dark-400 font-medium tracking-tight">
-                                                                Categorizado
+                                                        <div className="mt-4 flex items-center gap-3">
+                                                            <div className="w-10 h-px bg-dark-200 dark:bg-dark-700 transition-all group-hover:w-16 group-hover:bg-primary-500" />
+                                                            <span className="text-xs text-dark-400 font-semibold tracking-widest uppercase">
+                                                                Registro
                                                             </span>
                                                         </div>
                                                     </div>

@@ -26,31 +26,35 @@ export default function Login() {
 
     return (
         <PageTransition>
-            <section className="min-h-screen flex items-center justify-center bg-dark-950 px-4">
-                <div className="absolute inset-0 overflow-hidden pointer-events-none">
-                    <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-accent-500/10 rounded-full blur-[120px]" />
-                    <div className="absolute bottom-1/4 right-1/4 w-96 h-96 bg-primary-500/10 rounded-full blur-[120px]" />
-                </div>
+            <section className="min-h-screen flex items-center justify-center bg-dark-50 dark:bg-dark-950 px-4 relative">
+                {/* Clean, subtle gradient background instead of missing pattern */}
+                <div className="absolute inset-0 bg-gradient-to-br from-primary-500/5 to-transparent dark:from-primary-900/10 dark:to-dark-950 pointer-events-none" />
 
                 <motion.div
                     initial={{ opacity: 0, y: 20 }}
                     animate={{ opacity: 1, y: 0 }}
-                    className="w-full max-w-md bg-dark-900/50 backdrop-blur-xl border border-dark-800 p-8 rounded-3xl shadow-2xl relative z-10"
+                    transition={{ duration: 0.5, ease: "easeOut" }}
+                    className="w-full max-w-md bg-white dark:bg-dark-900 border border-dark-100 dark:border-dark-800 p-10 rounded-[2rem] shadow-xl relative z-10"
                 >
-                    <div className="text-center mb-8">
-                        <img src="/logo-white.png" alt="Fundación Arupo" className="h-12 w-auto mx-auto mb-6" />
-                        <h1 className="text-2xl font-bold text-white">Acceso Administrativo</h1>
-                        <p className="text-dark-400 mt-2 text-sm">Ingrese su contraseña para continuar</p>
+                    <div className="text-center mb-10">
+                        {/* Assuming the logo might be dark in light mode, but sticking to logic */}
+                        <div className="w-16 h-16 bg-primary-50 dark:bg-dark-800 rounded-2xl mx-auto flex items-center justify-center mb-6">
+                            <svg className="w-8 h-8 text-primary-600 dark:text-primary-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" />
+                            </svg>
+                        </div>
+                        <h1 className="text-2xl font-extrabold text-dark-900 dark:text-white tracking-tight">Acceso Seguro</h1>
+                        <p className="text-dark-500 dark:text-dark-400 mt-2 text-sm">Área restringida para administración</p>
                     </div>
 
                     <form onSubmit={handleLogin} className="space-y-6">
                         <div className="space-y-2">
-                            <label className="text-sm font-medium text-dark-300 ml-1">Contraseña</label>
+                            <label className="text-sm font-semibold text-dark-700 dark:text-dark-300 ml-1">Contraseña de acceso</label>
                             <input
                                 type="password"
                                 value={password}
                                 onChange={(e) => setPassword(e.target.value)}
-                                className="w-full bg-dark-800 border border-dark-700 rounded-2xl px-5 py-4 text-white focus:border-accent-500 outline-none transition-all placeholder:text-dark-600"
+                                className="w-full bg-dark-50 dark:bg-dark-950 border border-dark-200 dark:border-dark-700 rounded-xl px-5 py-3.5 text-dark-900 dark:text-white focus:border-primary-500 focus:ring-1 focus:ring-primary-500 outline-none transition-all placeholder:text-dark-400 dark:placeholder:text-dark-600"
                                 placeholder="••••••••"
                                 required
                             />
@@ -58,9 +62,9 @@ export default function Login() {
 
                         {error && (
                             <motion.p
-                                initial={{ opacity: 0 }}
-                                animate={{ opacity: 1 }}
-                                className="text-red-400 text-sm text-center font-medium bg-red-400/10 py-2 rounded-lg border border-red-400/20"
+                                initial={{ opacity: 0, height: 0 }}
+                                animate={{ opacity: 1, height: 'auto' }}
+                                className="text-red-600 dark:text-red-400 text-sm text-center font-medium bg-red-50 dark:bg-red-400/10 py-3 rounded-xl border border-red-100 dark:border-red-400/20"
                             >
                                 {error}
                             </motion.p>
@@ -68,15 +72,16 @@ export default function Login() {
 
                         <button
                             type="submit"
-                            className="w-full bg-gradient-to-r from-accent-400 to-accent-500 text-dark-900 font-bold py-4 rounded-2xl hover:from-accent-300 hover:to-accent-400 transition-all shadow-lg shadow-accent-500/20 active:scale-[0.98]"
+                            className="w-full bg-primary-600 text-white font-bold py-4 rounded-xl hover:bg-primary-700 transition-colors shadow-lg shadow-primary-600/20 active:scale-[0.98]"
                         >
-                            Entrar al Panel
+                            Ingresar
                         </button>
                     </form>
 
-                    <div className="mt-8 text-center">
-                        <a href="/" className="text-sm text-dark-500 hover:text-dark-300 transition-colors">
-                            ← Volver al sitio público
+                    <div className="mt-10 text-center">
+                        <a href="/" className="text-sm font-medium text-dark-400 hover:text-primary-600 transition-colors inline-flex items-center gap-2">
+                            <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 19l-7-7m0 0l7-7m-7 7h18" /></svg>
+                            Regresar a la página principal
                         </a>
                     </div>
                 </motion.div>
