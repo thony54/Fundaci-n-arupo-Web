@@ -6,7 +6,6 @@ import About from '../components/About';
 import Team from '../components/Team'; // Added Team component import
 import Areas from '../components/Areas';
 import Impact from '../components/Impact';
-import Projects from '../components/Projects';
 import SustainabilityAlliance from '../components/SustainabilityAlliance';
 import Volunteer from '../components/Volunteer';
 import Testimonials from '../components/Testimonials';
@@ -31,9 +30,6 @@ export default function Home() {
             </Reveal>
             <Reveal width="100%">
                 <Impact />
-            </Reveal>
-            <Reveal width="100%">
-                <Projects />
             </Reveal>
             <Reveal width="100%">
                 <SustainabilityAlliance />

@@ -27,7 +27,7 @@ export default function Navbar() {
                 aria-label="Navegación principal"
                 className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8"
             >
-                <div className="flex h-16 items-center justify-between">
+                <div className="flex h-14 items-center justify-between">
                     {/* Logo */}
                     <Link
                         to="/"
@@ -63,9 +63,9 @@ export default function Navbar() {
                             </div>
                         ))}
                         <a
-                            href="/#dona"
+                            href="/#contacto"
                             className="ml-3 inline-flex items-center px-5 py-2 text-sm font-semibold rounded-full bg-gradient-to-r from-accent-400 to-accent-500 text-dark-900 hover:from-accent-300 hover:to-accent-400 transition-all duration-300 shadow-lg shadow-accent-500/25 hover:shadow-accent-400/40 hover:scale-105"
-                            aria-label="Realizar una donación"
+                            aria-label="Ir a contacto"
                         >
                             Dona
                         </a>
@@ -164,10 +164,10 @@ export default function Navbar() {
                             </div>
                         ))}
                         <a
-                            href="/#dona"
+                            href="/#contacto"
                             onClick={() => setIsOpen(false)}
                             className="mx-4 mt-2 text-center px-5 py-2.5 text-sm font-semibold rounded-full bg-gradient-to-r from-accent-400 to-accent-500 text-dark-900 hover:from-accent-300 hover:to-accent-400 transition-all duration-300"
-                            aria-label="Realizar una donación"
+                            aria-label="Ir a contacto"
                         >
                             Dona
                         </a>

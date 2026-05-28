@@ -1,4 +1,5 @@
 import InclusionNetwork from './InclusionNetwork';
+import CountUp from './motion/CountUp';
 
 export default function Hero() {
     return (
@@ -35,25 +36,23 @@ export default function Hero() {
                 </div>
 
                 <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-black text-white leading-[1.1] tracking-tight max-w-5xl mx-auto">
-                    Construimos un mundo{' '}
+                    Transformamos realidades con{' '}
                     <span className="bg-gradient-to-r from-primary-300 via-primary-400 to-accent-400 bg-clip-text text-transparent">
-                        más inclusivo
-                    </span>{' '}
-                    con tecnología y derechos humanos
+                        accesibilidad
+                    </span>
+                    , tecnología y acción social
                 </h1>
 
                 <p className="mt-6 text-lg sm:text-xl text-dark-300 max-w-2xl mx-auto leading-relaxed">
-                    Acompañamos a personas en movilidad humana, comunidades LGBTIQ+,
-                    personas con discapacidad y jóvenes en situación de vulnerabilidad
-                    hacia una vida digna y plena.
+                    Desarrollamos procesos formativos, herramientas accesibles y proyectos sociales que fortalecen la autonomía de personas con discapacidad y movilidad humana.
                 </p>
 
                 {/* CTAs */}
                 <div className="mt-10 flex flex-col sm:flex-row items-center justify-center gap-4">
                     <a
-                        href="#dona"
+                        href="#contacto"
                         className="inline-flex items-center px-8 py-3.5 text-base font-semibold rounded-full bg-gradient-to-r from-primary-500 to-primary-600 text-white hover:from-primary-400 hover:to-primary-500 transition-all duration-300 shadow-xl shadow-primary-500/25 hover:shadow-primary-400/40 hover:scale-105"
-                        aria-label="Realizar una donación"
+                        aria-label="Ir a contacto"
                     >
                         Dona ahora
                         <svg className="ml-2 h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
@@ -75,12 +74,12 @@ export default function Hero() {
                 {/* Stats bar */}
                 <div className="mt-16 grid grid-cols-2 md:grid-cols-4 gap-6 md:gap-8 max-w-3xl mx-auto">
                     {[
-                        { number: '55,000+', label: 'Atenciones' },
-                        { number: '50+', label: 'Alianzas estratégicas' },
-                        { number: '20+', label: 'Provincias alcanzadas' },
-                        { number: '1', label: 'Centro de atención' },
-                    ].map((stat) => (
-                        <div key={stat.label} className="text-center">
+                        { number: <><CountUp to={55000} duration={2} />+</>, label: 'Atenciones' },
+                        { number: <><CountUp to={50} duration={1.5} />+</>, label: 'Alianzas estratégicas' },
+                        { number: <><CountUp to={20} duration={1.5} />+</>, label: 'Provincias alcanzadas' },
+                        { number: <CountUp to={1} duration={1} />, label: 'Centro de atención' },
+                    ].map((stat, index) => (
+                        <div key={index} className="text-center">
                             <p className="text-2xl sm:text-3xl font-bold text-white">{stat.number}</p>
                             <p className="mt-1 text-sm text-dark-400">{stat.label}</p>
                         </div>

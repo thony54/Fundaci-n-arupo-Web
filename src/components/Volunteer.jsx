@@ -1,71 +1,72 @@
 export default function Volunteer() {
     return (
-        <section id="voluntariado" className="py-24 bg-dark-50 dark:bg-dark-900 transition-colors duration-300" aria-labelledby="volunteer-heading">
+        <section id="voluntariado" className="py-24 bg-white dark:bg-dark-950 transition-colors duration-300" aria-labelledby="volunteer-heading">
             <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-                <div className="relative overflow-hidden rounded-3xl bg-gradient-to-br from-primary-600 via-primary-700 to-dark-900 p-10 sm:p-16">
-                    {/* Decorative */}
-                    <div className="absolute top-0 right-0 w-64 h-64 bg-accent-400/10 rounded-full blur-3xl" aria-hidden="true" />
-                    <div className="absolute bottom-0 left-0 w-48 h-48 bg-primary-300/10 rounded-full blur-3xl" aria-hidden="true" />
-
-                    <div className="relative z-10 grid lg:grid-cols-2 gap-10 items-center">
-                        <div>
-                            <p className="text-sm font-semibold uppercase tracking-widest text-primary-200 mb-3">
-                                Voluntariado
-                            </p>
-                            <h2
-                                id="volunteer-heading"
-                                className="text-3xl sm:text-4xl font-bold text-white leading-tight"
-                            >
-                                Tu tiempo puede cambiar la vida de alguien
-                            </h2>
-                            <p className="mt-6 text-primary-100/90 text-lg leading-relaxed">
-                                Únete a nuestra red de voluntarias y voluntarios que, desde la diversidad,
-                                construyen una sociedad más justa. No importa tu edad, profesión u
-                                origen – lo que importa es tu compromiso con los derechos humanos.
-                            </p>
-                            <p className="mt-4 text-primary-100/80 leading-relaxed">
-                                Ofrecemos oportunidades de voluntariado local e internacional en
-                                acompañamiento comunitario, producción audiovisual, accesibilidad digital,
-                                educación y campañas de sensibilización.
-                            </p>
-                            <div className="mt-8 flex flex-wrap gap-4">
-                                <a
-                                    href="#contacto"
-                                    className="inline-flex items-center px-7 py-3.5 text-base font-semibold rounded-full bg-white text-primary-700 hover:bg-primary-50 transition-all duration-300 shadow-lg hover:shadow-xl hover:scale-105"
-                                    aria-label="Postularse como voluntario"
-                                >
-                                    Postularse ahora
-                                    <svg className="ml-2 h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
-                                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
-                                    </svg>
-                                </a>
-                                <a
-                                    href="#proyectos"
-                                    className="inline-flex items-center px-7 py-3.5 text-base font-semibold rounded-full border-2 border-white/30 text-white hover:border-white/60 transition-all duration-300"
-                                    aria-label="Ver proyectos actuales"
-                                >
-                                    Ver proyectos
-                                </a>
-                            </div>
-                        </div>
-
-                        {/* Feature points */}
-                        <div className="grid grid-cols-2 gap-4">
-                            {[
-                                { title: 'Voluntariado local', desc: 'Acciones directas en Imbabura y Ecuador' },
-                                { title: 'Internacional', desc: 'Oportunidades con ACNUR y aliados globales' },
-                                { title: 'Jóvenes diversos', desc: 'Espacios seguros para todas las identidades' },
-                                { title: 'Impacto real', desc: 'Proyectos con resultados medibles y sostenibles' },
+                <div className="flex flex-col lg:flex-row gap-16 items-center">
+                    <div className="flex-1 lg:pr-8">
+                        <p className="text-sm font-semibold uppercase tracking-widest text-primary-600 mb-4">
+                            Voluntariado
+                        </p>
+                        <h2
+                            id="volunteer-heading"
+                            className="text-4xl sm:text-5xl lg:text-6xl font-black text-dark-900 dark:text-white leading-tight mb-6"
+                        >
+                            Tu tiempo puede <br />
+                            <span className="text-transparent bg-clip-text bg-gradient-to-r from-primary-500 to-accent-500">cambiar vidas</span>
+                        </h2>
+                        <p className="text-lg text-dark-600 dark:text-dark-300 mb-8 leading-relaxed max-w-xl">
+                            Únete a nuestra red de voluntariado. No importa tu edad, profesión u
+                            origen – lo que importa es tu compromiso con los derechos humanos y la inclusión.
+                        </p>
+                        
+                        <div className="space-y-6 mb-10 max-w-md">
+                             {[
+                                { title: 'Voluntariado Local', desc: 'Acciones directas e impacto en comunidades en Ecuador.' },
+                                { title: 'Voluntariado Internacional', desc: 'Oportunidades globales de colaboración con aliados.' },
                             ].map((item) => (
-                                <div
-                                    key={item.title}
-                                    className="bg-white/10 backdrop-blur-sm rounded-xl p-5 border border-white/10 hover:bg-white/15 transition-colors duration-300"
-                                >
-                                    <h3 className="font-semibold text-white text-sm mb-1">{item.title}</h3>
-                                    <p className="text-primary-200 text-sm">{item.desc}</p>
+                                <div key={item.title} className="flex gap-4 items-start">
+                                    <div className="mt-1 flex-shrink-0 w-10 h-10 flex items-center justify-center rounded-full bg-primary-100 dark:bg-primary-900/30 text-primary-600 dark:text-primary-400">
+                                        <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+                                        </svg>
+                                    </div>
+                                    <div>
+                                        <h3 className="font-bold text-lg text-dark-900 dark:text-white">{item.title}</h3>
+                                        <p className="text-dark-600 dark:text-dark-400 text-sm mt-1">{item.desc}</p>
+                                    </div>
                                 </div>
                             ))}
                         </div>
+
+                        <a
+                            href="https://enketo.unhcr.org/x/Eo942fQl"
+                            className="inline-flex items-center px-8 py-4 text-base font-bold rounded-full bg-dark-900 dark:bg-white text-white dark:text-dark-900 hover:scale-105 transition-transform duration-300 shadow-xl"
+                            aria-label="Postularse como voluntario"
+                        >
+                            Únete Ahora
+                            <svg className="ml-2 w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
+                            </svg>
+                        </a>
+                    </div>
+                    
+                    <div className="flex-1 w-full relative">
+                        <div className="aspect-square sm:aspect-[4/3] lg:aspect-square rounded-[2rem] overflow-hidden relative shadow-2xl">
+                            {/* Abstract vibrant gradient background */}
+                            <div className="absolute inset-0 bg-gradient-to-br from-primary-400 via-primary-600 to-accent-600 dark:from-primary-600 dark:via-primary-800 dark:to-accent-800 mix-blend-multiply dark:mix-blend-color-burn opacity-90" />
+                            <div className="absolute top-0 right-0 w-full h-full bg-[url('https://images.unsplash.com/photo-1593113565214-80afcb4a45d7?auto=format&fit=crop&q=80')] bg-cover bg-center mix-blend-overlay opacity-50 dark:opacity-40" />
+                            <div className="absolute inset-0 bg-gradient-to-t from-dark-900/90 via-dark-900/20 to-transparent" />
+                            
+                            <div className="absolute bottom-8 left-8 right-8">
+                                <div className="bg-white/10 backdrop-blur-md border border-white/20 rounded-2xl p-6 text-white transform transition-transform hover:-translate-y-1 duration-300">
+                                    <p className="font-medium text-lg italic">"El voluntariado en Arupo me enseñó el verdadero significado de la empatía y la transformación comunitaria."</p>
+                                    <p className="mt-3 text-primary-200 text-sm font-semibold tracking-wide uppercase">— Testimonio Voluntariado</p>
+                                </div>
+                            </div>
+                        </div>
+                        {/* Decorative blobs */}
+                        <div className="absolute -top-12 -right-12 w-64 h-64 bg-accent-400/20 rounded-full blur-3xl -z-10 pointer-events-none" />
+                        <div className="absolute -bottom-12 -left-12 w-64 h-64 bg-primary-400/20 rounded-full blur-3xl -z-10 pointer-events-none" />
                     </div>
                 </div>
             </div>

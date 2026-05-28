@@ -66,18 +66,17 @@ export default function About() {
                     </div>
 
                     {/* Pillars */}
-                    <div className="grid grid-cols-2 gap-4">
+                    <div className="flex flex-col gap-8 mt-8 lg:mt-0 lg:pl-12">
                         {pillars.map((pillar) => (
                             <div
                                 key={pillar.label}
-                                className="group relative overflow-hidden rounded-2xl bg-dark-50 dark:bg-dark-900 border border-dark-100 dark:border-dark-800 p-6 transition-all duration-300 hover:shadow-lg hover:border-primary-200 hover:-translate-y-1"
+                                className="group flex items-center gap-6 p-4 rounded-2xl transition-all duration-300 hover:bg-dark-50 dark:hover:bg-dark-900/50"
                             >
-                                <div className="absolute top-0 right-0 w-20 h-20 bg-gradient-to-bl from-primary-50 to-transparent rounded-bl-3xl opacity-0 group-hover:opacity-100 transition-opacity duration-300" aria-hidden="true" />
-                                <div className="relative">
-                                    <div className="inline-flex items-center justify-center w-12 h-12 rounded-xl bg-primary-100 text-primary-600 mb-4 group-hover:bg-primary-500 group-hover:text-white transition-colors duration-300">
-                                        {pillar.icon}
-                                    </div>
-                                    <h3 className="font-semibold text-dark-800 dark:text-white text-lg">{pillar.label}</h3>
+                                <div className="flex-shrink-0 flex items-center justify-center w-16 h-16 rounded-full bg-primary-50 dark:bg-primary-900/20 text-primary-600 dark:text-primary-400 group-hover:bg-primary-600 group-hover:text-white transition-colors duration-300 shadow-sm border border-primary-100 dark:border-primary-900/30">
+                                    {pillar.icon}
+                                </div>
+                                <div>
+                                    <h3 className="text-xl font-bold text-dark-900 dark:text-white transition-colors group-hover:text-primary-600 dark:group-hover:text-primary-400">{pillar.label}</h3>
                                 </div>
                             </div>
                         ))}
