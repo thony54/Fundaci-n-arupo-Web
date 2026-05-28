@@ -44,7 +44,7 @@ export default function Hero() {
                 </h1>
 
                 <p className="mt-6 text-lg sm:text-xl text-dark-300 max-w-2xl mx-auto leading-relaxed">
-                    Desarrollamos procesos formativos, herramientas accesibles y proyectos sociales que fortalecen la autonomía de personas con discapacidad y movilidad humana.
+                    En Fundación Arupo acompañamos a personas con discapacidad y grupos de atención prioritaria mediante procesos terapéuticos, formación técnica y programas de inclusión que generan autonomía y oportunidades reales.
                 </p>
 
                 {/* CTAs */}

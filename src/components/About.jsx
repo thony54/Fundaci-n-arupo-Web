@@ -1,36 +1,12 @@
-const pillars = [
-    {
-        icon: (
-            <svg className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197m13.5-9a2.25 2.25 0 11-4.5 0 2.25 2.25 0 014.5 0z" />
-            </svg>
-        ),
-        label: 'Inclusión',
-    },
-    {
-        icon: (
-            <svg className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M9 12.75L11.25 15 15 9.75m-3-7.036A11.959 11.959 0 013.598 6 11.99 11.99 0 003 9.749c0 5.592 3.824 10.29 9 11.623 5.176-1.332 9-6.03 9-11.622 0-1.31-.21-2.571-.598-3.751h-.152c-3.196 0-6.1-1.248-8.25-3.285z" />
-            </svg>
-        ),
-        label: 'Derechos Humanos',
-    },
-    {
-        icon: (
-            <svg className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M9.75 3.104v5.714a2.25 2.25 0 01-.659 1.591L5 14.5M9.75 3.104c-.251.023-.501.05-.75.082m.75-.082a24.301 24.301 0 014.5 0m0 0v5.714c0 .597.237 1.17.659 1.591L19.8 15.3M14.25 3.104c.251.023.501.05.75.082M19.8 15.3l-1.57.393A9.065 9.065 0 0112 15a9.065 9.065 0 00-6.23.693L5 14.5m14.8.8l1.402 1.402c1.232 1.232.65 3.318-1.067 3.611A48.309 48.309 0 0112 21c-2.773 0-5.491-.235-8.135-.687-1.718-.293-2.3-2.379-1.067-3.61L5 14.5" />
-            </svg>
-        ),
-        label: 'Innovación Social',
-    },
-    {
-        icon: (
-            <svg className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M10.5 1.5H8.25A2.25 2.25 0 006 3.75v16.5a2.25 2.25 0 002.25 2.25h7.5A2.25 2.25 0 0018 20.25V3.75a2.25 2.25 0 00-2.25-2.25H13.5m-3 0V3h3V1.5m-3 0h3m-3 18.75h3" />
-            </svg>
-        ),
-        label: 'Accesibilidad Digital',
-    },
+const enfoques = [
+    'Enfoque de derechos humanos.',
+    'Enfoque de discapacidad e inclusión.',
+    'Perspectiva de género.',
+    'Interculturalidad.',
+    'Desarrollo comunitario.',
+    'Participación ciudadana.',
+    'Inclusión económica.',
+    'Acción humanitaria territorial.'
 ];
 
 export default function About() {
@@ -44,42 +20,41 @@ export default function About() {
                             Quiénes Somos
                         </p>
                         <h2 id="about-heading" className="text-3xl sm:text-4xl font-bold text-dark-900 dark:text-white leading-tight">
-                            Transformamos realidades a través de la{' '}
-                            <span className="text-primary-600">inclusión</span> y la{' '}
-                            <span className="text-primary-600">innovación</span>
+                            Enfoque Institucional
                         </h2>
-                        <p className="mt-6 text-dark-600 dark:text-dark-300 leading-relaxed text-lg">
-                            Fundación Arupo es una organización de la sociedad civil, comprometidos con la inclusión, la justicia social y la defensa de los derechos humanos. Nacimos del deseo de transformar realidades y acompañar a personas en situación de discapacidad, movilidad humana y vulnerabilidad social. Trabajamos desde el corazón de Ecuador con enfoque comunitario, intercultural y con perspectiva de género.
-                            Nuestra labor ha sido reconocida a nivel nacional e internacional gracias a la participación activa en redes, alianzas estratégicas y espacios de incidencia.
-
+                        <p className="mt-6 text-dark-600 dark:text-dark-300 leading-relaxed text-lg mb-8">
+                            Nuestro trabajo se basa en los siguientes enfoques para transformar realidades y acompañar a personas en situación de discapacidad, movilidad humana y vulnerabilidad social:
                         </p>
-                        <p className="mt-4 text-dark-600 dark:text-dark-300 leading-relaxed">
-                            Integramos tecnología, comunicación y accesibilidad como herramientas
-                            de transformación social. Nuestra visión es construir una sociedad donde
-                            la diversidad sea celebrada y los derechos sean garantizados para todas
-                            las personas, sin distinción.
-                        </p>
-                        <p className="mt-4 text-dark-600 dark:text-dark-300 leading-relaxed">
-                            Promovemos procesos de inclusión social, educativa y terapéutica. Brindamos atención integral a niños, niñas, adolescentes, personas con discapacidad y sus familias, a través de programas de acompañamiento psicosocial, terapias, formación, arte y voluntariado.
-                            También impulsamos acciones de activismo, campañas de sensibilización, formación en derechos humanos y accesibilidad digital, generando espacios seguros, diversos y transformadores.
-                        </p>
+                        
+                        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                            {enfoques.map((enfoque, idx) => (
+                                <div key={idx} className="flex items-start gap-3">
+                                    <div className="mt-1 flex-shrink-0 w-6 h-6 rounded-full bg-primary-100 dark:bg-primary-900/30 text-primary-600 dark:text-primary-400 flex items-center justify-center">
+                                        <svg className="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={3} d="M5 13l4 4L19 7" />
+                                        </svg>
+                                    </div>
+                                    <p className="text-dark-800 dark:text-dark-200 font-medium text-sm leading-snug">
+                                        {enfoque}
+                                    </p>
+                                </div>
+                            ))}
+                        </div>
                     </div>
 
-                    {/* Pillars */}
-                    <div className="flex flex-col gap-8 mt-8 lg:mt-0 lg:pl-12">
-                        {pillars.map((pillar) => (
-                            <div
-                                key={pillar.label}
-                                className="group flex items-center gap-6 p-4 rounded-2xl transition-all duration-300 hover:bg-dark-50 dark:hover:bg-dark-900/50"
-                            >
-                                <div className="flex-shrink-0 flex items-center justify-center w-16 h-16 rounded-full bg-primary-50 dark:bg-primary-900/20 text-primary-600 dark:text-primary-400 group-hover:bg-primary-600 group-hover:text-white transition-colors duration-300 shadow-sm border border-primary-100 dark:border-primary-900/30">
-                                    {pillar.icon}
-                                </div>
-                                <div>
-                                    <h3 className="text-xl font-bold text-dark-900 dark:text-white transition-colors group-hover:text-primary-600 dark:group-hover:text-primary-400">{pillar.label}</h3>
-                                </div>
-                            </div>
-                        ))}
+                    {/* Image / Visual */}
+                    <div className="relative rounded-3xl overflow-hidden aspect-[4/3] lg:aspect-square shadow-2xl group">
+                        <div className="absolute inset-0 bg-gradient-to-tr from-primary-600/40 to-accent-500/20 mix-blend-overlay z-10 transition-opacity duration-500 group-hover:opacity-0" />
+                        <img 
+                            src="https://images.unsplash.com/photo-1573164713714-d95e436ab8d6?auto=format&fit=crop&q=80" 
+                            alt="Trabajo comunitario" 
+                            className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
+                        />
+                        <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-dark-900/90 p-8 z-20">
+                            <p className="text-white font-medium text-lg">
+                                Construimos una sociedad donde la diversidad sea celebrada y los derechos garantizados.
+                            </p>
+                        </div>
                     </div>
                 </div>
             </div>
