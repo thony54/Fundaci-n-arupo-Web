@@ -66,7 +66,7 @@ export default function TherapeuticCenter() {
 
                         <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-5xl font-black text-white leading-[1.2] tracking-tight max-w-5xl mx-auto">
                             Somos un espacio especializado y multidisciplinario que brinda atención integral a{' '}
-                            <span className="bg-gradient-to-r from-therapeutic-300 via-therapeutic-400 to-therapeutic-200 bg-clip-text text-transparent">
+                            <span className="bg-gradient-to-r from-[#0072BC] via-[#82368C] to-[#E6007E] bg-clip-text text-transparent">
                                 niños, adolescentes, personas adultas y sus familias.
                             </span>
                         </h1>

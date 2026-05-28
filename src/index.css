@@ -16,17 +16,18 @@
   --color-primary-800: #9a3412;
   --color-primary-900: #7c2d12;
 
-  /* Therapeutic Center - Original Teal */
-  --color-therapeutic-50: #f0fdfa;
-  --color-therapeutic-100: #ccfbf1;
-  --color-therapeutic-200: #99f6e4;
-  --color-therapeutic-300: #5eead4;
-  --color-therapeutic-400: #2dd4bf;
-  --color-therapeutic-500: #14b8a6;
-  --color-therapeutic-600: #0d9488;
-  --color-therapeutic-700: #0f766e;
-  --color-therapeutic-800: #115e59;
-  --color-therapeutic-900: #134e4a;
+  /* Therapeutic Center - ARUPOCTI Logo Palette */
+  --color-therapeutic-50: #faf5ff;
+  --color-therapeutic-100: #f3e8ff;
+  --color-therapeutic-200: #e9d5ff;
+  --color-therapeutic-300: #d8b4fe;
+  --color-therapeutic-400: #c084fc;
+  --color-therapeutic-500: #a855f7;
+  --color-therapeutic-600: #82368C; /* Logo Purple */
+  --color-therapeutic-700: #6b21a8;
+  --color-therapeutic-800: #4B2773; /* Transition Purple-Blue */
+  --color-therapeutic-900: #2B2B73; /* Logo Dark Blue */
+  --color-therapeutic-950: #1a1a4b;
 
   /* Specific Brand Colors */
   --color-arupo-brown: #6d493e;
