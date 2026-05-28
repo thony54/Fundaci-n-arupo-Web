@@ -2,72 +2,62 @@ import qrFundacion from '../assets/QRs/QR Fundación Arupo.png';
 
 export default function CTA() {
     return (
-        <section
-            id="dona"
-            className="relative py-24 overflow-hidden"
-            aria-labelledby="cta-heading"
-        >
-            {/* Background */}
-            <div className="absolute inset-0 bg-gradient-to-br from-dark-950 via-primary-900 to-dark-900" aria-hidden="true" />
-            <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[500px] h-[500px] bg-primary-500/10 rounded-full blur-3xl" aria-hidden="true" />
-            <div className="absolute bottom-0 right-0 w-72 h-72 bg-accent-500/10 rounded-full blur-3xl" aria-hidden="true" />
+        <section id="contacto" className="py-28 bg-white dark:bg-dark-950 px-4 sm:px-6 lg:px-8 transition-colors duration-300">
+            <div className="max-w-6xl mx-auto bg-white dark:bg-dark-900 rounded-[2.5rem] p-10 md:p-16 shadow-[0_20px_50px_rgba(0,0,0,0.05)] dark:shadow-none border border-dark-100 dark:border-dark-800 flex flex-col md:flex-row gap-16 items-center">
+                <div className="md:w-1/2 space-y-10">
+                    <div>
+                        <h2 className="text-4xl font-extrabold text-dark-900 dark:text-white tracking-tight mb-4">Estamos aquí para ayudarte</h2>
+                        <p className="text-lg text-dark-500 dark:text-dark-400 font-light leading-relaxed">Ponte en contacto con nuestro equipo para conocer más sobre nuestra labor, servicios, o sumarte a nuestras iniciativas.</p>
+                    </div>
 
-            <div className="relative z-10 mx-auto max-w-4xl px-4 sm:px-6 lg:px-8 text-center">
-                <p className="text-sm font-semibold uppercase tracking-widest text-primary-300 mb-4">
-                    Sé parte del cambio
-                </p>
-                <h2 id="cta-heading" className="text-3xl sm:text-4xl md:text-5xl font-black text-white leading-tight">
-                    Juntos podemos construir un Ecuador{' '}
-                    <span className="bg-gradient-to-r from-primary-300 to-accent-400 bg-clip-text text-transparent">
-                        más justo e inclusivo
-                    </span>
-                </h2>
-                <p className="mt-6 text-lg text-dark-300 max-w-2xl mx-auto leading-relaxed">
-                    Tu apoyo transforma vidas. Cada donación, alianza o acción de voluntariado
-                    contribuye directamente al bienestar de miles de personas en situación de
-                    vulnerabilidad.
-                </p>
+                    <div className="space-y-8">
+                        {/* Horario */}
+                        <div className="flex items-start gap-5">
+                            <div className="w-12 h-12 rounded-2xl bg-primary-50 dark:bg-primary-900/20 flex items-center justify-center text-primary-600 shrink-0">
+                                <svg className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
+                            </div>
+                            <div>
+                                <h4 className="font-bold text-dark-900 dark:text-white text-lg">Horario de Atención</h4>
+                                <p className="text-dark-500 dark:text-dark-400 mt-1">Lunes a Viernes</p>
+                                <p className="text-dark-800 dark:text-dark-200 font-medium">08:00 - 12:45 | 14:15 - 18:00</p>
+                            </div>
+                        </div>
 
-                {/* Buttons */}
-                <div className="mt-10 flex flex-col sm:flex-row items-center justify-center gap-4">
-                    <a
-                        href="#contacto"
-                        className="inline-flex items-center px-8 py-4 text-base font-bold rounded-full bg-gradient-to-r from-accent-400 to-accent-500 text-dark-900 hover:from-accent-300 hover:to-accent-400 transition-all duration-300 shadow-xl shadow-accent-500/25 hover:shadow-accent-400/40 hover:scale-105"
-                        aria-label="Realizar una donación"
-                    >
-                        Donar
-                        <svg className="ml-2 h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
-                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" />
-                        </svg>
-                    </a>
-                    <a
-                        href="#contacto"
-                        className="inline-flex items-center px-8 py-4 text-base font-semibold rounded-full bg-white/10 backdrop-blur-sm border border-white/20 text-white hover:bg-white/20 transition-all duration-300 hover:scale-105"
-                        aria-label="Crear una alianza con Fundación Arupo"
-                    >
-                        Aliarse
-                    </a>
-                    <a
-                        href="#voluntariado"
-                        className="inline-flex items-center px-8 py-4 text-base font-semibold rounded-full bg-primary-500/20 border border-primary-400/30 text-primary-200 hover:bg-primary-500/30 transition-all duration-300 hover:scale-105"
-                        aria-label="Participar como voluntario"
-                    >
-                        Participar
-                    </a>
+                        {/* Teléfono */}
+                        <div className="flex items-start gap-5">
+                            <div className="w-12 h-12 rounded-2xl bg-accent-50 dark:bg-accent-900/20 flex items-center justify-center text-accent-600 shrink-0">
+                                <svg className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z" /></svg>
+                            </div>
+                            <div>
+                                <h4 className="font-bold text-dark-900 dark:text-white text-lg">Llámanos</h4>
+                                <p className="text-dark-500 dark:text-dark-400 mt-1">Central telefónica</p>
+                                <p className="text-dark-800 dark:text-dark-200 font-medium">(02) 234-5678</p>
+                            </div>
+                        </div>
+
+                        {/* WhatsApp */}
+                        <div className="flex items-start gap-5">
+                            <div className="w-12 h-12 rounded-2xl bg-green-50 dark:bg-green-900/20 flex items-center justify-center text-green-600 shrink-0">
+                                <svg className="w-6 h-6" fill="currentColor" viewBox="0 0 24 24"><path d="M12.031 6.172c-3.181 0-5.767 2.586-5.768 5.766-.001 1.298.38 2.27 1.019 3.287l-.582 2.128 2.182-.573c.978.58 1.911.928 3.145.929 3.178 0 5.767-2.587 5.768-5.766.001-3.187-2.575-5.77-5.764-5.771zm3.392 8.244c-.144.405-.837.774-1.17.824-.299.045-.677.063-1.092-.111-.352-.148-.973-.397-1.943-1.272-1.084-.979-1.815-2.185-2.025-2.54-.21-.355-.022-.547.155-.724.161-.161.353-.414.53-.621.174-.207.234-.355.352-.591.118-.236.059-.443-.03-.621-.088-.178-.778-1.879-1.066-2.571-.274-.658-.553-.568-.778-.578-.207-.008-.445-.011-.682-.011-.237 0-.621.089-.947.443-.326.355-1.244 1.214-1.244 2.959s1.274 3.433 1.451 3.67c.178.237 2.493 3.823 6.035 5.356 2.308.995 3.109.845 3.626.702.597-.165 1.839-.751 2.097-1.477.258-.726.258-1.348.181-1.477-.077-.13-.279-.207-.633-.385z" /></svg>
+                            </div>
+                            <div>
+                                <h4 className="font-bold text-dark-900 dark:text-white text-lg">WhatsApp Directo</h4>
+                                <p className="text-dark-500 dark:text-dark-400 mt-1">Atención rápida por chat</p>
+                                <p className="text-dark-800 dark:text-dark-200 font-medium">+593 99 999 9999</p>
+                            </div>
+                        </div>
+                    </div>
                 </div>
 
                 {/* QR Code Section */}
-                <div className="mt-20 flex flex-col items-center justify-center pt-12 border-t border-white/10">
-                    <h3 className="text-2xl font-bold text-white mb-8">Conecta con nosotros al instante</h3>
-                    <div className="flex flex-col items-center justify-center">
-                        <div className="bg-white p-4 rounded-2xl shadow-lg border border-dark-100 flex items-center justify-center aspect-square w-48 mb-4 relative group">
-                            <img src={qrFundacion} alt="Código QR Fundación Arupo" className="w-full h-full object-contain opacity-50 filter blur-sm group-hover:blur-none transition-all" />
-                            <div className="absolute inset-0 flex items-center justify-center text-center font-bold text-dark-800 opacity-100 group-hover:opacity-0 transition-opacity">
-                                [ Escanear QR ]
-                            </div>
-                        </div>
-                        <p className="text-sm font-medium text-primary-200 text-center">Escanea para contactarnos directo por WhatsApp</p>
+                <div className="md:w-1/2 flex flex-col items-center justify-center">
+                    <h3 className="text-2xl font-bold text-dark-900 dark:text-white mb-6 text-center">Conecta al instante</h3>
+                    <div className="bg-white p-4 rounded-3xl shadow-xl border border-dark-100 flex items-center justify-center w-64 h-64 mb-6 relative group hover:border-primary-300 transition-all">
+                        <img src={qrFundacion} alt="Código QR Fundación Arupo" className="w-full h-full object-contain transition-all duration-300 group-hover:scale-105" />
                     </div>
+                    <p className="text-sm font-medium text-dark-500 dark:text-dark-400 text-center max-w-xs">
+                        Escanea este código para enviarnos un mensaje directo y recibir atención personalizada
+                    </p>
                 </div>
             </div>
         </section>
