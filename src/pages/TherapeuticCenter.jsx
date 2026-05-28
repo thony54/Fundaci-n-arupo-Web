@@ -6,85 +6,87 @@ import Reveal from '../components/motion/Reveal';
 import CountUp from '../components/motion/CountUp';
 import Conventions from '../components/Conventions';
 import Team from '../components/Team'; // Added Team component import
+import InclusionNetwork from '../components/InclusionNetwork'; // Using the same network background
 import qrCentro from '../assets/QRs/QR Centro Terapéutico Integral Arupo.png';
 
 export default function TherapeuticCenter() {
     const [activeSection, setActiveSection] = useState(null); // 'medica' or 'terapeutica'
 
     const medicalServices = [
-        { name: 'Neumología', icon: '🫁' },
-        { name: 'Fonoaudiología', icon: '🗣️' },
-        { name: 'Geriatría', icon: '🧓' },
-        { name: 'Medicina General', icon: '🩺' },
+        { name: 'Neuropediatría', icon: '🧠' },
+        { name: 'Neurología', icon: '⚕️' },
         { name: 'Otorrinolaringología', icon: '👂' },
-        { name: 'Psiquiatría', icon: '🧠' },
-        { name: 'Pediatría', icon: '👶' },
-        { name: 'Ginecología', icon: '♀️' },
-        { name: 'Odontología', icon: '🦷' },
-        { name: 'Examen Audiológico', icon: '🎧' },
+        { name: 'Fonoaudiología', icon: '🗣️' },
+        { name: 'Psicología Clínica', icon: '🛋️' },
     ];
 
     const therapeuticServices = [
-        { name: 'Evaluación Integral', icon: '📋' },
         { name: 'Neuropsicología', icon: '🧩' },
-        { name: 'Terapia de Lenguaje', icon: '💬' },
+        { name: 'Psicología Familiar', icon: '🫂' },
+        { name: 'Terapia Ocupacional', icon: '👐' },
         { name: 'Terapia Física', icon: '🏃' },
-        { name: 'Estimulación Temprana', icon: '🧸' },
-        { name: 'Fisioterapia Acuática', icon: '🏊' },
-        { name: 'Psicología', icon: '🛋️' },
-        { name: 'Nutrición', icon: '🥗' },
-        { name: 'Terapia Familiar', icon: '🫂' },
-        { name: 'Psicoterapia Arte', icon: '🎨' },
-        { name: 'Psicopedagogía', icon: '📚' },
-        { name: 'Est. Multisensorial', icon: '✨' },
-        { name: 'Escuela Padres', icon: '🏫' },
-        { name: 'Cuidado Especial', icon: '🤲' },
-        { name: 'Eval. ADIR/ADOS', icon: '📊' },
-        { name: 'Capacitación', icon: '🎓' },
+        { name: 'Terapia de Lenguaje', icon: '💬' },
     ];
 
     return (
         <PageTransition>
             <div className="bg-white dark:bg-dark-950 text-dark-900 dark:text-white transition-colors duration-300">
-                {/* 1. HERO SOBRIO Y CLARO */}
-                <section className="relative h-[60vh] flex items-center justify-center overflow-hidden">
-                    <div className="absolute inset-0 bg-dark-900/60 z-10" />
+                {/* 1. HERO AL ESTILO FUNDACIÓN ARUPO */}
+                <section
+                    id="inicio"
+                    className="relative min-h-[85vh] flex items-center justify-center overflow-hidden"
+                >
+                    {/* Background */}
                     <div className="absolute inset-0 z-0">
-                        <img
-                            src="/PORTADA ARUPO.jpg"
-                            alt="Sesión de terapia inclusiva"
-                            className="w-full h-full object-cover"
-                        />
+                        <div className="absolute inset-0 bg-gradient-to-br from-dark-950 via-dark-900 to-therapeutic-900" />
+                        <InclusionNetwork />
+                        {/* Decorative shapes using therapeutic colors */}
+                        <div className="absolute top-1/4 -left-20 w-96 h-96 bg-therapeutic-500/10 rounded-full blur-3xl" />
+                        <div className="absolute bottom-1/4 -right-20 w-80 h-80 bg-therapeutic-400/10 rounded-full blur-3xl" />
+                        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-therapeutic-600/5 rounded-full blur-3xl" />
                     </div>
 
-                    <div className="relative z-20 text-center px-4 max-w-4xl mx-auto">
-                        <h1 className="text-4xl sm:text-5xl md:text-6xl font-bold text-white mb-6 tracking-tight">
-                            Centro Terapéutico
+                    {/* Grid pattern overlay */}
+                    <div
+                        className="absolute inset-0 opacity-[0.03] z-0"
+                        style={{
+                            backgroundImage: 'radial-gradient(circle, white 1px, transparent 1px)',
+                            backgroundSize: '40px 40px',
+                        }}
+                        aria-hidden="true"
+                    />
+
+                    {/* Content */}
+                    <div className="relative z-10 mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 pt-24 pb-16 text-center">
+                        {/* Badge */}
+                        <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-therapeutic-500/10 border border-therapeutic-500/20 text-therapeutic-300 text-sm font-medium mb-8">
+                            <span className="inline-block w-2 h-2 rounded-full bg-therapeutic-400 animate-pulse" aria-hidden="true" />
+                            Atención Integral
+                        </div>
+
+                        <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-black text-white leading-[1.1] tracking-tight max-w-4xl mx-auto">
+                            Centro Terapéutico{' '}
+                            <span className="bg-gradient-to-r from-therapeutic-300 via-therapeutic-400 to-therapeutic-200 bg-clip-text text-transparent">
+                                Arupo
+                            </span>
                         </h1>
-                        <p className="text-xl sm:text-2xl text-therapeutic-100 font-light leading-relaxed max-w-3xl mx-auto">
+
+                        <p className="mt-6 text-lg sm:text-xl text-dark-300 max-w-2xl mx-auto leading-relaxed">
                             Atención integral para personas con discapacidad y sus familias.
                         </p>
-                    </div>
-                </section>
 
-                {/* 2. EL CENTRO TERAPÉUTICO EN CIFRAS */}
-                <section className="py-16 bg-therapeutic-600 dark:bg-therapeutic-900">
-                    <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-                        <div className="grid md:grid-cols-3 gap-8 text-center text-white">
-                            <div className="p-6">
-                                <p className="text-5xl font-black mb-2">
-                                    +<CountUp to={80} duration={2} />
-                                </p>
-                                <p className="text-lg font-medium opacity-90">Niñas, niños y personas atendidas</p>
-                            </div>
-                            <div className="p-6 border-y md:border-y-0 md:border-x border-therapeutic-500/30">
-                                <p className="text-2xl font-bold mb-2 h-12 flex items-center justify-center">Atención Continua</p>
-                                <p className="text-sm opacity-80">Procesos sostenidos en el tiempo</p>
-                            </div>
-                            <div className="p-6">
-                                <p className="text-2xl font-bold mb-2 h-12 flex items-center justify-center">Enfoque Integral</p>
-                                <p className="text-sm opacity-80">Mirada biopsicosocial y humana</p>
-                            </div>
+                        {/* Stats bar */}
+                        <div className="mt-16 grid grid-cols-1 md:grid-cols-3 gap-6 md:gap-8 max-w-3xl mx-auto border-t border-white/10 pt-10">
+                            {[
+                                { number: <><CountUp to={80} duration={2} />+</>, label: 'Personas atendidas' },
+                                { number: 'Continua', label: 'Atención integral' },
+                                { number: 'Humano', label: 'Enfoque biopsicosocial' },
+                            ].map((stat, index) => (
+                                <div key={index} className="text-center">
+                                    <p className="text-2xl sm:text-3xl font-bold text-white h-10 flex items-center justify-center">{stat.number}</p>
+                                    <p className="mt-2 text-sm text-dark-400 uppercase tracking-wider">{stat.label}</p>
+                                </div>
+                            ))}
                         </div>
                     </div>
                 </section>
@@ -100,34 +102,34 @@ export default function TherapeuticCenter() {
                     </p>
                 </section>
 
-                {/* 4. NUESTROS SERVICIOS ESPECIALIZADOS (PREMIUM REDESIGN) */}
-                <section id="servicios" className="py-28 bg-dark-50 dark:bg-dark-950 relative">
+                {/* 4. NUESTROS SERVICIOS ESPECIALIZADOS */}
+                <section id="servicios" className="py-24 bg-dark-50 dark:bg-dark-950 relative">
                     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-                        <div className="text-center mb-20">
-                            <h2 className="text-4xl md:text-5xl font-extrabold mb-6 text-dark-900 dark:text-white tracking-tight">
+                        <div className="text-center mb-16">
+                            <h2 className="text-3xl md:text-4xl font-bold mb-4 text-dark-900 dark:text-white tracking-tight">
                                 Áreas de Atención Especializada
                             </h2>
-                            <p className="text-xl text-dark-500 dark:text-dark-400 max-w-3xl mx-auto font-light leading-relaxed">
+                            <p className="text-lg text-dark-500 dark:text-dark-400 max-w-2xl mx-auto">
                                 Descubre nuestro enfoque integral, estructurado en áreas especializadas para brindar el acompañamiento más completo y humano.
                             </p>
                         </div>
 
-                        <div className="flex flex-col lg:flex-row gap-8 lg:gap-12 min-h-[600px]">
+                        <div className="flex flex-col lg:flex-row gap-6 lg:gap-8 min-h-[450px]">
                             {/* Área Médica Panel */}
                             <motion.div
                                 layout
                                 onClick={() => setActiveSection(activeSection === 'medica' ? null : 'medica')}
-                                className={`group cursor-pointer rounded-3xl border transition-all duration-500 flex flex-col p-10 lg:p-14
-                                    ${activeSection === 'medica' ? 'lg:flex-[1.8] bg-white dark:bg-dark-900 border-therapeutic-500 shadow-2xl shadow-therapeutic-500/10' :
-                                        activeSection === 'terapeutica' ? 'lg:flex-[0.6] opacity-60 bg-white/60 dark:bg-dark-900/40 border-transparent hover:opacity-100 hover:bg-white dark:hover:bg-dark-900' :
-                                            'lg:flex-1 bg-white dark:bg-dark-900 border-dark-100 dark:border-dark-800 hover:border-therapeutic-200 shadow-lg hover:shadow-xl'}`}
+                                className={`group cursor-pointer rounded-2xl border transition-all duration-500 flex flex-col p-8
+                                    ${activeSection === 'medica' ? 'lg:flex-[2] bg-white dark:bg-dark-900 border-therapeutic-500 shadow-xl' :
+                                        activeSection === 'terapeutica' ? 'lg:flex-[0.5] opacity-60 bg-white/60 dark:bg-dark-900/40 border-transparent hover:opacity-100 hover:bg-white dark:hover:bg-dark-900' :
+                                            'lg:flex-1 bg-white dark:bg-dark-900 border-dark-100 dark:border-dark-800 hover:border-therapeutic-200 shadow-md'}`}
                             >
-                                <motion.div layout className="flex flex-col items-start gap-6 relative">
-                                    <div className={`w-16 h-16 rounded-2xl flex items-center justify-center transition-all duration-500
-                                        ${activeSection === 'medica' ? 'bg-therapeutic-600 text-white shadow-lg shadow-therapeutic-600/30' : 'bg-therapeutic-50 dark:bg-therapeutic-900/30 text-therapeutic-600'}`}>
-                                        <svg className="w-8 h-8" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M19.428 15.428a2 2 0 00-1.022-.547l-2.387-.477a6 6 0 00-3.86.517l-.318.158a6 6 0 01-3.86.517L6.05 15.21a2 2 0 00-1.806.547M8 4h8l-1 1v5.172a2 2 0 00.586 1.414l5 5c1.26 1.26.367 3.414-1.415 3.414H4.828c-1.782 0-2.674-2.154-1.414-3.414l5-5A2 2 0 009 10.172V5L8 4z" /></svg>
+                                <motion.div layout className="flex flex-col items-start gap-4">
+                                    <div className={`w-14 h-14 rounded-xl flex items-center justify-center transition-all duration-500
+                                        ${activeSection === 'medica' ? 'bg-therapeutic-600 text-white shadow-md' : 'bg-therapeutic-50 dark:bg-therapeutic-900/30 text-therapeutic-600'}`}>
+                                        <svg className="w-7 h-7" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M19.428 15.428a2 2 0 00-1.022-.547l-2.387-.477a6 6 0 00-3.86.517l-.318.158a6 6 0 01-3.86.517L6.05 15.21a2 2 0 00-1.806.547M8 4h8l-1 1v5.172a2 2 0 00.586 1.414l5 5c1.26 1.26.367 3.414-1.415 3.414H4.828c-1.782 0-2.674-2.154-1.414-3.414l5-5A2 2 0 009 10.172V5L8 4z" /></svg>
                                     </div>
-                                    <motion.h3 layout className={`font-extrabold transition-all duration-500 tracking-tight ${activeSection === 'medica' ? 'text-4xl text-dark-900 dark:text-white' : 'text-2xl text-dark-800 dark:text-white'}`}>
+                                    <motion.h3 layout className={`font-bold transition-all duration-500 ${activeSection === 'medica' ? 'text-3xl text-dark-900 dark:text-white' : 'text-xl text-dark-800 dark:text-white'}`}>
                                         Área Médica
                                     </motion.h3>
                                 </motion.div>
@@ -139,17 +141,17 @@ export default function TherapeuticCenter() {
                                             animate={{ opacity: 1, y: 0 }}
                                             exit={{ opacity: 0, y: -10 }}
                                             transition={{ duration: 0.3, delay: 0.1 }}
-                                            className="w-full mt-10 grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 gap-5"
+                                            className="w-full mt-8 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4"
                                         >
                                             {medicalServices.map((item, idx) => (
                                                 <motion.div
                                                     key={idx}
                                                     initial={{ opacity: 0 }}
                                                     animate={{ opacity: 1 }}
-                                                    transition={{ delay: idx * 0.04 }}
-                                                    className="flex items-center gap-4 p-4 rounded-xl bg-dark-50 dark:bg-dark-950 border border-dark-100 dark:border-dark-800 hover:border-therapeutic-200 transition-colors"
+                                                    transition={{ delay: idx * 0.05 }}
+                                                    className="flex items-center gap-3 p-4 rounded-xl bg-dark-50 dark:bg-dark-950 border border-dark-100 dark:border-dark-800"
                                                 >
-                                                    <span className="text-2xl">{item.icon}</span>
+                                                    <span className="text-xl">{item.icon}</span>
                                                     <span className="text-sm font-semibold text-dark-700 dark:text-dark-200">{item.name}</span>
                                                 </motion.div>
                                             ))}
@@ -162,17 +164,17 @@ export default function TherapeuticCenter() {
                             <motion.div
                                 layout
                                 onClick={() => setActiveSection(activeSection === 'terapeutica' ? null : 'terapeutica')}
-                                className={`group cursor-pointer rounded-3xl border transition-all duration-500 flex flex-col p-10 lg:p-14
-                                    ${activeSection === 'terapeutica' ? 'lg:flex-[1.8] bg-white dark:bg-dark-900 border-primary-500 shadow-2xl shadow-primary-500/10' :
-                                        activeSection === 'medica' ? 'lg:flex-[0.6] opacity-60 bg-white/60 dark:bg-dark-900/40 border-transparent hover:opacity-100 hover:bg-white dark:hover:bg-dark-900' :
-                                            'lg:flex-1 bg-white dark:bg-dark-900 border-dark-100 dark:border-dark-800 hover:border-primary-200 shadow-lg hover:shadow-xl'}`}
+                                className={`group cursor-pointer rounded-2xl border transition-all duration-500 flex flex-col p-8
+                                    ${activeSection === 'terapeutica' ? 'lg:flex-[2] bg-white dark:bg-dark-900 border-therapeutic-500 shadow-xl' :
+                                        activeSection === 'medica' ? 'lg:flex-[0.5] opacity-60 bg-white/60 dark:bg-dark-900/40 border-transparent hover:opacity-100 hover:bg-white dark:hover:bg-dark-900' :
+                                            'lg:flex-1 bg-white dark:bg-dark-900 border-dark-100 dark:border-dark-800 hover:border-therapeutic-200 shadow-md'}`}
                             >
-                                <motion.div layout className="flex flex-col items-start gap-6 relative">
-                                    <div className={`w-16 h-16 rounded-2xl flex items-center justify-center transition-all duration-500
-                                        ${activeSection === 'terapeutica' ? 'bg-primary-600 text-white shadow-lg shadow-primary-600/30' : 'bg-primary-50 dark:bg-primary-900/30 text-primary-600'}`}>
-                                        <svg className="w-8 h-8" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M14.828 14.828a4 4 0 01-5.656 0M9 10h.01M15 10h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
+                                <motion.div layout className="flex flex-col items-start gap-4">
+                                    <div className={`w-14 h-14 rounded-xl flex items-center justify-center transition-all duration-500
+                                        ${activeSection === 'terapeutica' ? 'bg-therapeutic-600 text-white shadow-md' : 'bg-therapeutic-50 dark:bg-therapeutic-900/30 text-therapeutic-600'}`}>
+                                        <svg className="w-7 h-7" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M14.828 14.828a4 4 0 01-5.656 0M9 10h.01M15 10h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
                                     </div>
-                                    <motion.h3 layout className={`font-extrabold transition-all duration-500 tracking-tight ${activeSection === 'terapeutica' ? 'text-4xl text-dark-900 dark:text-white' : 'text-2xl text-dark-800 dark:text-white'}`}>
+                                    <motion.h3 layout className={`font-bold transition-all duration-500 ${activeSection === 'terapeutica' ? 'text-3xl text-dark-900 dark:text-white' : 'text-xl text-dark-800 dark:text-white'}`}>
                                         Área Terapéutica
                                     </motion.h3>
                                 </motion.div>
@@ -184,18 +186,18 @@ export default function TherapeuticCenter() {
                                             animate={{ opacity: 1, y: 0 }}
                                             exit={{ opacity: 0, y: -10 }}
                                             transition={{ duration: 0.3, delay: 0.1 }}
-                                            className="w-full mt-10 grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-4"
+                                            className="w-full mt-8 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4"
                                         >
                                             {therapeuticServices.map((item, idx) => (
                                                 <motion.div
                                                     key={idx}
                                                     initial={{ opacity: 0 }}
                                                     animate={{ opacity: 1 }}
-                                                    transition={{ delay: idx * 0.03 }}
-                                                    className="flex flex-col items-center p-4 rounded-xl bg-dark-50 dark:bg-dark-950 border border-dark-100 dark:border-dark-800 hover:border-primary-200 transition-colors text-center gap-3"
+                                                    transition={{ delay: idx * 0.05 }}
+                                                    className="flex items-center gap-3 p-4 rounded-xl bg-dark-50 dark:bg-dark-950 border border-dark-100 dark:border-dark-800"
                                                 >
-                                                    <span className="text-3xl">{item.icon}</span>
-                                                    <span className="text-xs font-semibold text-dark-700 dark:text-dark-200 leading-tight">{item.name}</span>
+                                                    <span className="text-xl">{item.icon}</span>
+                                                    <span className="text-sm font-semibold text-dark-700 dark:text-dark-200">{item.name}</span>
                                                 </motion.div>
                                             ))}
                                         </motion.div>
