@@ -148,6 +148,9 @@ export default function TherapeuticCenter() {
                                 layout
                                 transition={{ type: "spring", stiffness: 200, damping: 25 }}
                                 onClick={() => setActiveSection(activeSection === 'medica' ? null : 'medica')}
+                                onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); setActiveSection(activeSection === 'medica' ? null : 'medica'); } }}
+                                role="button"
+                                tabIndex={0}
                                 className={`group cursor-pointer rounded-3xl border transition-colors duration-500 flex flex-col p-10 overflow-hidden relative
                                     ${activeSection === 'medica' ? 'lg:flex-[2.5] bg-white dark:bg-dark-900 border-[#0072BC] shadow-[0_20px_50px_rgba(0,114,188,0.15)] z-10' :
                                         activeSection === 'terapeutica' ? 'lg:flex-[0.5] opacity-40 bg-white/40 dark:bg-dark-900/40 border-transparent hover:opacity-100 grayscale-[0.5] hover:grayscale-0' :
@@ -204,6 +207,9 @@ export default function TherapeuticCenter() {
                                 layout
                                 transition={{ type: "spring", stiffness: 200, damping: 25 }}
                                 onClick={() => setActiveSection(activeSection === 'terapeutica' ? null : 'terapeutica')}
+                                onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); setActiveSection(activeSection === 'terapeutica' ? null : 'terapeutica'); } }}
+                                role="button"
+                                tabIndex={0}
                                 className={`group cursor-pointer rounded-3xl border transition-colors duration-500 flex flex-col p-10 overflow-hidden relative
                                     ${activeSection === 'terapeutica' ? 'lg:flex-[2.5] bg-white dark:bg-dark-900 border-[#82368C] shadow-[0_20px_50px_rgba(130,54,140,0.15)] z-10' :
                                         activeSection === 'medica' ? 'lg:flex-[0.5] opacity-40 bg-white/40 dark:bg-dark-900/40 border-transparent hover:opacity-100 grayscale-[0.5] hover:grayscale-0' :

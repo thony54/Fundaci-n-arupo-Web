@@ -173,11 +173,15 @@
 }
 
 .a11y-highlight a,
-.a11y-highlight button {
-  outline: 2px solid #edb729 !important;
-  outline-offset: 2px !important;
+.a11y-highlight button,
+.a11y-highlight [role="button"],
+.a11y-highlight [role="link"],
+.a11y-highlight [tabindex="0"] {
+  outline: 4px solid #edb729 !important;
+  outline-offset: 4px !important;
   text-decoration: underline !important;
-  font-weight: 700 !important;
+  font-weight: 800 !important;
+  background-color: rgba(237, 183, 41, 0.1) !important;
 }
 
 .a11y-reduced-motion * {
