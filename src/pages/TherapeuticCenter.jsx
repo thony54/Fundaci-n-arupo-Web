@@ -6,6 +6,7 @@ import Reveal from '../components/motion/Reveal';
 import CountUp from '../components/motion/CountUp';
 import Conventions from '../components/Conventions';
 import Team from '../components/Team'; // Added Team component import
+import qrCentro from '../assets/QRs/QR Centro Terapéutico Integral Arupo.png';
 
 export default function TherapeuticCenter() {
     const [activeSection, setActiveSection] = useState(null); // 'medica' or 'terapeutica'
@@ -351,14 +352,15 @@ export default function TherapeuticCenter() {
                             </div>
                         </div>
 
-                        {/* Visual element instead of fake QR */}
-                        <div className="md:w-1/2 flex items-center justify-center">
-                            <div className="relative w-full max-w-md aspect-square rounded-[3rem] overflow-hidden shadow-2xl">
-                                <img src="/PORTADA ARUPO.jpg" alt="Instalaciones del Centro Terapéutico" className="w-full h-full object-cover" />
-                                <div className="absolute inset-0 bg-gradient-to-t from-dark-900/80 to-transparent flex items-end p-8">
-                                    <p className="text-white font-medium text-lg">Un espacio seguro, adaptado y diseñado pensando en el bienestar de cada familia.</p>
-                                </div>
+                        {/* QR Code Section */}
+                        <div className="md:w-1/2 flex flex-col items-center justify-center">
+                            <h3 className="text-2xl font-bold text-dark-900 dark:text-white mb-6 text-center">Conecta al instante</h3>
+                            <div className="bg-white p-4 rounded-3xl shadow-xl border border-dark-100 flex items-center justify-center w-64 h-64 mb-6 relative group hover:border-primary-300 transition-all">
+                                <img src={qrCentro} alt="Código QR Centro Terapéutico" className="w-full h-full object-contain transition-all duration-300 group-hover:scale-105" />
                             </div>
+                            <p className="text-sm font-medium text-dark-500 dark:text-dark-400 text-center max-w-xs">
+                                Escanea este código para enviarnos un mensaje directo y agendar tu cita
+                            </p>
                         </div>
                     </div>
                 </section>

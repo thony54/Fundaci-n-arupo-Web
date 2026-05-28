@@ -1,7 +1,6 @@
 import PageTransition from '../components/motion/PageTransition';
 import Reveal from '../components/motion/Reveal';
 import Hero from '../components/Hero';
-import Allies from '../components/Allies';
 import About from '../components/About';
 import Team from '../components/Team'; // Added Team component import
 import Areas from '../components/Areas';
@@ -17,9 +16,6 @@ export default function Home() {
     return (
         <PageTransition>
             <Hero />
-            <Reveal width="100%">
-                <Allies />
-            </Reveal>
             <Reveal width="100%">
                 <About />
             </Reveal>

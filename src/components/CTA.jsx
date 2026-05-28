@@ -1,3 +1,5 @@
+import qrFundacion from '../assets/QRs/QR Fundación Arupo.png';
+
 export default function CTA() {
     return (
         <section
@@ -59,7 +61,7 @@ export default function CTA() {
                     <h3 className="text-2xl font-bold text-white mb-8">Conecta con nosotros al instante</h3>
                     <div className="flex flex-col items-center justify-center">
                         <div className="bg-white p-4 rounded-2xl shadow-lg border border-dark-100 flex items-center justify-center aspect-square w-48 mb-4 relative group">
-                            <img src="/QR/Fundación Arupo QR.png" alt="Código QR Fundación Arupo" className="w-full h-full object-contain opacity-50 filter blur-sm group-hover:blur-none transition-all" />
+                            <img src={qrFundacion} alt="Código QR Fundación Arupo" className="w-full h-full object-contain opacity-50 filter blur-sm group-hover:blur-none transition-all" />
                             <div className="absolute inset-0 flex items-center justify-center text-center font-bold text-dark-800 opacity-100 group-hover:opacity-0 transition-opacity">
                                 [ Escanear QR ]
                             </div>
