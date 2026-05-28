@@ -21,9 +21,9 @@ export default function Allies() {
                         </h2>
                         <InfiniteMarquee speed={180} pauseOnHover={true}>
                             {conveniosEntries.map(([path, logoUrl], i) => (
-                                <div key={i} className="h-40 w-72 shrink-0 flex items-center justify-center mx-4 group transition-all duration-500 relative cursor-default">
-                                    <div className="h-32 w-64 flex items-center justify-center p-4 bg-white/5 dark:bg-white/5 rounded-2xl group-hover:bg-white dark:group-hover:bg-white transition-all duration-500 shadow-sm border border-dark-100 dark:border-dark-800">
-                                        <img src={logoUrl} alt={getName(path)} className="max-h-full max-w-full object-contain transition-all duration-500 group-hover:scale-105" />
+                                <div key={i} className="h-40 w-72 shrink-0 flex items-center justify-center mx-4 group cursor-default">
+                                    <div className="h-32 w-64 flex items-center justify-center p-6 bg-white rounded-2xl shadow-sm border border-dark-100 dark:border-dark-800 transition-all duration-500 group-hover:-translate-y-1.5 group-hover:shadow-[0_20px_40px_-15px_rgba(0,0,0,0.1)] group-hover:border-primary-100 dark:group-hover:border-primary-900/50">
+                                        <img src={logoUrl} alt={getName(path)} className="max-h-full max-w-full object-contain filter grayscale opacity-70 group-hover:grayscale-0 group-hover:opacity-100 transition-all duration-500 group-hover:scale-105" />
                                     </div>
                                 </div>
                             ))}
@@ -38,9 +38,9 @@ export default function Allies() {
                         </h2>
                         <InfiniteMarquee speed={180} pauseOnHover={true} direction="right">
                             {reconocimientosEntries.map(([path, logoUrl], i) => (
-                                <div key={i} className="h-40 w-72 shrink-0 flex items-center justify-center mx-4 group transition-all duration-500 relative cursor-default">
-                                    <div className="h-32 w-64 flex items-center justify-center p-4 bg-white/5 dark:bg-white/5 rounded-2xl group-hover:bg-white dark:group-hover:bg-white transition-all duration-500 shadow-sm border border-dark-100 dark:border-dark-800">
-                                        <img src={logoUrl} alt={getName(path)} className="max-h-full max-w-full object-contain transition-all duration-500 group-hover:scale-105" />
+                                <div key={i} className="h-40 w-72 shrink-0 flex items-center justify-center mx-4 group cursor-default">
+                                    <div className="h-32 w-64 flex items-center justify-center p-6 bg-white rounded-2xl shadow-sm border border-dark-100 dark:border-dark-800 transition-all duration-500 group-hover:-translate-y-1.5 group-hover:shadow-[0_20px_40px_-15px_rgba(0,0,0,0.1)] group-hover:border-primary-100 dark:group-hover:border-primary-900/50">
+                                        <img src={logoUrl} alt={getName(path)} className="max-h-full max-w-full object-contain filter grayscale opacity-70 group-hover:grayscale-0 group-hover:opacity-100 transition-all duration-500 group-hover:scale-105" />
                                     </div>
                                 </div>
                             ))}
