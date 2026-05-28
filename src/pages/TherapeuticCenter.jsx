@@ -34,7 +34,7 @@ export default function TherapeuticCenter() {
                 {/* 1. HERO AL ESTILO FUNDACIÓN ARUPO */}
                 <section
                     id="inicio"
-                    className="relative min-h-[85vh] flex items-center justify-center overflow-hidden"
+                    className="relative min-h-[85vh] flex flex-col items-center justify-center overflow-hidden"
                 >
                     {/* Background */}
                     <div className="absolute inset-0 z-0">
@@ -57,26 +57,28 @@ export default function TherapeuticCenter() {
                     />
 
                     {/* Content */}
-                    <div className="relative z-10 mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 pt-24 pb-16 text-center">
+                    <div className="relative z-10 mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 pt-24 pb-16 text-center mt-auto">
                         {/* Badge */}
-                        <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-therapeutic-500/10 border border-therapeutic-500/20 text-therapeutic-300 text-sm font-medium mb-8">
+                        <div className="inline-flex items-center gap-2 px-5 py-2 rounded-full bg-therapeutic-500/10 border border-therapeutic-500/20 text-therapeutic-300 text-sm font-semibold mb-8 uppercase tracking-widest">
                             <span className="inline-block w-2 h-2 rounded-full bg-therapeutic-400 animate-pulse" aria-hidden="true" />
-                            Atención Integral
+                            Centro Terapéutico Arupo
                         </div>
 
-                        <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-black text-white leading-[1.1] tracking-tight max-w-4xl mx-auto">
-                            Centro Terapéutico{' '}
+                        <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-5xl font-black text-white leading-[1.2] tracking-tight max-w-5xl mx-auto">
+                            Somos un espacio especializado y multidisciplinario que brinda atención integral a{' '}
                             <span className="bg-gradient-to-r from-therapeutic-300 via-therapeutic-400 to-therapeutic-200 bg-clip-text text-transparent">
-                                Arupo
+                                niños, adolescentes, personas adultas y sus familias.
                             </span>
                         </h1>
 
-                        <p className="mt-6 text-lg sm:text-xl text-dark-300 max-w-2xl mx-auto leading-relaxed">
-                            Atención integral para personas con discapacidad y sus familias.
+                        <p className="mt-8 text-lg md:text-xl text-dark-300 max-w-4xl mx-auto leading-relaxed font-light">
+                            Nuestro enfoque se centra en el desarrollo de habilidades para la vida, la inclusión educativa y la participación activa en la comunidad, mediante procesos terapéuticos personalizados, acompañamiento familiar y estrategias accesibles.
                         </p>
-
-                        {/* Stats bar */}
-                        <div className="mt-16 grid grid-cols-1 md:grid-cols-3 gap-6 md:gap-8 max-w-3xl mx-auto border-t border-white/10 pt-10">
+                    </div>
+                    
+                    {/* Stats bar */}
+                    <div className="relative z-10 mt-auto w-full pb-10">
+                        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 md:gap-8 max-w-4xl mx-auto border-t border-white/10 pt-10 px-4">
                             {[
                                 { number: <><CountUp to={80} duration={2} />+</>, label: 'Personas atendidas' },
                                 { number: 'Continua', label: 'Atención integral' },
