@@ -80,7 +80,7 @@ export default function Gallery() {
 
                                 <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
                                     {items.map((item, index) => (
-                                        <Reveal key={item.id} delay={index * 0.08}>
+                                        <Reveal key={item.id} delay={index * 0.08} width="100%" className="h-full">
                                             <div className="group relative overflow-hidden rounded-[2rem] bg-white dark:bg-dark-900 shadow-sm hover:shadow-2xl transition-all duration-500 border border-dark-100 dark:border-dark-800 h-full flex flex-col">
                                                 <div className="aspect-[4/5] relative flex items-center justify-center overflow-hidden flex-shrink-0 bg-dark-50 dark:bg-dark-950">
                                                     {item.image_url ? (
