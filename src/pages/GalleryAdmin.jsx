@@ -104,8 +104,8 @@ export default function GalleryAdmin() {
     const handleFileChange = (e) => {
         const file = e.target.files[0];
         if (file) {
-            if (file.size > 5 * 1024 * 1024) {
-                showStatus('La imagen original es demasiado grande. Use una de menos de 5MB.', 'error');
+            if (file.size > 45 * 1024 * 1024) {
+                showStatus('La imagen original es demasiado grande. Use una de menos de 45MB.', 'error');
                 return;
             }
 
@@ -191,7 +191,8 @@ export default function GalleryAdmin() {
             fetchGallery(); // Recargar datos
         } catch (e) {
             console.error("Error saving to Supabase:", e);
-            showStatus('Error al subir a la nube. ¿Creaste el bucket "gallery-images" en Supabase?', 'error');
+            const errorMessage = e.message || (typeof e === 'object' ? JSON.stringify(e) : String(e));
+            showStatus('Error: ' + errorMessage, 'error');
         } finally {
             setLoading(false);
         }
