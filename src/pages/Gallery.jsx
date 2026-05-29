@@ -1,7 +1,6 @@
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import PageTransition from '../components/motion/PageTransition';
 import Reveal from '../components/motion/Reveal';
-import { supabase } from '../lib/supabase';
 
 const DEFAULT_GALLERY_DATA = {
     "Fundación Arupo": [
@@ -28,37 +27,10 @@ const PlaceholderIcon = ({ className }) => (
 
 export default function Gallery() {
     const [activeSection, setActiveSection] = useState('All');
-    const [galleryState, setGalleryState] = useState(DEFAULT_GALLERY_DATA);
-
-    const [loading, setLoading] = useState(true);
-
-    useEffect(() => {
-        fetchGallery();
-    }, []);
-
-    const fetchGallery = async () => {
-        setLoading(true);
-        try {
-            const { data, error } = await supabase
-                .from('gallery_items')
-                .select('*')
-                .order('created_at', { ascending: false });
-
-            if (error) throw error;
-
-            if (data && data.length > 0) {
-                const organized = {
-                    "Fundación Arupo": data.filter(item => item.section === "Fundación Arupo"),
-                    "Centro Terapéutico Integral Arupo": data.filter(item => item.section === "Centro Terapéutico Integral Arupo")
-                };
-                setGalleryState(organized);
-            }
-        } catch (e) {
-            console.error("Error loading gallery data:", e);
-        } finally {
-            setLoading(false);
-        }
-    };
+    
+    // Al remover el admin de Supabase, la galería lee directamente de este objeto de datos.
+    // Para agregar más imágenes, agrégalas a DEFAULT_GALLERY_DATA.
+    const galleryState = DEFAULT_GALLERY_DATA;
 
     const sections = Object.keys(galleryState);
 
