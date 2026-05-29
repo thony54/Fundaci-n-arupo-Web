@@ -2,18 +2,27 @@ import { useState } from 'react';
 import PageTransition from '../components/motion/PageTransition';
 import Reveal from '../components/motion/Reveal';
 
+import img1 from '../assets/Galeria Fundación Arupo/Brigada medica - La Dolorosa de Priorato - Voluntariado.JPG';
+import img2 from '../assets/Galeria Fundación Arupo/Feria de Ciencias - Unidad Educativa Ibarra - Voluntariado.jpeg';
+import img3 from '../assets/Galeria Fundación Arupo/Feria de Salud - Alpachaca - Voluntariado.JPG';
+import img4 from '../assets/Galeria Fundación Arupo/Feria de Salud - Comunidad el Cercado - Voluntariado.jpg';
+import img5 from '../assets/Galeria Fundación Arupo/Fundación Cristo de la Calle - Voluntariado.jpeg';
+import img6 from '../assets/Galeria Fundación Arupo/Visita BYU instalaciones PUCE Ibarra.jpeg';
+
 const DEFAULT_GALLERY_DATA = {
     "Fundación Arupo": [
-        { id: 1, category: 'Comunidad', title: 'Talleres Sociales', color: 'accent-500' },
-        { id: 2, category: 'Educación', title: 'Apoyo Escolar', color: 'primary-500' },
-        { id: 3, category: 'Eventos', title: 'Día de la Familia', color: 'secondary-500' },
-        { id: 4, category: 'Voluntariado', title: 'Jornadas de Limpieza', color: 'accent-400' },
+        { id: 1, category: 'Voluntariado', title: 'Brigada Médica - La Dolorosa', color: 'accent-500', image_url: img1 },
+        { id: 2, category: 'Voluntariado', title: 'Feria de Ciencias - UE Ibarra', color: 'primary-500', image_url: img2 },
+        { id: 3, category: 'Voluntariado', title: 'Feria de Salud - Alpachaca', color: 'secondary-500', image_url: img3 },
+        { id: 4, category: 'Voluntariado', title: 'Feria de Salud - El Cercado', color: 'accent-400', image_url: img4 },
+        { id: 5, category: 'Voluntariado', title: 'Fundación Cristo de la Calle', color: 'primary-400', image_url: img5 },
+        { id: 6, category: 'Comunidad', title: 'Visita BYU - PUCE Ibarra', color: 'secondary-400', image_url: img6 },
     ],
     "Centro Terapéutico Integral Arupo": [
-        { id: 5, category: 'Terapia Ocupacional', title: 'Motricidad Fina', color: 'primary-400' },
-        { id: 6, category: 'Psicología', title: 'Terapia de Juego', color: 'secondary-400' },
-        { id: 7, category: 'Lenguaje', title: 'Comunicación Asertiva', color: 'accent-300' },
-        { id: 8, category: 'Fisioterapia', title: 'Rehabilitación Física', color: 'primary-300' },
+        { id: 7, category: 'Terapia Ocupacional', title: 'Motricidad Fina', color: 'primary-400' },
+        { id: 8, category: 'Psicología', title: 'Terapia de Juego', color: 'secondary-400' },
+        { id: 9, category: 'Lenguaje', title: 'Comunicación Asertiva', color: 'accent-300' },
+        { id: 10, category: 'Fisioterapia', title: 'Rehabilitación Física', color: 'primary-300' },
     ]
 };
 
