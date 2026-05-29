@@ -155,9 +155,15 @@ export default function GalleryAdmin() {
 
         setLoading(true);
         try {
-            // 1. Convertir Base64 a Blob para subir a Storage
-            const response = await fetch(newItem.imageUrl);
-            const blob = await response.blob();
+            // 1. Convertir Base64 a Blob para subir a Storage de forma segura
+            const base64Data = newItem.imageUrl.split(',')[1];
+            const byteString = atob(base64Data);
+            const ab = new ArrayBuffer(byteString.length);
+            const ia = new Uint8Array(ab);
+            for (let i = 0; i < byteString.length; i++) {
+                ia[i] = byteString.charCodeAt(i);
+            }
+            const blob = new Blob([ab], { type: 'image/jpeg' });
             const fileName = `${Date.now()}-${Math.random().toString(36).substring(7)}.jpg`;
             const filePath = `gallery/${fileName}`;
 
