@@ -1,14 +1,17 @@
 import { motion } from 'framer-motion';
+import { useReveal } from './useReveal';
 
 // Container that staggers its <StaggerItem> children into view.
-export function Stagger({ children, className = "", stagger = 0.12, delay = 0, once = true, as = 'div' }) {
+// Guaranteed to reveal even if IntersectionObserver never fires.
+export function Stagger({ children, className = "", stagger = 0.12, delay = 0, as = 'div' }) {
     const MotionTag = motion[as] || motion.div;
+    const { ref, revealed, reduced } = useReveal({ margin: "-60px" });
     return (
         <MotionTag
+            ref={ref}
             className={className}
-            initial="hidden"
-            whileInView="visible"
-            viewport={{ once, margin: "-60px" }}
+            initial={reduced ? "visible" : "hidden"}
+            animate={revealed ? "visible" : "hidden"}
             variants={{
                 hidden: {},
                 visible: { transition: { staggerChildren: stagger, delayChildren: delay } },

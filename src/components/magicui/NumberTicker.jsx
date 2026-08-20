@@ -1,4 +1,4 @@
-import { useEffect, useRef } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { useInView, useMotionValue, useSpring } from 'framer-motion';
 import { cn } from '../../lib/utils';
 
@@ -16,11 +16,18 @@ export function NumberTicker({
     const springValue = useSpring(motionValue, { damping: 60, stiffness: 100 });
     const isInView = useInView(ref, { once: true, margin: '0px' });
 
+    // Safety net: run even if the intersection observer never fires.
+    const [forced, setForced] = useState(false);
     useEffect(() => {
-        if (!isInView) return;
+        const t = setTimeout(() => setForced(true), 1200);
+        return () => clearTimeout(t);
+    }, []);
+
+    useEffect(() => {
+        if (!isInView && !forced) return;
         const t = setTimeout(() => motionValue.set(direction === 'down' ? 0 : value), delay * 1000);
         return () => clearTimeout(t);
-    }, [motionValue, isInView, delay, value, direction]);
+    }, [motionValue, isInView, forced, delay, value, direction]);
 
     useEffect(() => {
         return springValue.on('change', (latest) => {

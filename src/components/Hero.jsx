@@ -3,6 +3,7 @@ import { motion, useScroll, useTransform } from 'framer-motion';
 import InclusionNetwork from './InclusionNetwork';
 import MeshGradient from './motion/MeshGradient';
 import WordReveal from './motion/WordReveal';
+import { useReveal } from './motion/useReveal';
 import { NumberTicker } from './magicui/NumberTicker';
 import { AnimatedShinyText } from './magicui/AnimatedShinyText';
 import { ShimmerButton } from './magicui/ShimmerButton';
@@ -25,6 +26,11 @@ const headline = [
     { text: 'social' },
 ];
 
+const fadeUp = {
+    hidden: { opacity: 0, y: 16 },
+    visible: { opacity: 1, y: 0, transition: { duration: 0.6, ease: [0.22, 1, 0.36, 1] } },
+};
+
 export default function Hero() {
     const ref = useRef(null);
     const { scrollYProgress } = useScroll({
@@ -38,6 +44,10 @@ export default function Hero() {
     const yMesh = useTransform(scrollYProgress, [0, 1], ['0%', '18%']);
     const yBlobFar = useTransform(scrollYProgress, [0, 1], ['0%', '55%']);
     const scaleMesh = useTransform(scrollYProgress, [0, 1], [1, 1.15]);
+
+    // Entrance reveal with a guaranteed fallback (works even if the
+    // intersection observer never fires on the user's device).
+    const { ref: revealRef, revealed, reduced } = useReveal({ margin: '0px' });
 
     return (
         <section
@@ -70,87 +80,79 @@ export default function Hero() {
                 aria-hidden="true"
             />
 
-            {/* Content */}
+            {/* Content: scroll layer (parallax + fade) wraps the reveal layer */}
             <motion.div
                 style={{ y: yContent, opacity }}
                 className="relative z-10 mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 pt-24 pb-16 text-center"
             >
-                {/* Badge */}
                 <motion.div
-                    initial={{ opacity: 0, y: 12 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{ duration: 0.6, delay: 0.05 }}
-                    className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-primary-500/10 border border-primary-500/20 text-primary-300 text-sm font-medium mb-8 backdrop-blur-sm"
+                    ref={revealRef}
+                    initial={reduced ? 'visible' : 'hidden'}
+                    animate={revealed ? 'visible' : 'hidden'}
+                    variants={{ visible: { transition: { staggerChildren: 0.12, delayChildren: 0.05 } } }}
                 >
-                    <span className="inline-block w-2 h-2 rounded-full bg-primary-400 animate-pulse" aria-hidden="true" />
-                    <AnimatedShinyText style={{ '--shine-base': '#fdba74' }}>
-                        Innovación Social desde Ecuador
-                    </AnimatedShinyText>
-                </motion.div>
-
-                <WordReveal
-                    as="h1"
-                    segments={headline}
-                    delay={0.15}
-                    className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-black text-white leading-[1.1] tracking-tight max-w-5xl mx-auto"
-                />
-
-                <motion.p
-                    initial={{ opacity: 0, y: 16 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{ duration: 0.7, delay: 0.7 }}
-                    className="mt-6 text-lg sm:text-xl text-dark-300 max-w-2xl mx-auto leading-relaxed"
-                >
-                    En Fundación Arupo acompañamos a personas con discapacidad y grupos de atención prioritaria mediante procesos terapéuticos, formación técnica y programas de inclusión que generan autonomía y oportunidades reales.
-                </motion.p>
-
-                {/* CTAs */}
-                <motion.div
-                    initial={{ opacity: 0, y: 16 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{ duration: 0.7, delay: 0.85 }}
-                    className="mt-10 flex flex-col sm:flex-row items-center justify-center gap-4"
-                >
-                    <ShimmerButton href="#contacto" aria-label="Ir a contacto">
-                        Dona ahora
-                        <svg className="ml-2 h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
-                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" />
-                        </svg>
-                    </ShimmerButton>
-                    <a
-                        href="https://enketo.unhcr.org/x/Eo942fQl"
-                        className="inline-flex items-center px-8 py-3.5 text-base font-semibold rounded-full border-2 border-dark-500 text-white hover:border-primary-400 hover:text-primary-300 transition-all duration-300 hover:scale-105"
-                        aria-label="Información sobre voluntariado"
+                    {/* Badge */}
+                    <motion.div
+                        variants={fadeUp}
+                        className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-primary-500/10 border border-primary-500/20 text-primary-300 text-sm font-medium mb-8 backdrop-blur-sm"
                     >
-                        Sé voluntario/a
-                        <svg className="ml-2 h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
-                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
-                        </svg>
-                    </a>
-                </motion.div>
+                        <span className="inline-block w-2 h-2 rounded-full bg-primary-400 animate-pulse" aria-hidden="true" />
+                        <AnimatedShinyText style={{ '--shine-base': '#fdba74' }}>
+                            Innovación Social desde Ecuador
+                        </AnimatedShinyText>
+                    </motion.div>
 
-                {/* Stats bar — assembles in with a stagger */}
-                <motion.div
-                    className="mt-16 grid grid-cols-2 md:grid-cols-4 gap-6 md:gap-8 max-w-3xl mx-auto"
-                    initial="hidden"
-                    animate="visible"
-                    variants={{ visible: { transition: { staggerChildren: 0.12, delayChildren: 1 } } }}
-                >
-                    {stats.map((stat, index) => (
-                        <motion.div
-                            key={index}
-                            className="text-center"
-                            variants={{
-                                hidden: { opacity: 0, y: 20, scale: 0.9 },
-                                visible: { opacity: 1, y: 0, scale: 1, transition: { duration: 0.5, ease: [0.34, 1.56, 0.64, 1] } },
-                            }}
+                    <WordReveal
+                        as="h1"
+                        segments={headline}
+                        delay={0.15}
+                        className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-black text-white leading-[1.1] tracking-tight max-w-5xl mx-auto"
+                    />
+
+                    <motion.p
+                        variants={fadeUp}
+                        className="mt-6 text-lg sm:text-xl text-dark-300 max-w-2xl mx-auto leading-relaxed"
+                    >
+                        En Fundación Arupo acompañamos a personas con discapacidad y grupos de atención prioritaria mediante procesos terapéuticos, formación técnica y programas de inclusión que generan autonomía y oportunidades reales.
+                    </motion.p>
+
+                    {/* CTAs */}
+                    <motion.div
+                        variants={fadeUp}
+                        className="mt-10 flex flex-col sm:flex-row items-center justify-center gap-4"
+                    >
+                        <ShimmerButton href="#contacto" aria-label="Ir a contacto">
+                            Dona ahora
+                            <svg className="ml-2 h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
+                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" />
+                            </svg>
+                        </ShimmerButton>
+                        <a
+                            href="https://enketo.unhcr.org/x/Eo942fQl"
+                            className="inline-flex items-center px-8 py-3.5 text-base font-semibold rounded-full border-2 border-dark-500 text-white hover:border-primary-400 hover:text-primary-300 transition-all duration-300 hover:scale-105"
+                            aria-label="Información sobre voluntariado"
                         >
-                            <p className="text-2xl sm:text-3xl font-bold text-white">
-                                <NumberTicker value={stat.value} />
-                            </p>
-                            <p className="mt-1 text-sm text-dark-400">{stat.label}</p>
-                        </motion.div>
-                    ))}
+                            Sé voluntario/a
+                            <svg className="ml-2 h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
+                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
+                            </svg>
+                        </a>
+                    </motion.div>
+
+                    {/* Stats bar */}
+                    <motion.div
+                        variants={fadeUp}
+                        className="mt-16 grid grid-cols-2 md:grid-cols-4 gap-6 md:gap-8 max-w-3xl mx-auto"
+                    >
+                        {stats.map((stat, index) => (
+                            <div key={index} className="text-center">
+                                <p className="text-2xl sm:text-3xl font-bold text-white">
+                                    <NumberTicker value={stat.value} />
+                                </p>
+                                <p className="mt-1 text-sm text-dark-400">{stat.label}</p>
+                            </div>
+                        ))}
+                    </motion.div>
                 </motion.div>
             </motion.div>
 

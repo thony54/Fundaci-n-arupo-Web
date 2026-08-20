@@ -1,10 +1,8 @@
 import { Fragment } from 'react';
 import { motion } from 'framer-motion';
-// Word-by-word heading reveal (mobile-safe: no per-word clipping).
-
-// Reveals a heading word-by-word (rise + de-blur) when scrolled into view.
-// Pass plain text via `text`, or rich segments via `segments`:
-//   [{ text: 'accesibilidad', className: 'text-primary-400' }, ...]
+import { useReveal } from './useReveal';
+// Word-by-word heading reveal (mobile-safe: no per-word clipping,
+// and guaranteed to reveal even if IntersectionObserver never fires).
 export default function WordReveal({
     text,
     segments,
@@ -15,6 +13,7 @@ export default function WordReveal({
     id,
 }) {
     const source = segments || (text || "").split(" ").map((t) => ({ text: t }));
+    const { ref, revealed, reduced } = useReveal({ margin: "-80px" });
 
     const container = {
         hidden: {},
@@ -34,12 +33,12 @@ export default function WordReveal({
 
     return (
         <MotionTag
+            ref={ref}
             id={id}
             className={className}
             variants={container}
-            initial="hidden"
-            whileInView="visible"
-            viewport={{ once: true, margin: "-80px" }}
+            initial={reduced ? "visible" : "hidden"}
+            animate={revealed ? "visible" : "hidden"}
         >
             {source.map((seg, i) => (
                 <Fragment key={i}>
