@@ -2,10 +2,15 @@ import PageTransition from '../components/motion/PageTransition';
 import Reveal from '../components/motion/Reveal';
 import Hero from '../components/Hero';
 import About from '../components/About';
+import MissionVision from '../components/MissionVision';
+import Problem from '../components/Problem';
+import ContextStats from '../components/ContextStats';
 import Team from '../components/Team'; // Added Team component import
 import Areas from '../components/Areas';
 import Impact from '../components/Impact';
+import PolicyAchievements from '../components/PolicyAchievements';
 import Projects from '../components/Projects';
+import Cooperation from '../components/Cooperation';
 import SustainabilityAlliance from '../components/SustainabilityAlliance';
 import Volunteer from '../components/Volunteer';
 import Testimonials from '../components/Testimonials';
@@ -20,6 +25,15 @@ export default function Home() {
                 <About />
             </Reveal>
             <Reveal width="100%">
+                <MissionVision />
+            </Reveal>
+            <Reveal width="100%">
+                <Problem />
+            </Reveal>
+            <Reveal width="100%">
+                <ContextStats />
+            </Reveal>
+            <Reveal width="100%">
                 <Team /> {/* Added Team Section */}
             </Reveal>
             <Reveal width="100%" delay={0.2}>
@@ -29,7 +43,13 @@ export default function Home() {
                 <Impact />
             </Reveal>
             <Reveal width="100%">
+                <PolicyAchievements />
+            </Reveal>
+            <Reveal width="100%">
                 <Projects />
+            </Reveal>
+            <Reveal width="100%">
+                <Cooperation />
             </Reveal>
             <Reveal width="100%">
                 <SustainabilityAlliance />

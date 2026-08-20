@@ -392,7 +392,7 @@ export default function TherapeuticCenter() {
                                     <div>
                                         <h4 className="font-bold text-dark-900 dark:text-white text-lg">Llámanos</h4>
                                         <p className="text-dark-500 dark:text-dark-400 mt-1">Central telefónica</p>
-                                        <p className="text-dark-800 dark:text-dark-200 font-medium">(02) 234-5678</p>
+                                        <a href="tel:+593996768228" className="text-dark-800 dark:text-dark-200 font-medium hover:text-therapeutic-600 transition-colors">+593 99 676 8228</a>
                                     </div>
                                 </div>
 
@@ -404,7 +404,19 @@ export default function TherapeuticCenter() {
                                     <div>
                                         <h4 className="font-bold text-dark-900 dark:text-white text-lg">WhatsApp Directo</h4>
                                         <p className="text-dark-500 dark:text-dark-400 mt-1">Atención rápida por chat</p>
-                                        <p className="text-dark-800 dark:text-dark-200 font-medium">+593 99 999 9999</p>
+                                        <a href="https://wa.me/593996768228" target="_blank" rel="noopener noreferrer" className="text-dark-800 dark:text-dark-200 font-medium hover:text-green-600 transition-colors">+593 99 676 8228</a>
+                                    </div>
+                                </div>
+
+                                {/* Email */}
+                                <div className="flex items-start gap-5">
+                                    <div className="w-12 h-12 rounded-2xl bg-therapeutic-50 dark:bg-therapeutic-900/20 flex items-center justify-center text-therapeutic-600 shrink-0">
+                                        <svg className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" /></svg>
+                                    </div>
+                                    <div>
+                                        <h4 className="font-bold text-dark-900 dark:text-white text-lg">Escríbenos</h4>
+                                        <p className="text-dark-500 dark:text-dark-400 mt-1">Correo electrónico</p>
+                                        <a href="mailto:rrpparupocti@gmail.com" className="text-dark-800 dark:text-dark-200 font-medium hover:text-therapeutic-600 transition-colors break-all">rrpparupocti@gmail.com</a>
                                     </div>
                                 </div>
                             </div>

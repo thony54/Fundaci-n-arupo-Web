@@ -74,10 +74,10 @@ export default function Hero() {
                 {/* Stats bar */}
                 <div className="mt-16 grid grid-cols-2 md:grid-cols-4 gap-6 md:gap-8 max-w-3xl mx-auto">
                     {[
-                        { number: <><CountUp to={55000} duration={2} />+</>, label: 'Atenciones' },
-                        { number: <><CountUp to={50} duration={1.5} />+</>, label: 'Alianzas estratégicas' },
-                        { number: <><CountUp to={20} duration={1.5} />+</>, label: 'Provincias alcanzadas' },
-                        { number: <CountUp to={1} duration={1} />, label: 'Centro de atención' },
+                        { number: <CountUp to={33568} duration={2} />, label: 'Atenciones' },
+                        { number: <CountUp to={10} duration={1.5} />, label: 'Provincias alcanzadas' },
+                        { number: <CountUp to={509} duration={1.5} />, label: 'Pasantías' },
+                        { number: <><CountUp to={2563} duration={2} /></>, label: 'Funcionarios capacitados' },
                     ].map((stat, index) => (
                         <div key={index} className="text-center">
                             <p className="text-2xl sm:text-3xl font-bold text-white">{stat.number}</p>

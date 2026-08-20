@@ -7,7 +7,6 @@ import { useAccessibility } from '../context/AccessibilityContext';
 // Use absolute paths for home sections to support navigation from sub-pages
 const navLinks = [
     { label: 'Inicio', href: '/' },
-    { label: 'Quiénes Somos', href: '/#nosotros' },
     { label: 'Centro Terapéutico', href: '/centro-terapeutico' },
     { label: 'Impacto', href: '/impacto' },
     { label: 'Galería', href: '/galeria' },

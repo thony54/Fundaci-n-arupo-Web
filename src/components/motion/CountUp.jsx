@@ -15,14 +15,18 @@ export default function CountUp({ to, from = 0, duration = 2, className = "" }) 
     useEffect(() => {
         if (isInView) {
             motionValue.set(to);
+            // Guarantee the exact target is shown once the spring settles,
+            // since useSpring converges asymptotically and may rest just below `to`.
+            const snap = setTimeout(() => setDisplayValue(to), duration * 1000 + 400);
+            return () => clearTimeout(snap);
         }
-    }, [isInView, motionValue, to]);
+    }, [isInView, motionValue, to, duration]);
 
     useEffect(() => {
         return springValue.on("change", (latest) => {
-            setDisplayValue(Math.floor(latest));
+            setDisplayValue(Math.round(latest));
         });
     }, [springValue]);
 
-    return <span ref={ref} className={className}>{displayValue}</span>;
+    return <span ref={ref} className={className}>{displayValue.toLocaleString('es-ES')}</span>;
 }
