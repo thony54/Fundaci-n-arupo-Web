@@ -87,6 +87,7 @@ export default function Hero() {
             >
                 <motion.div
                     ref={revealRef}
+                    data-reveal
                     initial={reduced ? 'visible' : 'hidden'}
                     animate={revealed ? 'visible' : 'hidden'}
                     variants={{ visible: { transition: { staggerChildren: 0.12, delayChildren: 0.05 } } }}

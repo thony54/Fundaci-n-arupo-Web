@@ -9,6 +9,7 @@ export function Stagger({ children, className = "", stagger = 0.12, delay = 0, a
     return (
         <MotionTag
             ref={ref}
+            data-reveal
             className={className}
             initial={reduced ? "visible" : "hidden"}
             animate={revealed ? "visible" : "hidden"}

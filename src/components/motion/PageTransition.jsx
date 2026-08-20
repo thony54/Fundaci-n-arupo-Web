@@ -26,6 +26,7 @@ const variants = {
 export default function PageTransition({ children }) {
     return (
         <motion.div
+            data-reveal
             variants={variants}
             initial="initial"
             animate="enter"

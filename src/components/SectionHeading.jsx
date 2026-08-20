@@ -18,7 +18,7 @@ export default function SectionHeading({
     const { ref, revealed, reduced } = useReveal({ margin: '-60px' });
 
     return (
-        <div ref={ref} className={`flex flex-col ${aligned} max-w-3xl mb-16 ${className}`}>
+        <div ref={ref} data-reveal className={`flex flex-col ${aligned} max-w-3xl mb-16 ${className}`}>
             {eyebrow && (
                 <div className="flex items-center gap-3 mb-3">
                     <motion.span

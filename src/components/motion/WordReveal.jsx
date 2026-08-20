@@ -35,6 +35,7 @@ export default function WordReveal({
         <MotionTag
             ref={ref}
             id={id}
+            data-reveal
             className={className}
             variants={container}
             initial={reduced ? "visible" : "hidden"}

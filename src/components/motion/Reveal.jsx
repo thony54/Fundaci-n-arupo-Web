@@ -5,7 +5,7 @@ export default function Reveal({ children, width = "fit-content", delay = 0, cla
     const { ref, revealed, reduced } = useReveal({ margin: "-75px" });
 
     return (
-        <div ref={ref} style={{ position: "relative", width }} className={className}>
+        <div ref={ref} data-reveal style={{ position: "relative", width }} className={className}>
             <motion.div
                 variants={{
                     hidden: { opacity: 0, y: 30 },

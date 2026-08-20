@@ -224,6 +224,16 @@
 .a11y-reduced-motion .mu-shimmer::after,
 .a11y-reduced-motion .mu-beam { animation: none !important; }
 
+/* Last-resort visibility guarantee: if the JS motion engine never reveals
+   the content (e.g. animations don't run on a given device), this class is
+   added to <html> and forces every reveal subtree visible. Only touches
+   opacity/filter so layout and hover transforms are preserved. */
+html.arupo-motion-fallback [data-reveal],
+html.arupo-motion-fallback [data-reveal] * {
+  opacity: 1 !important;
+  filter: none !important;
+}
+
 /* Accessibility Modes */
 .a11y-high-contrast {
   background-color: #fff !important;
