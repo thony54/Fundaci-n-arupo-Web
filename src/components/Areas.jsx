@@ -1,3 +1,7 @@
+import SectionHeading from './SectionHeading';
+import TiltCard from './motion/TiltCard';
+import { Stagger, StaggerItem } from './motion/Stagger';
+
 const areas = [
     {
         title: 'Inclusión y discapacidad',
@@ -81,44 +85,44 @@ export default function Areas() {
         <section id="areas" className="py-24 bg-dark-50 dark:bg-dark-900 transition-colors duration-300" aria-labelledby="areas-heading">
             <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
                 {/* Header */}
-                <div className="text-center max-w-3xl mx-auto mb-16">
-                    <p className="text-sm font-semibold uppercase tracking-widest text-primary-600 mb-3">
-                        Líneas de Trabajo
-                    </p>
-                    <h2 id="areas-heading" className="text-3xl sm:text-4xl font-bold text-dark-900 dark:text-white">
-                        Fundación Arupo desarrolla sus acciones a través de cinco líneas programáticas
-                    </h2>
-                </div>
+                <SectionHeading
+                    eyebrow="Líneas de Trabajo"
+                    title="Fundación Arupo desarrolla sus acciones a través de cinco líneas programáticas"
+                    titleId="areas-heading"
+                />
 
                 {/* Cards Grid */}
-                <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+                <Stagger className="grid md:grid-cols-2 lg:grid-cols-3 gap-6" stagger={0.1}>
                     {areas.map((area, idx) => (
-                        <article
-                            key={idx}
-                            className="group relative bg-white dark:bg-dark-950 rounded-3xl border border-dark-100 dark:border-dark-800 p-8 transition-all duration-300 hover:shadow-xl hover:border-primary-200 dark:hover:border-primary-800 overflow-hidden flex flex-col"
-                        >
-                            <div className="absolute top-0 right-0 w-32 h-32 bg-gradient-to-bl from-primary-50 to-transparent dark:from-primary-900/10 rounded-bl-full opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
-                            
-                            <div className="inline-flex items-center justify-center w-16 h-16 rounded-2xl bg-primary-100 dark:bg-primary-900/30 text-primary-600 dark:text-primary-400 mb-6 group-hover:scale-110 transition-transform duration-500 shadow-sm">
-                                {area.icon}
-                            </div>
-                            <h3 className="text-xl font-bold text-dark-900 dark:text-white mb-4 group-hover:text-primary-600 dark:group-hover:text-primary-400 transition-colors">
-                                {area.title}
-                            </h3>
-                            
-                            <ul className="flex-1 space-y-3">
-                                {area.items.map((item, i) => (
-                                    <li key={i} className="flex items-start gap-2.5">
-                                        <div className="mt-1.5 w-1.5 h-1.5 rounded-full bg-accent-500 flex-shrink-0" />
-                                        <span className="text-dark-600 dark:text-dark-300 text-sm leading-relaxed">
-                                            {item}
-                                        </span>
-                                    </li>
-                                ))}
-                            </ul>
-                        </article>
+                        <StaggerItem key={idx} variant="card" className="group h-full" style={{ transformStyle: 'preserve-3d' }}>
+                            <TiltCard className="group rounded-3xl h-full" max={6}>
+                                <article
+                                    className="arupo-sheen relative bg-white dark:bg-dark-950 rounded-3xl border border-dark-100 dark:border-dark-800 p-8 transition-colors duration-300 group-hover:border-primary-200 dark:group-hover:border-primary-800 shadow-sm group-hover:shadow-2xl overflow-hidden flex flex-col h-full"
+                                >
+                                    <div className="absolute top-0 right-0 w-32 h-32 bg-gradient-to-bl from-primary-50 to-transparent dark:from-primary-900/10 rounded-bl-full opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+
+                                    <div className="inline-flex items-center justify-center w-16 h-16 rounded-2xl bg-primary-100 dark:bg-primary-900/30 text-primary-600 dark:text-primary-400 mb-6 group-hover:scale-110 transition-transform duration-500 shadow-sm">
+                                        {area.icon}
+                                    </div>
+                                    <h3 className="text-xl font-bold text-dark-900 dark:text-white mb-4 group-hover:text-primary-600 dark:group-hover:text-primary-400 transition-colors">
+                                        {area.title}
+                                    </h3>
+
+                                    <ul className="flex-1 space-y-3">
+                                        {area.items.map((item, i) => (
+                                            <li key={i} className="flex items-start gap-2.5">
+                                                <div className="mt-1.5 w-1.5 h-1.5 rounded-full bg-accent-500 flex-shrink-0" />
+                                                <span className="text-dark-600 dark:text-dark-300 text-sm leading-relaxed">
+                                                    {item}
+                                                </span>
+                                            </li>
+                                        ))}
+                                    </ul>
+                                </article>
+                            </TiltCard>
+                        </StaggerItem>
                     ))}
-                </div>
+                </Stagger>
             </div>
         </section>
     );
