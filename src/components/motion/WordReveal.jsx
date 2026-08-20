@@ -1,4 +1,6 @@
+import { Fragment } from 'react';
 import { motion } from 'framer-motion';
+// Word-by-word heading reveal (mobile-safe: no per-word clipping).
 
 // Reveals a heading word-by-word (rise + de-blur) when scrolled into view.
 // Pass plain text via `text`, or rich segments via `segments`:
@@ -19,7 +21,7 @@ export default function WordReveal({
         visible: { transition: { staggerChildren: stagger, delayChildren: delay } },
     };
     const word = {
-        hidden: { opacity: 0, y: "0.6em", filter: "blur(8px)" },
+        hidden: { opacity: 0, y: "0.35em", filter: "blur(6px)" },
         visible: {
             opacity: 1,
             y: "0em",
@@ -40,7 +42,7 @@ export default function WordReveal({
             viewport={{ once: true, margin: "-80px" }}
         >
             {source.map((seg, i) => (
-                <span key={i} style={{ display: "inline-block", overflow: "hidden", verticalAlign: "top" }}>
+                <Fragment key={i}>
                     <motion.span
                         variants={word}
                         style={{ display: "inline-block", willChange: "transform, filter" }}
@@ -48,8 +50,8 @@ export default function WordReveal({
                     >
                         {seg.text}
                     </motion.span>
-                    {i < source.length - 1 && " "}
-                </span>
+                    {i < source.length - 1 ? " " : null}
+                </Fragment>
             ))}
         </MotionTag>
     );

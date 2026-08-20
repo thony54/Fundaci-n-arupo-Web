@@ -134,6 +134,15 @@
 .arupo-mesh__blob--b { width: 42vw; height: 42vw; right: -8%; top: 6%;   background: radial-gradient(circle at 70% 30%, #823d83, transparent 70%); animation: arupo-mesh-b 26s ease-in-out infinite; }
 .arupo-mesh__blob--c { width: 40vw; height: 40vw; left: 25%;  bottom: -18%; background: radial-gradient(circle at 50% 50%, #edb729, transparent 70%); animation: arupo-mesh-c 30s ease-in-out infinite; }
 
+/* Lighten the mesh on phones: smaller, softer, cheaper to composite */
+@media (max-width: 640px) {
+  .arupo-mesh { inset: -10%; }
+  .arupo-mesh__blob { filter: blur(42px); opacity: 0.4; }
+  .arupo-mesh__blob--a { width: 62vw; height: 62vw; }
+  .arupo-mesh__blob--b { width: 58vw; height: 58vw; }
+  .arupo-mesh__blob--c { width: 56vw; height: 56vw; }
+}
+
 .arupo-float { animation: arupo-float 6s ease-in-out infinite; }
 
 .arupo-sheen { position: relative; overflow: hidden; }
@@ -148,6 +157,72 @@
 .a11y-reduced-motion .arupo-mesh__blob,
 .a11y-reduced-motion .arupo-float,
 .a11y-reduced-motion .arupo-sheen::after { animation: none !important; }
+
+/* ============================================================
+   Magic UI (vendored, adapted to Tailwind v4 + framer-motion)
+   ============================================================ */
+
+/* AnimatedShinyText — a light sweep across colored text */
+@keyframes mu-shiny {
+  0%   { background-position: 200% 0; }
+  100% { background-position: -100% 0; }
+}
+.mu-shiny-text {
+  color: transparent;
+  background-image: linear-gradient(110deg, var(--shine-base, #94a3b8) 40%, #ffffff 50%, var(--shine-base, #94a3b8) 60%);
+  background-size: 250% 100%;
+  -webkit-background-clip: text;
+  background-clip: text;
+  animation: mu-shiny 5s linear infinite;
+}
+
+/* ShimmerButton — a continuous light sweep across a button */
+@keyframes mu-shimmer-slide {
+  0%   { transform: translateX(-160%) skewX(-12deg); }
+  100% { transform: translateX(260%) skewX(-12deg); }
+}
+.mu-shimmer { position: relative; overflow: hidden; isolation: isolate; }
+.mu-shimmer::after {
+  content: "";
+  position: absolute;
+  top: 0; bottom: 0; left: 0;
+  width: 55%;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.4), transparent);
+  transform: translateX(-160%) skewX(-12deg);
+  animation: mu-shimmer-slide 3.4s ease-in-out infinite;
+  z-index: 1;
+  pointer-events: none;
+}
+
+/* BorderBeam — a color beam travelling around a card border */
+@property --mu-beam-angle {
+  syntax: "<angle>";
+  inherits: false;
+  initial-value: 0deg;
+}
+@keyframes mu-beam-spin { to { --mu-beam-angle: 360deg; } }
+.mu-beam {
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  padding: 1.5px;
+  background: conic-gradient(from var(--mu-beam-angle),
+      transparent 0 72%,
+      var(--beam-from, #e77512),
+      var(--beam-to, #edb729),
+      transparent 100%);
+  -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+  -webkit-mask-composite: xor;
+          mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+          mask-composite: exclude;
+  animation: mu-beam-spin var(--beam-duration, 6s) linear infinite;
+  pointer-events: none;
+}
+
+/* Disable Magic UI motion under reduced-motion */
+.a11y-reduced-motion .mu-shiny-text,
+.a11y-reduced-motion .mu-shimmer::after,
+.a11y-reduced-motion .mu-beam { animation: none !important; }
 
 /* Accessibility Modes */
 .a11y-high-contrast {

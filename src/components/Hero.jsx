@@ -3,13 +3,15 @@ import { motion, useScroll, useTransform } from 'framer-motion';
 import InclusionNetwork from './InclusionNetwork';
 import MeshGradient from './motion/MeshGradient';
 import WordReveal from './motion/WordReveal';
-import CountUp from './motion/CountUp';
+import { NumberTicker } from './magicui/NumberTicker';
+import { AnimatedShinyText } from './magicui/AnimatedShinyText';
+import { ShimmerButton } from './magicui/ShimmerButton';
 
 const stats = [
-    { number: <CountUp to={33568} duration={2} />, label: 'Atenciones' },
-    { number: <CountUp to={10} duration={1.5} />, label: 'Provincias alcanzadas' },
-    { number: <CountUp to={509} duration={1.5} />, label: 'Pasantías' },
-    { number: <CountUp to={2563} duration={2} />, label: 'Funcionarios capacitados' },
+    { value: 33568, label: 'Atenciones' },
+    { value: 10, label: 'Provincias alcanzadas' },
+    { value: 509, label: 'Pasantías' },
+    { value: 2563, label: 'Funcionarios capacitados' },
 ];
 
 const headline = [
@@ -81,7 +83,9 @@ export default function Hero() {
                     className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-primary-500/10 border border-primary-500/20 text-primary-300 text-sm font-medium mb-8 backdrop-blur-sm"
                 >
                     <span className="inline-block w-2 h-2 rounded-full bg-primary-400 animate-pulse" aria-hidden="true" />
-                    Innovación Social desde Ecuador
+                    <AnimatedShinyText style={{ '--shine-base': '#fdba74' }}>
+                        Innovación Social desde Ecuador
+                    </AnimatedShinyText>
                 </motion.div>
 
                 <WordReveal
@@ -107,16 +111,12 @@ export default function Hero() {
                     transition={{ duration: 0.7, delay: 0.85 }}
                     className="mt-10 flex flex-col sm:flex-row items-center justify-center gap-4"
                 >
-                    <a
-                        href="#contacto"
-                        className="arupo-sheen inline-flex items-center px-8 py-3.5 text-base font-semibold rounded-full bg-gradient-to-r from-primary-500 to-primary-600 text-white hover:from-primary-400 hover:to-primary-500 transition-all duration-300 shadow-xl shadow-primary-500/25 hover:shadow-primary-400/40 hover:scale-105"
-                        aria-label="Ir a contacto"
-                    >
+                    <ShimmerButton href="#contacto" aria-label="Ir a contacto">
                         Dona ahora
                         <svg className="ml-2 h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
                             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" />
                         </svg>
-                    </a>
+                    </ShimmerButton>
                     <a
                         href="https://enketo.unhcr.org/x/Eo942fQl"
                         className="inline-flex items-center px-8 py-3.5 text-base font-semibold rounded-full border-2 border-dark-500 text-white hover:border-primary-400 hover:text-primary-300 transition-all duration-300 hover:scale-105"
@@ -145,7 +145,9 @@ export default function Hero() {
                                 visible: { opacity: 1, y: 0, scale: 1, transition: { duration: 0.5, ease: [0.34, 1.56, 0.64, 1] } },
                             }}
                         >
-                            <p className="text-2xl sm:text-3xl font-bold text-white">{stat.number}</p>
+                            <p className="text-2xl sm:text-3xl font-bold text-white">
+                                <NumberTicker value={stat.value} />
+                            </p>
                             <p className="mt-1 text-sm text-dark-400">{stat.label}</p>
                         </motion.div>
                     ))}

@@ -1,6 +1,7 @@
 import SectionHeading from './SectionHeading';
 import TiltCard from './motion/TiltCard';
 import { Stagger, StaggerItem } from './motion/Stagger';
+import { BorderBeam } from './magicui/BorderBeam';
 
 const areas = [
     {
@@ -100,6 +101,7 @@ export default function Areas() {
                                     className="arupo-sheen relative bg-white dark:bg-dark-950 rounded-3xl border border-dark-100 dark:border-dark-800 p-8 transition-colors duration-300 group-hover:border-primary-200 dark:group-hover:border-primary-800 shadow-sm group-hover:shadow-2xl overflow-hidden flex flex-col h-full"
                                 >
                                     <div className="absolute top-0 right-0 w-32 h-32 bg-gradient-to-bl from-primary-50 to-transparent dark:from-primary-900/10 rounded-bl-full opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+                                    <BorderBeam className="opacity-0 group-hover:opacity-100 transition-opacity duration-300" duration={5} />
 
                                     <div className="inline-flex items-center justify-center w-16 h-16 rounded-2xl bg-primary-100 dark:bg-primary-900/30 text-primary-600 dark:text-primary-400 mb-6 group-hover:scale-110 transition-transform duration-500 shadow-sm">
                                         {area.icon}
