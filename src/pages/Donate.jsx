@@ -11,6 +11,29 @@ import {
     paymentMethods,
     formatAmount,
 } from '../data/donation';
+import {
+    generateDonationCode,
+    downloadReceipt,
+    receiptToBase64,
+} from '../lib/receipt';
+
+// Intenta enviar el comprobante por correo desde la Fundación.
+// Requiere el endpoint /api/send-receipt configurado (ver README).
+// Si no está disponible (local sin backend / sin clave), falla en
+// silencio y el flujo continúa con código + PDF.
+async function sendReceiptEmail(donation) {
+    try {
+        const pdfBase64 = await receiptToBase64(donation);
+        const res = await fetch('/api/send-receipt', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ donation, pdfBase64 }),
+        });
+        return res.ok;
+    } catch {
+        return false;
+    }
+}
 
 // Pasos del asistente de donación.
 const STEPS = [
@@ -31,6 +54,8 @@ export default function Donate() {
 
     const [step, setStep] = useState(0);
     const [done, setDone] = useState(false);
+    const [receipt, setReceipt] = useState(null); // donación finalizada (con código)
+    const [emailSent, setEmailSent] = useState(false);
 
     // Paso 1 — Aporte
     const [frequency, setFrequency] = useState('monthly');
@@ -81,15 +106,17 @@ export default function Donate() {
         window.scrollTo({ top: 0, behavior: 'smooth' });
     }
 
-    function handleSubmit() {
+    async function handleSubmit() {
         // ────────────────────────────────────────────────────────
         // PUNTO DE INTEGRACIÓN DE PASARELA DE PAGO
         // Aquí se conecta Stripe / PayPal con las credenciales de la
-        // Fundación. Por ahora registramos la intención y mostramos
-        // la confirmación. El objeto `donation` es lo que se enviaría
-        // al backend / pasarela.
+        // Fundación. Por ahora registramos la intención, generamos el
+        // código único, descargamos el comprobante y (si el backend
+        // está configurado) enviamos el correo con la factura.
         // ────────────────────────────────────────────────────────
         const donation = {
+            code: generateDonationCode(),
+            date: new Date(),
             frequency,
             currency,
             amount,
@@ -97,14 +124,26 @@ export default function Donate() {
             territory,
             donor: details,
         };
-        // eslint-disable-next-line no-console
-        console.log('Donación (pendiente de procesar):', donation);
+
+        setReceipt(donation);
         setDone(true);
         window.scrollTo({ top: 0, behavior: 'smooth' });
+
+        // Descarga automática del comprobante en PDF.
+        downloadReceipt(donation).catch(() => {});
+
+        // Envío del correo con la factura (no bloquea la confirmación).
+        sendReceiptEmail(donation).then((ok) => setEmailSent(ok));
     }
 
-    if (done) {
-        return <ThankYou details={details} amount={amount} currency={currency} frequency={frequency} />;
+    if (done && receipt) {
+        return (
+            <ThankYou
+                donation={receipt}
+                emailSent={emailSent}
+                onDownload={() => downloadReceipt(receipt).catch(() => {})}
+            />
+        );
     }
 
     return (
@@ -599,7 +638,8 @@ function CardForm() {
 }
 
 /* ========================= Confirmación ========================= */
-function ThankYou({ details, amount, currency, frequency }) {
+function ThankYou({ donation, emailSent, onDownload }) {
+    const { code, amount, currency, frequency, donor } = donation;
     return (
         <PageTransition>
             <div className="min-h-screen bg-dark-50 dark:bg-dark-950 pt-28 pb-24 px-4 flex items-center justify-center transition-colors duration-300">
@@ -613,27 +653,63 @@ function ThankYou({ details, amount, currency, frequency }) {
                         <CheckIcon className="w-10 h-10" />
                     </motion.div>
                     <h1 className="text-3xl font-extrabold text-dark-900 dark:text-white">
-                        ¡Gracias, {details.firstName || 'de corazón'}!
+                        ¡Gracias, {donor.firstName || 'de corazón'}!
                     </h1>
                     <p className="mt-3 text-dark-500 dark:text-dark-400">
-                        Registramos tu intención de donar{' '}
+                        Registramos tu donación de{' '}
                         <span className="font-semibold text-primary-600 dark:text-primary-300">
                             {formatAmount(amount, currency)}
                             {frequency === 'monthly' ? ' cada mes' : ''}
                         </span>
                         . Tu apoyo hace posible un Ecuador más inclusivo.
                     </p>
-                    {details.subscribe && (
-                        <p className="mt-2 text-sm text-dark-400">
+
+                    {/* Código único */}
+                    <div className="mt-6 rounded-2xl bg-white dark:bg-dark-900 border border-dark-100 dark:border-dark-800 p-5">
+                        <p className="text-xs uppercase tracking-wide text-dark-400">
+                            Código único de tu donación
+                        </p>
+                        <p className="mt-1 text-2xl font-extrabold text-primary-600 dark:text-primary-300 tracking-wide">
+                            {code}
+                        </p>
+                        <p className="mt-1 text-xs text-dark-400">
+                            Guárdalo como referencia de tu aporte.
+                        </p>
+                    </div>
+
+                    {/* Estado del correo */}
+                    <p className="mt-4 text-sm text-dark-500 dark:text-dark-400 flex items-center justify-center gap-2">
+                        {emailSent ? (
+                            <>
+                                <CheckIcon className="w-4 h-4 text-green-500" />
+                                Enviamos tu factura a{' '}
+                                <span className="font-semibold">{donor.email}</span>.
+                            </>
+                        ) : (
+                            <>Descargamos tu comprobante en PDF automáticamente.</>
+                        )}
+                    </p>
+                    {donor.subscribe && (
+                        <p className="mt-1 text-sm text-dark-400">
                             Te suscribimos a las publicaciones mensuales de la Fundación.
                         </p>
                     )}
-                    <Link
-                        to="/"
-                        className="mt-8 inline-flex items-center gap-2 px-7 py-3.5 rounded-full font-semibold text-white bg-gradient-to-r from-primary-500 to-primary-600 shadow-lg shadow-primary-500/25 hover:scale-105 transition-all"
-                    >
-                        Volver al inicio
-                    </Link>
+
+                    {/* Acciones */}
+                    <div className="mt-8 flex flex-col sm:flex-row items-center justify-center gap-3">
+                        <button
+                            onClick={onDownload}
+                            className="inline-flex items-center gap-2 px-6 py-3 rounded-full font-semibold text-primary-600 dark:text-primary-300 border-2 border-primary-500/40 hover:bg-primary-50 dark:hover:bg-primary-900/20 transition-all"
+                        >
+                            <DownloadIcon className="w-4 h-4" /> Descargar comprobante
+                        </button>
+                        <Link
+                            to="/"
+                            className="inline-flex items-center gap-2 px-7 py-3 rounded-full font-semibold text-white bg-gradient-to-r from-primary-500 to-primary-600 shadow-lg shadow-primary-500/25 hover:scale-105 transition-all"
+                        >
+                            Volver al inicio
+                        </Link>
+                    </div>
                 </div>
             </div>
         </PageTransition>
@@ -684,6 +760,13 @@ function LockIcon({ className }) {
     return (
         <svg className={className} fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
             <path strokeLinecap="round" strokeLinejoin="round" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" />
+        </svg>
+    );
+}
+function DownloadIcon({ className }) {
+    return (
+        <svg className={className} fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+            <path strokeLinecap="round" strokeLinejoin="round" d="M4 16v2a2 2 0 002 2h12a2 2 0 002-2v-2M7 10l5 5 5-5M12 15V3" />
         </svg>
     );
 }
