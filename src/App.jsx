@@ -7,6 +7,7 @@ import Impact from './components/Impact';
 import TerritoryStory from './pages/TerritoryStory';
 import TherapeuticCenter from './pages/TherapeuticCenter';
 import Gallery from './pages/Gallery';
+import Donate from './pages/Donate';
 
 export default function App() {
   const location = useLocation();
@@ -22,6 +23,7 @@ export default function App() {
             <Route path="impacto/:id" element={<TerritoryStory />} />
             <Route path="centro-terapeutico" element={<TherapeuticCenter />} />
             <Route path="galeria" element={<Gallery />} />
+            <Route path="donar" element={<Donate />} />
           </Route>
         </Routes>
       </AnimatePresence>

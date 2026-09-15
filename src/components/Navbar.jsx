@@ -61,13 +61,13 @@ export default function Navbar() {
                                 )}
                             </div>
                         ))}
-                        <a
-                            href="/#contacto"
+                        <Link
+                            to="/donar"
                             className="ml-3 inline-flex items-center px-5 py-2 text-sm font-semibold rounded-full bg-gradient-to-r from-accent-400 to-accent-500 text-dark-900 hover:from-accent-300 hover:to-accent-400 transition-all duration-300 shadow-lg shadow-accent-500/25 hover:shadow-accent-400/40 hover:scale-105"
-                            aria-label="Ir a contacto"
+                            aria-label="Hacer una donación"
                         >
-                            Dona
-                        </a>
+                            Donar
+                        </Link>
                         <div className="ml-4 flex items-center gap-2">
                             <button
                                 onClick={() => updateSetting('visualAccessibilityMode', !settings.visualAccessibilityMode)}
@@ -162,14 +162,14 @@ export default function Navbar() {
                                 )}
                             </div>
                         ))}
-                        <a
-                            href="/#contacto"
+                        <Link
+                            to="/donar"
                             onClick={() => setIsOpen(false)}
                             className="mx-4 mt-2 text-center px-5 py-2.5 text-sm font-semibold rounded-full bg-gradient-to-r from-accent-400 to-accent-500 text-dark-900 hover:from-accent-300 hover:to-accent-400 transition-all duration-300"
-                            aria-label="Ir a contacto"
+                            aria-label="Hacer una donación"
                         >
-                            Dona
-                        </a>
+                            Donar
+                        </Link>
                         <div className="px-4 py-3 flex items-center justify-between border-t border-dark-800 mt-2">
                             <span className="text-sm font-medium text-dark-300">Tema</span>
                             <ThemeToggle />

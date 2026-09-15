@@ -94,7 +94,7 @@ export default function TherapeuticCenter() {
                                 Solicitar Información
                             </Link>
                             <Link
-                                to="/#voluntariado"
+                                to="/donar"
                                 className="inline-flex items-center justify-center px-8 py-4 text-lg font-bold rounded-full border-2 border-white/80 text-white backdrop-blur-sm hover:bg-white hover:text-dark-900 transition-all shadow-lg hover:scale-105"
                             >
                                 Quiero apoyar
