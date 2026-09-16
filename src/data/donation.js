@@ -57,6 +57,8 @@ export const tiers = [
 ];
 
 // Métodos de pago que se ofrecerán en el último paso.
+// (PayPal se reemplazó por Global66 según el plan de cobro; se puede
+//  volver a añadir en cualquier momento.)
 export const paymentMethods = [
     {
         id: 'card',
@@ -64,16 +66,49 @@ export const paymentMethods = [
         description: 'Débito o crédito — Visa, Mastercard, Amex.',
     },
     {
-        id: 'paypal',
-        label: 'PayPal',
-        description: 'Paga con tu cuenta o saldo de PayPal.',
+        id: 'global66',
+        label: 'Global66',
+        description: 'Paga con tu enlace o cuenta Global66.',
     },
     {
         id: 'transfer',
         label: 'Transferencia / Depósito',
-        description: 'Recibe los datos bancarios de la Fundación.',
+        description: 'Banco Internacional u otras cuentas.',
     },
 ];
+
+// ────────────────────────────────────────────────────────────
+//  DATOS DE COBRO — PLACEHOLDERS
+//  Reemplaza estos valores con los datos reales de la Fundación.
+// ────────────────────────────────────────────────────────────
+
+// Cuentas bancarias para transferencia / depósito.
+export const bankAccounts = [
+    {
+        bank: 'Banco Internacional',
+        type: 'Cuenta Corriente', // TODO: confirmar
+        number: '0000000000', // TODO: número de cuenta real
+        holder: 'Fundación Arupo', // TODO: titular exacto
+        id: 'RUC 0000000000000', // TODO: RUC / cédula del titular
+    },
+];
+
+// Global66: enlace de cobro y/o datos de la Cuenta Global.
+export const global66 = {
+    // Pega aquí el "link de pago / recaudo" generado desde la app de
+    // Global66. Si queda vacío, se muestra un aviso de "próximamente".
+    paymentLink: '', // TODO: https://... (link de cobro Global66)
+    account: {
+        holder: 'Fundación Arupo', // TODO
+        detail: 'Cuenta Global / correo asociado', // TODO
+    },
+};
+
+// A dónde envía el donante su comprobante de pago.
+export const proofContact = {
+    whatsapp: '593996768228', // sin '+' ni espacios (formato wa.me)
+    email: 'rrpparupocti@gmail.com',
+};
 
 // Formatea un monto con el símbolo de la moneda seleccionada.
 export function formatAmount(amount, currencyCode) {

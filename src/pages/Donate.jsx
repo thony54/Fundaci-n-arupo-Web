@@ -10,6 +10,9 @@ import {
     tiers,
     paymentMethods,
     formatAmount,
+    bankAccounts,
+    global66,
+    proofContact,
 } from '../data/donation';
 import {
     generateDonationCode,
@@ -56,6 +59,9 @@ export default function Donate() {
     const [done, setDone] = useState(false);
     const [receipt, setReceipt] = useState(null); // donación finalizada (con código)
     const [emailSent, setEmailSent] = useState(false);
+    // Código de referencia estable para toda la sesión de donación
+    // (para transferencia / Global66 el donante lo usa como concepto).
+    const [refCode] = useState(() => generateDonationCode());
 
     // Paso 1 — Aporte
     const [frequency, setFrequency] = useState('monthly');
@@ -115,7 +121,7 @@ export default function Donate() {
         // está configurado) enviamos el correo con la factura.
         // ────────────────────────────────────────────────────────
         const donation = {
-            code: generateDonationCode(),
+            code: refCode,
             date: new Date(),
             frequency,
             currency,
@@ -212,6 +218,8 @@ export default function Donate() {
                                         amount={amount}
                                         currency={currency}
                                         frequency={frequency}
+                                        refCode={refCode}
+                                        donor={details}
                                     />
                                 )}
                             </motion.div>
@@ -260,7 +268,8 @@ export default function Donate() {
                                     onClick={handleSubmit}
                                     className="inline-flex items-center gap-2 px-7 py-3.5 rounded-full font-semibold text-white bg-gradient-to-r from-primary-500 to-primary-600 shadow-lg shadow-primary-500/25 hover:from-primary-400 hover:to-primary-500 hover:scale-105 transition-all"
                                 >
-                                    <HeartIcon className="w-4 h-4" /> Donar de forma segura
+                                    <HeartIcon className="w-4 h-4" />
+                                    {method === 'card' ? 'Donar de forma segura' : 'Ya realicé mi donación'}
                                 </button>
                             )}
                         </div>
@@ -540,7 +549,7 @@ function StepDetails({ details, updateDetail }) {
 }
 
 /* ========================= Paso 3: Pago ========================= */
-function StepPayment({ method, setMethod, amount, currency, frequency }) {
+function StepPayment({ method, setMethod, amount, currency, frequency, refCode, donor }) {
     return (
         <div className="space-y-6">
             <div>
@@ -589,41 +598,209 @@ function StepPayment({ method, setMethod, amount, currency, frequency }) {
             {/* Panel del método seleccionado */}
             <div className="rounded-2xl bg-dark-50 dark:bg-dark-800/40 border border-dark-100 dark:border-dark-800 p-5">
                 {method === 'card' && <CardForm />}
-                {method === 'paypal' && (
-                    <p className="text-sm text-dark-600 dark:text-dark-300">
-                        Al continuar te llevaremos a PayPal para autorizar tu donación de forma
-                        segura y volver al sitio.
-                    </p>
+                {method === 'global66' && (
+                    <Global66Panel
+                        refCode={refCode}
+                        amount={amount}
+                        currency={currency}
+                        frequency={frequency}
+                        donor={donor}
+                    />
                 )}
                 {method === 'transfer' && (
-                    <div className="text-sm text-dark-600 dark:text-dark-300 space-y-1">
-                        <p className="font-semibold text-dark-900 dark:text-white">
-                            Datos para transferencia
-                        </p>
-                        <p>Banco: <span className="font-medium">— por definir —</span></p>
-                        <p>Cuenta: <span className="font-medium">— por definir —</span></p>
-                        <p>Titular: Fundación Arupo</p>
-                        <p className="text-dark-400">
-                            Al continuar recibirás estos datos por correo para completar tu aporte.
-                        </p>
-                    </div>
+                    <TransferPanel
+                        refCode={refCode}
+                        amount={amount}
+                        currency={currency}
+                        frequency={frequency}
+                        donor={donor}
+                    />
                 )}
             </div>
 
-            {/* Aviso honesto sobre la pasarela */}
-            <div className="flex items-start gap-2 text-xs text-dark-400 bg-amber-50 dark:bg-amber-900/10 border border-amber-200/60 dark:border-amber-800/40 rounded-xl p-3">
-                <InfoIcon className="w-4 h-4 shrink-0 mt-0.5 text-amber-500" />
-                <span>
-                    El procesamiento seguro de pagos (cobro real de tarjeta / PayPal) se activa al
-                    conectar la pasarela con las credenciales de la Fundación.
-                </span>
+            {/* Aviso según el método */}
+            {method === 'card' ? (
+                <div className="flex items-start gap-2 text-xs text-dark-400 bg-amber-50 dark:bg-amber-900/10 border border-amber-200/60 dark:border-amber-800/40 rounded-xl p-3">
+                    <InfoIcon className="w-4 h-4 shrink-0 mt-0.5 text-amber-500" />
+                    <span>
+                        El cobro real de tarjeta (pago único y débito mensual) se activa al conectar
+                        la pasarela Datafast con las credenciales de la Fundación.
+                    </span>
+                </div>
+            ) : (
+                <div className="flex items-start gap-2 text-xs text-dark-500 dark:text-dark-400 bg-primary-50 dark:bg-primary-900/10 border border-primary-200/60 dark:border-primary-800/40 rounded-xl p-3">
+                    <InfoIcon className="w-4 h-4 shrink-0 mt-0.5 text-primary-500" />
+                    <span>
+                        Realiza tu pago usando el código de referencia y envíanos el comprobante.
+                        La Fundación confirmará tu donación al recibirlo.
+                    </span>
+                </div>
+            )}
+        </div>
+    );
+}
+
+/* ---- Panel: Global66 ---- */
+function Global66Panel({ refCode, amount, currency, frequency, donor }) {
+    return (
+        <div className="space-y-4">
+            <p className="text-sm font-semibold text-dark-900 dark:text-white">Pagar con Global66</p>
+            {global66.paymentLink ? (
+                <a
+                    href={global66.paymentLink}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full font-semibold text-white bg-dark-900 dark:bg-white dark:text-dark-900 hover:scale-105 transition-all"
+                >
+                    Abrir enlace de pago <ArrowIcon className="w-4 h-4" />
+                </a>
+            ) : (
+                <p className="text-sm text-dark-500 dark:text-dark-400">
+                    El enlace de pago de Global66 estará disponible muy pronto. Mientras tanto,
+                    puedes transferir a nuestra Cuenta Global:
+                </p>
+            )}
+            <DataTable
+                rows={[
+                    ['Titular', global66.account.holder],
+                    ['Cuenta Global', global66.account.detail],
+                ]}
+            />
+            <ReferenceBox refCode={refCode} />
+            <ProofActions refCode={refCode} amount={amount} currency={currency} frequency={frequency} donor={donor} method="Global66" />
+        </div>
+    );
+}
+
+/* ---- Panel: Transferencia / Depósito ---- */
+function TransferPanel({ refCode, amount, currency, frequency, donor }) {
+    return (
+        <div className="space-y-4">
+            <p className="text-sm font-semibold text-dark-900 dark:text-white">
+                Datos para transferencia o depósito
+            </p>
+            {bankAccounts.map((acc, i) => (
+                <DataTable
+                    key={i}
+                    rows={[
+                        ['Banco', acc.bank],
+                        ['Tipo', acc.type],
+                        ['Cuenta', acc.number],
+                        ['Titular', acc.holder],
+                        ['Identificación', acc.id],
+                    ]}
+                />
+            ))}
+            <ReferenceBox refCode={refCode} />
+            <ProofActions refCode={refCode} amount={amount} currency={currency} frequency={frequency} donor={donor} method="Transferencia" />
+        </div>
+    );
+}
+
+/* ---- Caja del código de referencia (con copiar) ---- */
+function ReferenceBox({ refCode }) {
+    return (
+        <div className="flex items-center justify-between gap-3 rounded-xl bg-white dark:bg-dark-950 border border-primary-200 dark:border-primary-800/50 px-4 py-3">
+            <div>
+                <p className="text-[11px] uppercase tracking-wide text-dark-400">
+                    Usa este código como concepto / referencia
+                </p>
+                <p className="text-lg font-extrabold text-primary-600 dark:text-primary-300 tracking-wide">
+                    {refCode}
+                </p>
+            </div>
+            <CopyButton value={refCode} />
+        </div>
+    );
+}
+
+/* ---- Botones para enviar el comprobante ---- */
+function ProofActions({ refCode, amount, currency, frequency, donor, method }) {
+    const summary =
+        `Hola, realicé una donación a Fundación Arupo.\n` +
+        `Código: ${refCode}\n` +
+        `Monto: ${formatAmount(amount, currency)} (${frequency === 'monthly' ? 'mensual' : 'única'})\n` +
+        `Método: ${method}\n` +
+        `Nombre: ${(donor?.firstName || '') + ' ' + (donor?.lastName || '')}`.trim() +
+        `\nAdjunto el comprobante.`;
+    const wa = `https://wa.me/${proofContact.whatsapp}?text=${encodeURIComponent(summary)}`;
+    const mail =
+        `mailto:${proofContact.email}` +
+        `?subject=${encodeURIComponent('Comprobante de donación ' + refCode)}` +
+        `&body=${encodeURIComponent(summary)}`;
+    return (
+        <div>
+            <p className="text-xs text-dark-400 mb-2">
+                Cuando completes el pago, envíanos tu comprobante:
+            </p>
+            <div className="flex flex-wrap gap-2">
+                <a
+                    href={wa}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="inline-flex items-center gap-2 px-4 py-2 rounded-full text-sm font-semibold text-white bg-green-600 hover:bg-green-500 transition-colors"
+                >
+                    <WhatsAppIcon className="w-4 h-4" /> Enviar por WhatsApp
+                </a>
+                <a
+                    href={mail}
+                    className="inline-flex items-center gap-2 px-4 py-2 rounded-full text-sm font-semibold text-dark-700 dark:text-dark-200 border border-dark-200 dark:border-dark-700 hover:bg-dark-100 dark:hover:bg-dark-800 transition-colors"
+                >
+                    <MailIcon className="w-4 h-4" /> Enviar por correo
+                </a>
             </div>
         </div>
     );
 }
 
-// Formulario de tarjeta (maqueta de UI — se reemplaza por Stripe Elements
-// al conectar la pasarela real).
+/* ---- Tabla simple de datos ---- */
+function DataTable({ rows }) {
+    return (
+        <div className="rounded-xl overflow-hidden border border-dark-100 dark:border-dark-800">
+            {rows.map(([label, value], i) => (
+                <div
+                    key={label}
+                    className={`flex items-center justify-between gap-3 px-4 py-2.5 text-sm ${
+                        i % 2 === 0 ? 'bg-white dark:bg-dark-950' : 'bg-dark-50 dark:bg-dark-900'
+                    }`}
+                >
+                    <span className="text-dark-400">{label}</span>
+                    <span className="font-semibold text-dark-900 dark:text-white text-right break-all">
+                        {value}
+                    </span>
+                </div>
+            ))}
+        </div>
+    );
+}
+
+/* ---- Botón copiar al portapapeles ---- */
+function CopyButton({ value }) {
+    const [copied, setCopied] = useState(false);
+    function copy() {
+        try {
+            navigator.clipboard.writeText(value).then(() => {
+                setCopied(true);
+                setTimeout(() => setCopied(false), 1800);
+            });
+        } catch {
+            /* portapapeles no disponible */
+        }
+    }
+    return (
+        <button
+            onClick={copy}
+            className="inline-flex items-center gap-1.5 px-3 py-2 rounded-lg text-sm font-semibold text-primary-600 dark:text-primary-300 border border-primary-300/60 dark:border-primary-700/60 hover:bg-primary-50 dark:hover:bg-primary-900/20 transition-colors shrink-0"
+            aria-label="Copiar código"
+        >
+            {copied ? <CheckIcon className="w-4 h-4" /> : <CopyIcon className="w-4 h-4" />}
+            {copied ? 'Copiado' : 'Copiar'}
+        </button>
+    );
+}
+
+// Formulario de tarjeta (maqueta de UI — se reemplaza por el widget de
+// Datafast (Dataweb 2.0 / COPYandPAY) al conectar la pasarela real).
 function CardForm() {
     return (
         <div className="space-y-3">
@@ -786,16 +963,39 @@ function MethodIcon({ id }) {
             </svg>
         );
     }
-    if (id === 'paypal') {
+    if (id === 'global66') {
         return (
-            <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
-                <path d="M7.076 21.337H2.47a.641.641 0 0 1-.633-.74L4.944.901C5.026.382 5.474 0 5.998 0h7.46c2.57 0 4.578.543 5.69 1.81 1.01 1.15 1.304 2.42 1.012 4.287-.023.143-.047.288-.077.437-.983 5.05-4.349 6.797-8.647 6.797h-2.19c-.524 0-.968.382-1.05.9l-1.12 7.106zm14.146-14.42a3.35 3.35 0 0 0-.607-.541c-.013.076-.026.175-.041.254-.93 4.778-4.005 7.201-9.138 7.201h-2.19a.563.563 0 0 0-.556.479l-1.187 7.527h-.506l-.24 1.516a.56.56 0 0 0 .554.647h3.882c.46 0 .85-.334.922-.788.06-.26.76-4.852.816-5.09a.932.932 0 0 1 .923-.788h.58c3.76 0 6.705-1.528 7.565-5.946.36-1.847.174-3.388-.777-4.471z" />
+            <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.8}>
+                <circle cx="12" cy="12" r="9" />
+                <path strokeLinecap="round" strokeLinejoin="round" d="M3.5 12h17M12 3a15 15 0 010 18M12 3a15 15 0 000 18" />
             </svg>
         );
     }
     return (
         <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.8}>
             <path strokeLinecap="round" strokeLinejoin="round" d="M3 10h18M3 10l9-6 9 6M5 10v9m14-9v9M9 19v-5h6v5" />
+        </svg>
+    );
+}
+function WhatsAppIcon({ className }) {
+    return (
+        <svg className={className} fill="currentColor" viewBox="0 0 24 24">
+            <path d="M12.031 6.172c-3.181 0-5.767 2.586-5.768 5.766-.001 1.298.38 2.27 1.019 3.287l-.582 2.128 2.182-.573c.978.58 1.911.928 3.145.929 3.178 0 5.767-2.587 5.768-5.766.001-3.187-2.575-5.77-5.764-5.771zm3.392 8.244c-.144.405-.837.774-1.17.824-.299.045-.677.063-1.092-.111-.352-.148-.973-.397-1.943-1.272-1.084-.979-1.815-2.185-2.025-2.54-.21-.355-.022-.547.155-.724.161-.161.353-.414.53-.621.174-.207.234-.355.352-.591.118-.236.059-.443-.03-.621-.088-.178-.778-1.879-1.066-2.571-.274-.658-.553-.568-.778-.578-.207-.008-.445-.011-.682-.011-.237 0-.621.089-.947.443-.326.355-1.244 1.214-1.244 2.959s1.274 3.433 1.451 3.67c.178.237 2.493 3.823 6.035 5.356 2.308.995 3.109.845 3.626.702.597-.165 1.839-.751 2.097-1.477.258-.726.258-1.348.181-1.477-.077-.13-.279-.207-.633-.385z" />
+        </svg>
+    );
+}
+function MailIcon({ className }) {
+    return (
+        <svg className={className} fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.8}>
+            <path strokeLinecap="round" strokeLinejoin="round" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
+        </svg>
+    );
+}
+function CopyIcon({ className }) {
+    return (
+        <svg className={className} fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.8}>
+            <rect x="9" y="9" width="11" height="11" rx="2" />
+            <path strokeLinecap="round" strokeLinejoin="round" d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1" />
         </svg>
     );
 }
