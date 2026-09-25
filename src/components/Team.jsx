@@ -2,17 +2,17 @@ const defaultMembers = [
     {
         name: "Maria Fernanda Ayala",
         role: "Directora de Fundación Arupo",
-        image: "/TeamFA/Maria%20Fernanda.JPG"
+        image: "/TeamFA/Maria%20Fernanda.webp"
     },
     {
         name: "Anthony Karter",
         role: "Director de Comunicación",
-        image: "/TeamFA/Anthony%20Karter.JPG"
+        image: "/TeamFA/Anthony%20Karter.webp"
     },
     {
         name: "Milton Solano",
         role: "Técnico en Discapacidad",
-        image: "/TeamFA/Milton%20Solano.JPG"
+        image: "/TeamFA/Milton%20Solano.webp"
     }
 ];
 
@@ -39,6 +39,8 @@ export default function Team({ variant = 'primary', members = defaultMembers }) 
                                 <img
                                     src={member.image}
                                     alt={member.name}
+                                    loading="lazy"
+                                    decoding="async"
                                     className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
                                 />
                                 <div className="absolute inset-0 bg-gradient-to-t from-dark-900/80 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end p-6">

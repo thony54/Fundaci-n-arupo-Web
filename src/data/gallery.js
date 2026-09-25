@@ -1,32 +1,55 @@
-// Galería generada automáticamente desde src/assets/galeria/<Sección>/<Título - Categoría>.webp
+// Galería generada automáticamente desde
+//   src/assets/galeria/<Etiqueta>/<Nombre del evento - Ubicación>/<n>.webp
 // (esos archivos los crea `npm run galeria` a partir de galeria-originales/).
-// Un prefijo numérico opcional ("01 ", "2. ") en carpetas o archivos sirve para ordenar y no se muestra.
+// Un prefijo numérico en la etiqueta ("1 Ferias") sirve para ordenar y no se muestra.
 
-const full = import.meta.glob('../assets/galeria/*/*.webp', { eager: true, import: 'default', query: '?url' });
+const files = import.meta.glob('../assets/galeria/*/*/*.webp', { eager: true, import: 'default', query: '?url' });
 
 const stripOrder = (s) => s.replace(/^\d+[\s._-]+/, '');
-
-const bySection = new Map();
-
-for (const [path, src] of Object.entries(full)) {
-    if (path.endsWith('.thumb.webp')) continue;
-    const [, sectionDir, file] = path.match(/galeria\/([^/]+)\/(.+)\.webp$/);
-    const parts = stripOrder(file).split(' - ');
-    const category = parts.length > 1 ? parts.pop() : '';
-    const title = parts.join(' - ');
-    const thumb = full[path.replace(/\.webp$/, '.thumb.webp')] ?? src;
-
-    if (!bySection.has(sectionDir)) bySection.set(sectionDir, []);
-    bySection.get(sectionDir).push({ id: path, sortKey: file, title, category, src, thumb });
-}
-
 const collator = new Intl.Collator('es', { numeric: true });
 
-export const gallerySections = [...bySection.entries()]
-    .sort(([a], [b]) => collator.compare(a, b))
-    .map(([dir, items]) => ({
-        title: stripOrder(dir),
-        items: items.sort((a, b) => collator.compare(a.sortKey, b.sortKey)),
-    }));
+const albumsByKey = new Map();
 
-export const galleryImages = gallerySections.flatMap((s) => s.items);
+for (const [path, src] of Object.entries(files)) {
+    if (path.endsWith('.thumb.webp')) continue;
+    const [, tagDir, albumDir, file] = path.match(/galeria\/([^/]+)\/([^/]+)\/(.+)\.webp$/);
+    const key = `${tagDir}/${albumDir}`;
+
+    if (!albumsByKey.has(key)) {
+        const parts = albumDir.split(' - ');
+        const location = parts.length > 1 ? parts.pop() : '';
+        albumsByKey.set(key, {
+            id: key,
+            tagKey: tagDir,
+            tag: stripOrder(tagDir),
+            title: parts.join(' - '),
+            location,
+            photos: [],
+        });
+    }
+    albumsByKey.get(key).photos.push({
+        id: path,
+        sortKey: file,
+        src,
+        thumb: files[path.replace(/\.webp$/, '.thumb.webp')] ?? src,
+    });
+}
+
+for (const album of albumsByKey.values()) {
+    album.photos.sort((a, b) => collator.compare(a.sortKey, b.sortKey));
+    album.cover = album.photos[0];
+}
+
+// Etiquetas ordenadas; dentro de cada una, primero los álbumes con más fotos.
+export const galleryTags = [...new Set([...albumsByKey.values()].map((a) => a.tagKey))]
+    .sort(collator.compare)
+    .map((tagKey) => {
+        const albums = [...albumsByKey.values()]
+            .filter((a) => a.tagKey === tagKey)
+            .sort((a, b) => b.photos.length - a.photos.length || collator.compare(a.title, b.title));
+        return { title: stripOrder(tagKey), albums };
+    });
+
+export const galleryAlbums = galleryTags.flatMap((t) => t.albums);
+
+export const galleryPhotoCount = galleryAlbums.reduce((n, a) => n + a.photos.length, 0);
