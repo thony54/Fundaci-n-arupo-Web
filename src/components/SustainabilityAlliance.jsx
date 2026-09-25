@@ -1,5 +1,5 @@
 import Reveal from './motion/Reveal';
-import SectionDecor from './ui/Decor';
+import SectionDecor, { ArupoFlower } from './ui/Decor';
 import connexoIso from '../assets/CONNEXO ISO O.png';
 
 export default function SustainabilityAlliance() {
@@ -11,28 +11,21 @@ export default function SustainabilityAlliance() {
                     {/* Visual Side: Orbital Synergy with Logo */}
                     <Reveal>
                         <div className="flex justify-center">
-                            <div className="relative w-[19rem] h-[19rem] sm:w-[26rem] sm:h-[26rem] flex items-center justify-center">
-                                {/* Órbitas decorativas alrededor del logo */}
-                                <div aria-hidden="true" className="arupo-deco inset-0 rounded-full bg-gradient-to-br from-primary-50 via-cream-100 to-[#fbeef6] dark:from-primary-500/10 dark:via-dark-900 dark:to-therapeutic-500/10" />
-                                <div aria-hidden="true" className="arupo-deco inset-6 rounded-full border border-primary-200 dark:border-primary-800/60" />
-                                <div aria-hidden="true" className="arupo-deco inset-0 arupo-orbit">
-                                    <span className="absolute left-1/2 -top-1.5 -ml-1.5 w-3 h-3 rounded-full bg-primary-500 shadow-[0_0_14px_rgba(234,88,12,0.8)]" />
-                                </div>
-                                <div aria-hidden="true" className="arupo-deco inset-14 rounded-full border-2 border-dashed border-accent-300/70 dark:border-accent-500/30" />
-                                <div aria-hidden="true" className="arupo-deco inset-14 arupo-orbit is-reverse">
-                                    <span className="absolute top-1/2 -right-2 -mt-2 w-4 h-4 rounded-full bg-gradient-to-br from-accent-300 to-arupo-purple" />
-                                </div>
+                            <div className="relative w-full max-w-[26rem] p-4 sm:p-6">
+                                {/* Capa de color inclinada detrás de la tarjeta */}
+                                <div aria-hidden="true" className="arupo-deco inset-0 petal-lg bg-gradient-to-br from-primary-400 via-primary-600 to-arupo-purple -rotate-6 opacity-90 transition-transform duration-700" />
+                                <ArupoFlower className="-bottom-8 -left-8 w-32 h-32 text-primary-500/30 dark:text-primary-400/25" strokeWidth={2.2} />
                                 <a
-                                    href="https://www.connexo.tech/"
+                                    href="https://web.connexoapp.com/"
                                     target="_blank"
                                     rel="noopener noreferrer"
-                                    className="relative z-10 block w-44 h-44 sm:w-56 sm:h-56 rounded-full bg-white dark:bg-dark-900 shadow-[0_24px_60px_-20px_rgba(234,88,12,0.45)] ring-1 ring-primary-100 dark:ring-primary-900/60 p-8 sm:p-10 transition-all duration-500 hover:scale-105 active:scale-95 group"
+                                    className="group relative z-10 flex aspect-[4/3] items-center justify-center petal-lg bg-white dark:bg-dark-900 p-10 sm:p-14 shadow-[0_30px_60px_-28px_rgba(234,88,12,0.55)] ring-1 ring-primary-100 dark:ring-primary-900/50 transition-all duration-500 hover:-translate-y-1.5 hover:shadow-[0_36px_70px_-26px_rgba(234,88,12,0.7)]"
                                 >
                                     {/* Logo Symbol (ISO) */}
                                     <img
                                         src={connexoIso}
                                         alt="Visitar sitio web de Connexo"
-                                        className="w-full h-full object-contain transition-all duration-500 group-hover:drop-shadow-[0_0_25px_rgba(231,117,18,0.4)]"
+                                        className="w-full max-w-[15rem] h-auto object-contain transition-transform duration-500 group-hover:scale-105"
                                     />
                                 </a>
                             </div>
@@ -60,7 +53,7 @@ export default function SustainabilityAlliance() {
                                 </p>
                                 <p className="mt-4">
                                     Tú también puedes ser parte de este proyecto y sumar tu apoyo. <br />
-                                    <a href="https://www.connexo.tech/ec" target="_blank" rel="noopener noreferrer" className="text-primary-500 hover:text-primary-600 font-bold underline inline-flex items-center gap-1 mt-2">
+                                    <a href="https://web.connexoapp.com/" target="_blank" rel="noopener noreferrer" className="text-primary-500 hover:text-primary-600 font-bold underline inline-flex items-center gap-1 mt-2">
                                         Conoce más y únete aquí
                                         <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M14 5l7 7m0 0l-7 7m7-7H3" /></svg>
                                     </a>

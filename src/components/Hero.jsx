@@ -41,6 +41,9 @@ export default function Hero() {
     // Layered parallax: content drifts up and fades; background layers move slower.
     const yContent = useTransform(scrollYProgress, [0, 1], ['0%', '30%']);
     const opacity = useTransform(scrollYProgress, [0, 0.75], [1, 0]);
+    // El indicador "Descubre" desaparece apenas se empieza a bajar, para que el
+    // contenido (que se desplaza hacia abajo con el parallax) nunca lo pise.
+    const cueOpacity = useTransform(scrollYProgress, [0, 0.08], [1, 0]);
     const yMesh = useTransform(scrollYProgress, [0, 1], ['0%', '18%']);
     const yBlobFar = useTransform(scrollYProgress, [0, 1], ['0%', '55%']);
     const scaleMesh = useTransform(scrollYProgress, [0, 1], [1, 1.15]);
@@ -83,7 +86,7 @@ export default function Hero() {
             {/* Content: scroll layer (parallax + fade) wraps the reveal layer */}
             <motion.div
                 style={{ y: yContent, opacity }}
-                className="relative z-10 mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 pt-24 pb-16 text-center"
+                className="relative z-10 mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 pt-24 pb-16 md:pb-32 text-center"
             >
                 <motion.div
                     ref={revealRef}
@@ -159,8 +162,8 @@ export default function Hero() {
 
             {/* Scroll cue */}
             <motion.div
-                style={{ opacity }}
-                className="absolute bottom-7 left-1/2 -translate-x-1/2 z-10 flex flex-col items-center gap-2"
+                style={{ opacity: cueOpacity }}
+                className="absolute bottom-7 left-1/2 -translate-x-1/2 z-10 hidden md:flex flex-col items-center gap-2 pointer-events-none"
                 aria-hidden="true"
             >
                 <span className="text-[11px] uppercase tracking-[0.2em] text-dark-400">Descubre</span>

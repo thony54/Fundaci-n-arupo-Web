@@ -369,14 +369,11 @@
   }
   .dark .arupo-halo { opacity: 0.35; }
   .arupo-flower { animation: arupo-spin-slow 90s linear infinite; }
-  .arupo-orbit { animation: arupo-spin-slow 28s linear infinite; }
-  .arupo-orbit.is-reverse { animation-direction: reverse; animation-duration: 40s; }
-}
+    }
 
 @keyframes arupo-spin-slow { to { transform: rotate(360deg); } }
-@media (prefers-reduced-motion: reduce) { .arupo-flower, .arupo-orbit { animation: none; } }
-.a11y-reduced-motion .arupo-flower,
-.a11y-reduced-motion .arupo-orbit { animation: none !important; }
+@media (prefers-reduced-motion: reduce) { .arupo-flower { animation: none; } }
+.a11y-reduced-motion .arupo-flower { animation: none !important; }
 
 /* Los modos de alto contraste / visual total no necesitan decoración */
 .a11y-high-contrast .arupo-deco,
