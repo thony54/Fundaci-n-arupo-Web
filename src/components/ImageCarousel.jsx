@@ -1,55 +1,47 @@
-import { motion } from 'framer-motion';
+import { Link } from 'react-router-dom';
+import { galleryImages } from '../data/gallery';
 
-const images = [
-    { url: '/images/impact1.png', title: 'Impacto Social' },
-    { url: '/images/therapy1.png', title: 'Centro Terapéutico' },
-    { url: '/images/volunteer1.png', title: 'Voluntariado' },
-    { url: '/images/education1.png', title: 'Educación' },
-    { url: '/images/inclusion1.png', title: 'Inclusión' },
-    { url: '/images/health1.png', title: 'Salud' },
-    // Duplicating some to reach 9 and then doubling for infinite scroll
-    { url: '/images/impact1.png', title: 'Comunidad' },
-    { url: '/images/therapy1.png', title: 'Bienestar' },
-    { url: '/images/volunteer1.png', title: 'Compromiso' }
-];
-
-// Double the images array to create a seamless loop
-const marqueeImages = [...images, ...images];
+// Repite las fotos hasta tener suficientes para cubrir pantallas anchas,
+// y luego duplica la tira completa para que el bucle (-50%) sea continuo.
+const MIN_ITEMS = 10;
+const strip = galleryImages.length
+    ? Array.from({ length: Math.ceil(MIN_ITEMS / galleryImages.length) }, () => galleryImages).flat()
+    : [];
+const marqueeImages = [...strip, ...strip];
 
 export default function ImageCarousel() {
+    if (!strip.length) return null;
+
     return (
         <section className="py-20 bg-dark-950 overflow-hidden">
             <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 mb-12">
-                <div className="flex items-center gap-4">
-                    <h2 className="text-2xl font-bold text-white whitespace-nowrap">Nuestra Labor en Imágenes</h2>
-                    <div className="h-px w-full bg-gradient-to-r from-dark-700 to-transparent" />
+                <div className="flex items-center gap-4 sm:gap-6">
+                    <div className="h-px flex-1 bg-gradient-to-r from-transparent to-dark-700" />
+                    <h2 className="text-2xl md:text-3xl font-bold text-white text-center">Nuestra Labor en Imágenes</h2>
+                    <div className="h-px flex-1 bg-gradient-to-l from-transparent to-dark-700" />
                 </div>
             </div>
 
-            <div className="relative flex">
-                <motion.div
-                    className="flex gap-4 animate-marquee"
-                    animate={{
-                        x: [0, -1920], // Adjusted based on image width + gap
-                    }}
-                    transition={{
-                        x: {
-                            repeat: Infinity,
-                            repeatType: "loop",
-                            duration: 30,
-                            ease: "linear",
-                        },
-                    }}
-                    style={{ width: "fit-content" }}
+            <div className="gallery-marquee relative [mask-image:linear-gradient(to_right,transparent,black_6%,black_94%,transparent)]">
+                <div
+                    className="gallery-marquee-track flex w-max"
+                    style={{ '--marquee-duration': `${strip.length * 4}s` }}
                 >
                     {marqueeImages.map((image, index) => (
-                        <div
+                        <Link
                             key={index}
-                            className="relative w-64 h-48 flex-shrink-0 group overflow-hidden rounded-xl bg-dark-900 border border-dark-800"
+                            to="/galeria"
+                            aria-hidden={index >= strip.length || undefined}
+                            tabIndex={index >= strip.length ? -1 : undefined}
+                            className="relative w-64 h-48 mr-4 flex-shrink-0 group overflow-hidden rounded-xl bg-dark-900 border border-dark-800"
                         >
                             <img
-                                src={image.url}
-                                alt={image.title}
+                                src={image.thumb}
+                                alt={index >= strip.length ? '' : image.title}
+                                loading="lazy"
+                                decoding="async"
+                                width="256"
+                                height="192"
                                 className="w-full h-full object-cover grayscale transition-all duration-500 group-hover:grayscale-0 group-hover:scale-110"
                             />
                             <div className="absolute inset-0 bg-gradient-to-t from-dark-950/80 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end p-4">
@@ -57,9 +49,19 @@ export default function ImageCarousel() {
                                     {image.title}
                                 </span>
                             </div>
-                        </div>
+                        </Link>
                     ))}
-                </motion.div>
+                </div>
+            </div>
+
+            <div className="mt-10 text-center">
+                <Link
+                    to="/galeria"
+                    className="inline-flex items-center gap-2 text-sm font-semibold text-accent-400 hover:text-accent-300 transition-colors"
+                >
+                    Ver galería completa
+                    <span aria-hidden="true">→</span>
+                </Link>
             </div>
         </section>
     );

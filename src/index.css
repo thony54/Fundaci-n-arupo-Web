@@ -158,6 +158,20 @@
 .a11y-reduced-motion .arupo-float,
 .a11y-reduced-motion .arupo-sheen::after { animation: none !important; }
 
+/* Carrusel "Nuestra Labor en Imágenes": bucle continuo, pausa al pasar el mouse */
+@keyframes gallery-marquee { to { transform: translateX(-50%); } }
+.gallery-marquee-track {
+  animation: gallery-marquee var(--marquee-duration, 40s) linear infinite;
+}
+.gallery-marquee:hover .gallery-marquee-track,
+.gallery-marquee:focus-within .gallery-marquee-track { animation-play-state: paused; }
+.a11y-reduced-motion .gallery-marquee { overflow-x: auto; }
+.a11y-reduced-motion .gallery-marquee-track { animation: none !important; }
+@media (prefers-reduced-motion: reduce) {
+  .gallery-marquee { overflow-x: auto; }
+  .gallery-marquee-track { animation: none; }
+}
+
 /* ============================================================
    Magic UI (vendored, adapted to Tailwind v4 + framer-motion)
    ============================================================ */
