@@ -2,19 +2,33 @@ import { createContext, useContext, useEffect, useState } from 'react';
 
 const AccessibilityContext = createContext();
 
+const DEFAULTS = {
+    fontSize: 1, // 1, 1.25, 1.5
+    highContrast: false,
+    grayscale: false,
+    highlightInteractions: false,
+    lineSpacing: 1, // 1, 1.5, 2
+    reducedMotion: false,
+    dyslexiaFont: false, // Fuente legible + espaciado cognitivo
+    readingRuler: false, // Guía de lectura que sigue el cursor/dedo
+    bigCursor: false, // Cursor grande de alto contraste
+    speech: false, // Lector de voz (TTS)
+    visualAccessibilityMode: false,
+};
+
+function readInitial() {
+    if (typeof window === 'undefined') return DEFAULTS;
+    try {
+        const saved = window.localStorage.getItem('accessibility-settings');
+        // Merge con DEFAULTS: los ajustes guardados antes de añadir claves nuevas no quedan en undefined.
+        return saved ? { ...DEFAULTS, ...JSON.parse(saved) } : DEFAULTS;
+    } catch {
+        return DEFAULTS;
+    }
+}
+
 export function AccessibilityProvider({ children }) {
-    const [settings, setSettings] = useState(() => {
-        const saved = localStorage.getItem('accessibility-settings');
-        return saved ? JSON.parse(saved) : {
-            fontSize: 1, // 1, 1.25, 1.5
-            highContrast: false,
-            grayscale: false,
-            highlightInteractions: false,
-            lineSpacing: 1, // 1, 1.5, 2
-            reducedMotion: false,
-            visualAccessibilityMode: false,
-        };
-    });
+    const [settings, setSettings] = useState(readInitial);
 
     useEffect(() => {
         const root = window.document.documentElement;
@@ -38,8 +52,14 @@ export function AccessibilityProvider({ children }) {
         root.classList.toggle('a11y-grayscale', settings.grayscale);
         root.classList.toggle('a11y-highlight', settings.highlightInteractions);
         root.classList.toggle('a11y-reduced-motion', settings.reducedMotion);
+        root.classList.toggle('a11y-dyslexia', settings.dyslexiaFont);
+        root.classList.toggle('a11y-big-cursor', settings.bigCursor);
 
-        localStorage.setItem('accessibility-settings', JSON.stringify(settings));
+        try {
+            localStorage.setItem('accessibility-settings', JSON.stringify(settings));
+        } catch {
+            /* localStorage bloqueado — no es fatal para la sesión actual. */
+        }
     }, [settings]);
 
     const updateSetting = (key, value) => {
@@ -47,15 +67,7 @@ export function AccessibilityProvider({ children }) {
     };
 
     const resetSettings = () => {
-        setSettings({
-            fontSize: 1,
-            highContrast: false,
-            grayscale: false,
-            highlightInteractions: false,
-            lineSpacing: 1,
-            reducedMotion: false,
-            visualAccessibilityMode: false,
-        });
+        setSettings(DEFAULTS);
     };
 
     return (

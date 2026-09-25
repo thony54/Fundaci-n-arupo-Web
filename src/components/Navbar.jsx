@@ -3,6 +3,7 @@ import { Link, useLocation } from 'react-router-dom';
 import ThemeToggle from './ThemeToggle';
 import AccessibilityPanel from './AccessibilityPanel';
 import { useAccessibility } from '../context/AccessibilityContext';
+import { AccessibilityIcon, EyeIcon } from './A11yIcons';
 
 // Use absolute paths for home sections to support navigation from sub-pages
 const navLinks = [
@@ -76,10 +77,7 @@ export default function Navbar() {
                                 aria-label={settings.visualAccessibilityMode ? "Desactivar modo visual total" : "Activar modo visual total"}
                                 title="Modo Accesibilidad Visual Total"
                             >
-                                <svg className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
-                                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />
-                                </svg>
+                                <EyeIcon className="a11y-icon h-6 w-6" />
                             </button>
                             <button
                                 onClick={() => setIsA11yOpen(true)}
@@ -87,9 +85,7 @@ export default function Navbar() {
                                 aria-label="Abrir panel de accesibilidad"
                                 title="Opciones de accesibilidad"
                             >
-                                <svg className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197m13.5-9a2.25 2.25 0 11-4.5 0 2.25 2.25 0 014.5 0z" />
-                                </svg>
+                                <AccessibilityIcon className="a11y-icon h-6 w-6" />
                             </button>
                             <ThemeToggle />
                         </div>
@@ -101,21 +97,17 @@ export default function Navbar() {
                             onClick={() => updateSetting('visualAccessibilityMode', !settings.visualAccessibilityMode)}
                             className={`p-2 rounded-lg transition-colors ${settings.visualAccessibilityMode ? 'bg-primary-600 text-white' : 'text-dark-300 hover:text-white hover:bg-dark-800'
                                 }`}
-                            aria-label="Modo visual total"
+                            aria-pressed={settings.visualAccessibilityMode}
+                            aria-label={settings.visualAccessibilityMode ? "Desactivar modo visual total" : "Activar modo visual total"}
                         >
-                            <svg className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
-                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />
-                            </svg>
+                            <EyeIcon className="a11y-icon h-6 w-6" />
                         </button>
                         <button
                             onClick={() => setIsA11yOpen(true)}
                             className="p-2 rounded-lg text-dark-300 hover:text-white hover:bg-dark-800 transition-colors"
                             aria-label="Opciones de accesibilidad"
                         >
-                            <svg className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197m13.5-9a2.25 2.25 0 11-4.5 0 2.25 2.25 0 014.5 0z" />
-                            </svg>
+                            <AccessibilityIcon className="a11y-icon h-6 w-6" />
                         </button>
                         <button
                             className="inline-flex items-center justify-center p-2 rounded-lg text-dark-300 hover:text-white hover:bg-dark-800 transition-colors duration-200"

@@ -1,6 +1,7 @@
 import { motion, AnimatePresence } from 'framer-motion';
 import { useAccessibility } from '../context/AccessibilityContext';
 import { useEffect, useRef } from 'react';
+import { AccessibilityIcon } from './A11yIcons';
 
 export default function AccessibilityPanel({ isOpen, onClose }) {
     const { settings, updateSetting, resetSettings } = useAccessibility();
@@ -53,9 +54,13 @@ export default function AccessibilityPanel({ isOpen, onClose }) {
             min: 1, max: 2, step: 0.5,
             desc: 'Aumenta el espacio entre líneas de texto.'
         },
+        { label: 'Fuente para dislexia', key: 'dyslexiaFont', type: 'toggle', desc: 'Tipografía más legible y más espacio entre letras, palabras y líneas.' },
         { label: 'Alto contraste', key: 'highContrast', type: 'toggle', desc: 'Colores de alto contraste para visión reducida.' },
         { label: 'Blanco y negro', key: 'grayscale', type: 'toggle', desc: 'Elimina los colores para evitar distracciones o fatiga.' },
         { label: 'Resaltar enlaces', key: 'highlightInteractions', type: 'toggle', desc: 'Añade bordes y subrayado a elementos interactivos.' },
+        { label: 'Guía de lectura', key: 'readingRuler', type: 'toggle', desc: 'Una franja clara sigue el cursor o el dedo y atenúa el resto.' },
+        { label: 'Cursor grande', key: 'bigCursor', type: 'toggle', desc: 'Puntero extra grande y de alto contraste (solo en computador).' },
+        { label: 'Lector de voz', key: 'speech', type: 'toggle', desc: 'Selecciona un texto y la página lo lee en voz alta.' },
         { label: 'Desactivar animaciones', key: 'reducedMotion', type: 'toggle', desc: 'Elimina efectos de movimiento en toda la página.' },
         { label: 'Modo Visual Total', key: 'visualAccessibilityMode', type: 'toggle', desc: 'Máximo contraste y simplificación total para baja visión.' },
     ];
@@ -74,6 +79,7 @@ export default function AccessibilityPanel({ isOpen, onClose }) {
                     {/* Panel */}
                     <motion.div
                         ref={panelRef}
+                        data-a11y-ui
                         initial={{ opacity: 0, x: 100 }}
                         animate={{ opacity: 1, x: 0 }}
                         exit={{ opacity: 0, x: 100 }}
@@ -84,9 +90,7 @@ export default function AccessibilityPanel({ isOpen, onClose }) {
                     >
                         <div className="flex items-center justify-between mb-8">
                             <h2 id="a11y-title" className="text-xl font-bold text-white flex items-center gap-2">
-                                <svg className="h-6 w-6 text-primary-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197m13.5-9a2.25 2.25 0 11-4.5 0 2.25 2.25 0 014.5 0z" />
-                                </svg>
+                                <AccessibilityIcon className="a11y-icon h-6 w-6 text-primary-500" />
                                 Accesibilidad
                             </h2>
                             <button
@@ -104,7 +108,7 @@ export default function AccessibilityPanel({ isOpen, onClose }) {
                             {options.map((opt) => (
                                 <div key={opt.key} className="space-y-3">
                                     <div className="flex items-center justify-between">
-                                        <label htmlFor={opt.key} className="font-semibold text-dark-100 flex flex-col">
+                                        <label htmlFor={opt.key} className="font-semibold text-dark-100 flex flex-col pr-4">
                                             {opt.label}
                                             <span className="text-xs font-normal text-dark-400 mt-1">{opt.desc}</span>
                                         </label>
@@ -112,7 +116,7 @@ export default function AccessibilityPanel({ isOpen, onClose }) {
                                             <button
                                                 id={opt.key}
                                                 onClick={() => updateSetting(opt.key, !settings[opt.key])}
-                                                className={`relative inline-flex h-6 w-11 items-center rounded-full transition-colors focus:outline-none focus:ring-2 focus:ring-primary-500 focus:ring-offset-2 focus:ring-offset-dark-900 ${settings[opt.key] ? 'bg-primary-600' : 'bg-dark-700'
+                                                className={`relative inline-flex h-6 w-11 shrink-0 items-center rounded-full transition-colors focus:outline-none focus:ring-2 focus:ring-primary-500 focus:ring-offset-2 focus:ring-offset-dark-900 ${settings[opt.key] ? 'bg-primary-600' : 'bg-dark-700'
                                                     }`}
                                                 aria-pressed={settings[opt.key]}
                                             >

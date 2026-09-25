@@ -277,6 +277,11 @@ html.arupo-motion-fallback [data-reveal] * {
   stroke: currentColor !important;
 }
 
+/* Los iconos de línea de accesibilidad no se rellenan (se verían como una mancha). */
+.a11y-high-contrast svg.a11y-icon {
+  fill: none !important;
+}
+
 .a11y-high-contrast img {
   filter: grayscale(1) !important;
   opacity: 0.7 !important;
@@ -316,6 +321,44 @@ html.arupo-motion-fallback [data-reveal] * {
 
 .a11y-grayscale {
   filter: grayscale(1) !important;
+}
+
+/* --- Fuente para dislexia (espaciado cognitivo) ---
+   Sans muy legible + más espacio entre letras, palabras y líneas, sin itálicas
+   (enfoque de la British Dyslexia Association / WebAIM). Cero peso extra. */
+.a11y-dyslexia,
+.a11y-dyslexia * {
+  font-family: Verdana, Tahoma, 'Trebuchet MS', Arial, system-ui, sans-serif !important;
+  font-style: normal !important;
+  letter-spacing: 0.06em !important;
+  word-spacing: 0.16em !important;
+  line-height: 1.6 !important;
+}
+
+/* --- Cursor grande (alto contraste) ---
+   PNG 48x48 (Safari de escritorio no soporta cursores SVG); hotspot en la punta.
+   `auto` de respaldo: si el navegador lo ignora, cae al cursor normal. */
+.a11y-big-cursor,
+.a11y-big-cursor * {
+  cursor: url('/cursor-big.png') 6 4, auto !important;
+}
+.a11y-big-cursor a,
+.a11y-big-cursor button,
+.a11y-big-cursor [role='button'],
+.a11y-big-cursor [role='link'],
+.a11y-big-cursor label[for],
+.a11y-big-cursor select,
+.a11y-big-cursor summary,
+.a11y-big-cursor [tabindex]:not([tabindex='-1']) {
+  cursor: url('/cursor-pointer-big.png') 18 4, auto !important;
+}
+
+/* --- Lector de voz: bloque que se está leyendo / bajo el dedo --- */
+.a11y-tts-reading {
+  outline: 3px solid #e77512 !important;
+  outline-offset: 2px !important;
+  background-color: rgba(231, 117, 18, 0.16) !important;
+  border-radius: 4px !important;
 }
 
 .a11y-highlight a,

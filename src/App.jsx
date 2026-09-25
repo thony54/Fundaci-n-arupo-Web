@@ -8,6 +8,8 @@ import TerritoryStory from './pages/TerritoryStory';
 import TherapeuticCenter from './pages/TherapeuticCenter';
 import Gallery from './pages/Gallery';
 import Donate from './pages/Donate';
+import ReadingRuler from './components/ReadingRuler';
+import SpeechReader from './components/SpeechReader';
 
 export default function App() {
   const location = useLocation();
@@ -27,6 +29,8 @@ export default function App() {
           </Route>
         </Routes>
       </AnimatePresence>
+      <ReadingRuler />
+      <SpeechReader />
     </MotionConfig>
   );
 }
