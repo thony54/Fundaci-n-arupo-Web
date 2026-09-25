@@ -1,3 +1,7 @@
+import SectionHeading from './SectionHeading';
+import SectionDecor from './ui/Decor';
+import { Stagger, StaggerItem } from './motion/Stagger';
+
 const items = [
     {
         label: 'Misión',
@@ -23,38 +27,48 @@ const items = [
 
 export default function MissionVision() {
     return (
-        <section id="mision-vision" className="py-24 bg-dark-50 dark:bg-dark-900 transition-colors duration-300" aria-labelledby="mv-heading">
-            <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-                <div className="text-center max-w-3xl mx-auto mb-16">
-                    <p className="text-sm font-semibold uppercase tracking-widest text-primary-600 mb-3">
-                        Nuestro Propósito
-                    </p>
-                    <h2 id="mv-heading" className="text-3xl sm:text-4xl font-bold text-dark-900 dark:text-white">
-                        Misión y Visión
-                    </h2>
-                </div>
+        <section id="mision-vision" className="relative py-24 lg:py-28 bg-cream-50 dark:bg-night-900 transition-colors duration-300 overflow-hidden" aria-labelledby="mv-heading">
+            <SectionDecor variant="cool" />
 
-                <div className="grid md:grid-cols-2 gap-8">
-                    {items.map((item) => (
-                        <article
-                            key={item.label}
-                            className="relative bg-white dark:bg-dark-950 rounded-3xl border border-dark-100 dark:border-dark-800 p-8 sm:p-10 transition-all duration-300 hover:shadow-xl hover:border-primary-200 dark:hover:border-primary-800 overflow-hidden"
-                        >
-                            <div className="absolute top-0 right-0 w-40 h-40 bg-gradient-to-bl from-primary-50 to-transparent dark:from-primary-900/10 rounded-bl-full" aria-hidden="true" />
-                            <div className="relative">
-                                <div className="inline-flex items-center justify-center w-14 h-14 rounded-2xl bg-primary-100 dark:bg-primary-900/30 text-primary-600 dark:text-primary-400 mb-6 shadow-sm">
+            <div className="relative z-10 mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+                <SectionHeading eyebrow="Nuestro Propósito" title="Misión y Visión" titleId="mv-heading" accent={1} />
+
+                <Stagger className="grid md:grid-cols-2 gap-6 lg:gap-8 items-stretch" stagger={0.15}>
+                    {items.map((item, i) => {
+                        const featured = i === 0;
+                        return (
+                            <StaggerItem
+                                key={item.label}
+                                as="article"
+                                variant="card"
+                                className={`group relative overflow-hidden p-8 sm:p-11 ${featured
+                                    ? 'petal-lg on-dark bg-gradient-to-br from-night-900 via-[#1c1530] to-primary-900 text-white shadow-2xl shadow-primary-900/25 md:translate-y-6'
+                                    : 'petal-lg arupo-card md:-translate-y-2'}`}
+                            >
+                                {/* Icono gigante como marca de agua */}
+                                <div aria-hidden="true" className={`arupo-deco -right-10 -bottom-12 w-64 h-64 [&_svg]:w-full [&_svg]:h-full transition-transform duration-700 group-hover:rotate-6 group-hover:scale-105 ${featured ? 'text-white/[0.06]' : 'text-primary-500/[0.07] dark:text-primary-400/[0.08]'}`}>
                                     {item.icon}
                                 </div>
-                                <h3 className="text-2xl font-bold text-dark-900 dark:text-white mb-4">
-                                    {item.label}
-                                </h3>
-                                <p className="text-dark-600 dark:text-dark-300 leading-relaxed">
-                                    {item.text}
-                                </p>
-                            </div>
-                        </article>
-                    ))}
-                </div>
+                                {featured && (
+                                    <div aria-hidden="true" className="arupo-halo -top-20 -left-16 w-72 h-72" style={{ background: 'radial-gradient(circle, rgba(251,146,60,0.45), transparent 70%)' }} />
+                                )}
+
+                                <div className="relative">
+                                    <div className="arupo-icon w-16 h-16 mb-7">
+                                        {item.icon}
+                                    </div>
+                                    <h3 className={`text-2xl sm:text-3xl font-extrabold tracking-tight mb-4 ${featured ? 'text-white' : 'text-dark-900 dark:text-white'}`}>
+                                        {item.label}
+                                    </h3>
+                                    <span aria-hidden="true" className="block w-12 h-1 rounded-full bg-gradient-to-r from-primary-400 to-accent-400 mb-6" />
+                                    <p className={`leading-relaxed text-[1.02rem] ${featured ? 'text-dark-200' : 'text-dark-600 dark:text-dark-300'}`}>
+                                        {item.text}
+                                    </p>
+                                </div>
+                            </StaggerItem>
+                        );
+                    })}
+                </Stagger>
             </div>
         </section>
     );

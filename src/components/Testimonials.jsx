@@ -1,3 +1,7 @@
+import SectionHeading from './SectionHeading';
+import SectionDecor from './ui/Decor';
+import { Stagger, StaggerItem } from './motion/Stagger';
+
 const testimonials = [
     {
         quote:
@@ -27,58 +31,67 @@ const testimonials = [
 
 export default function Testimonials() {
     return (
-        <section className="py-24 bg-white dark:bg-dark-950 transition-colors duration-300" aria-labelledby="testimonials-heading">
-            <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+        <section className="relative py-24 lg:py-28 bg-white dark:bg-dark-950 transition-colors duration-300 overflow-hidden" aria-labelledby="testimonials-heading">
+            <SectionDecor variant="cool" />
+
+            <div className="relative z-10 mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
                 {/* Header */}
-                <div className="text-center max-w-3xl mx-auto mb-16">
-                    <p className="text-sm font-semibold uppercase tracking-widest text-primary-600 mb-3">
-                        Testimonios
-                    </p>
-                    <h2 id="testimonials-heading" className="text-3xl sm:text-4xl font-bold text-dark-900 dark:text-white">
-                        Historias de resiliencia y esperanza
-                    </h2>
-                    <p className="mt-4 text-dark-500 dark:text-dark-300 text-lg">
-                        Las voces de quienes acompañamos son nuestra mayor motivación para seguir
-                        construyendo un mundo más justo.
-                    </p>
-                </div>
+                <SectionHeading
+                    eyebrow="Testimonios"
+                    title="Historias de resiliencia y esperanza"
+                    titleId="testimonials-heading"
+                    accent={1}
+                    subtitle="Las voces de quienes acompañamos son nuestra mayor motivación para seguir construyendo un mundo más justo."
+                />
 
                 {/* Cards */}
-                <div className="grid md:grid-cols-3 gap-6">
-                    {testimonials.map((t) => (
-                        <article
+                <Stagger className="grid md:grid-cols-3 gap-8 md:pb-12" stagger={0.14}>
+                    {testimonials.map((t, i) => (
+                        <StaggerItem
                             key={t.name}
-                            className="group relative bg-dark-50 dark:bg-dark-900 rounded-2xl border border-dark-100 dark:border-dark-800 p-8 transition-all duration-300 hover:shadow-xl hover:border-primary-200 hover:-translate-y-1"
+                            as="article"
+                            variant="up"
+                            className={`group flex flex-col ${i === 1 ? 'md:translate-y-12' : ''}`}
                         >
-                            {/* Quote icon */}
-                            <svg
-                                className="h-8 w-8 text-primary-200 mb-4"
-                                fill="currentColor"
-                                viewBox="0 0 24 24"
-                                aria-hidden="true"
-                            >
-                                <path d="M14.017 21v-7.391c0-5.704 3.731-9.57 8.983-10.609l.995 2.151c-2.432.917-3.995 3.638-3.995 5.849h4v10H14.017zm-14.017 0v-7.391c0-5.704 3.748-9.57 9-10.609l.996 2.151c-2.433.917-3.996 3.638-3.996 5.849h3.983v10H0z" />
-                            </svg>
+                            {/* Burbuja */}
+                            <div className={`relative arupo-card arupo-card-hover is-warm ${i % 2 ? 'petal-alt' : 'petal-lg'} p-8 pt-10 flex-1`}>
+                                <svg
+                                    className="absolute -top-5 left-8 h-11 w-11 drop-shadow-[0_8px_16px_rgba(234,88,12,0.35)]"
+                                    viewBox="0 0 24 24"
+                                    aria-hidden="true"
+                                >
+                                    <defs>
+                                        <linearGradient id={`q-${i}`} x1="0" y1="0" x2="1" y2="1">
+                                            <stop offset="0" stopColor="#fb923c" />
+                                            <stop offset="1" stopColor="#a13d6d" />
+                                        </linearGradient>
+                                    </defs>
+                                    <path fill={`url(#q-${i})`} d="M14.017 21v-7.391c0-5.704 3.731-9.57 8.983-10.609l.995 2.151c-2.432.917-3.995 3.638-3.995 5.849h4v10H14.017zm-14.017 0v-7.391c0-5.704 3.748-9.57 9-10.609l.996 2.151c-2.433.917-3.996 3.638-3.996 5.849h3.983v10H0z" />
+                                </svg>
 
-                            <blockquote>
-                                <p className="text-dark-600 dark:text-dark-300 leading-relaxed italic">&ldquo;{t.quote}&rdquo;</p>
-                            </blockquote>
+                                <blockquote>
+                                    <p className="text-dark-700 dark:text-dark-200 leading-relaxed italic text-[1.02rem]">&ldquo;{t.quote}&rdquo;</p>
+                                </blockquote>
 
-                            <div className="mt-6 flex items-center gap-3">
+                                {/* Cola de la burbuja */}
+                                <span aria-hidden="true" className="absolute -bottom-3 left-12 w-6 h-6 rotate-45 rounded-br-md bg-[#fffaf4] dark:bg-[#111a2e] shadow-[3px_3px_0_-2px_rgba(234,88,12,0.18)]" />
+                            </div>
+
+                            <div className="mt-7 ml-6 flex items-center gap-3">
                                 <div
-                                    className={`inline-flex items-center justify-center w-11 h-11 rounded-full bg-gradient-to-br ${t.color} text-white font-bold text-sm`}
+                                    className={`inline-flex items-center justify-center w-12 h-12 blob bg-gradient-to-br ${t.color} text-white font-bold text-sm shadow-lg ring-4 ring-white dark:ring-dark-950`}
                                     aria-hidden="true"
                                 >
                                     {t.initials}
                                 </div>
                                 <div>
-                                    <p className="font-semibold text-dark-800 dark:text-white text-sm">{t.name}</p>
-                                    <p className="text-dark-400 dark:text-dark-400 text-xs">{t.role}</p>
+                                    <p className="font-bold text-dark-900 dark:text-white text-sm">{t.name}</p>
+                                    <p className="text-dark-500 dark:text-dark-400 text-xs">{t.role}</p>
                                 </div>
                             </div>
-                        </article>
+                        </StaggerItem>
                     ))}
-                </div>
+                </Stagger>
             </div>
         </section>
     );

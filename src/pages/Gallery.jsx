@@ -5,6 +5,7 @@ import { AnimatePresence, motion } from 'framer-motion';
 import PageTransition from '../components/motion/PageTransition';
 import Reveal from '../components/motion/Reveal';
 import { galleryAlbums, galleryPhotoCount, galleryTags } from '../data/gallery';
+import SectionDecor from '../components/ui/Decor';
 
 // Las fotos salen de galeria-originales/ → `npm run galeria` → src/assets/galeria/.
 // Ver src/data/gallery.js.
@@ -139,13 +140,13 @@ function Lightbox({ album, index, onClose, onNavigate }) {
     );
 }
 
-function AlbumCard({ album, onOpen, eager }) {
+function AlbumCard({ album, onOpen, eager, index = 0 }) {
     const count = album.photos.length;
     return (
         <button
             type="button"
             onClick={onOpen}
-            className="group relative w-full h-full text-left rounded-[1.75rem] bg-white dark:bg-dark-900 shadow-sm hover:shadow-2xl hover:-translate-y-1 transition-all duration-500 border border-dark-100 dark:border-dark-800 flex flex-col overflow-hidden focus:outline-none focus-visible:ring-4 focus-visible:ring-primary-500/50"
+            className={`group arupo-card arupo-card-hover ${index % 2 ? 'petal-alt' : 'petal-lg'} w-full h-full text-left flex flex-col overflow-hidden focus:outline-none focus-visible:ring-4 focus-visible:ring-primary-500/50`}
         >
             <div className="aspect-[4/3] w-full relative overflow-hidden flex-shrink-0 bg-dark-100 dark:bg-dark-950">
                 <img
@@ -157,12 +158,13 @@ function AlbumCard({ album, onOpen, eager }) {
                     height="480"
                     className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700 ease-in-out"
                 />
-                <div className="absolute inset-0 bg-gradient-to-t from-dark-950/50 via-transparent to-transparent" />
+                <div className="absolute inset-0 bg-gradient-to-t from-dark-950/55 via-transparent to-transparent" />
+                <span aria-hidden="true" className="absolute inset-0 bg-gradient-to-br from-primary-500/0 to-arupo-purple/0 group-hover:from-primary-500/15 group-hover:to-arupo-purple/20 transition-colors duration-500" />
                 <span className="absolute top-4 left-4 bg-white/90 dark:bg-dark-900/90 backdrop-blur-md text-[10px] font-bold tracking-widest uppercase text-dark-900 dark:text-white px-3 py-1.5 rounded-full shadow-sm">
                     {album.tag}
                 </span>
                 {count > 1 && (
-                    <span className="absolute bottom-4 right-4 flex items-center gap-1.5 bg-dark-950/70 backdrop-blur-md text-white text-xs font-semibold px-3 py-1.5 rounded-full">
+                    <span className="absolute bottom-4 right-4 flex items-center gap-1.5 bg-gradient-to-r from-primary-500/90 to-[#a13d6d]/90 backdrop-blur-md text-white text-xs font-semibold px-3 py-1.5 rounded-full shadow-lg">
                         <PhotosIcon className="w-3.5 h-3.5" />{count} fotos
                     </span>
                 )}
@@ -201,15 +203,16 @@ export default function Gallery() {
 
     return (
         <PageTransition>
-            <section className="pt-32 pb-24 bg-white dark:bg-dark-950 min-h-screen">
-                <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+            <section className="relative pt-32 pb-28 bg-cream-50 dark:bg-night-900 min-h-screen overflow-hidden">
+                <SectionDecor variant="warm" />
+                <div className="relative z-10 mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
                     <Reveal width="100%">
                         <header className="mb-14 text-center">
-                            <span className="inline-block py-1.5 px-4 rounded-full bg-primary-50 dark:bg-primary-900/20 text-primary-600 dark:text-primary-400 text-xs font-bold tracking-[0.2em] uppercase mb-4">
+                            <span className="arupo-eyebrow mb-5">
                                 Portafolio Institucional
                             </span>
                             <h1 className="text-4xl md:text-5xl lg:text-6xl font-extrabold text-dark-900 dark:text-white mb-6 tracking-tight">
-                                Galería de Impacto
+                                Galería de <span className="text-arupo">Impacto</span>
                             </h1>
                             <p className="text-xl text-dark-500 dark:text-dark-400 max-w-3xl mx-auto font-light leading-relaxed">
                                 Conoce de cerca los rostros, los talleres y los hitos que construyen una sociedad más inclusiva en Ecuador.
@@ -231,8 +234,8 @@ export default function Gallery() {
                                     onClick={() => setActiveTag(tag)}
                                     aria-pressed={active}
                                     className={`flex-shrink-0 whitespace-nowrap inline-flex items-center gap-2 px-4 sm:px-6 py-2.5 rounded-full text-sm font-semibold transition-all duration-300 ${active
-                                        ? 'bg-primary-600 text-white shadow-lg shadow-primary-500/20'
-                                        : 'bg-white dark:bg-dark-900 border border-dark-200 dark:border-dark-800 text-dark-600 dark:text-dark-300 hover:text-primary-600 dark:hover:text-primary-400 hover:border-primary-200'
+                                        ? 'bg-gradient-to-r from-primary-500 via-primary-600 to-[#a13d6d] text-white shadow-[0_12px_28px_-12px_rgba(234,88,12,0.7)]'
+                                        : 'bg-white dark:bg-dark-900 ring-1 ring-primary-100 dark:ring-dark-800 text-dark-600 dark:text-dark-300 hover:text-primary-600 dark:hover:text-primary-400 hover:ring-primary-300 shadow-sm'
                                         }`}
                                 >
                                     {tag === 'All' ? 'Ver todo' : tag}
@@ -245,9 +248,12 @@ export default function Gallery() {
                     {visibleTags.map(({ title, albums }, tagIndex) => (
                         <div key={title} className="mb-20">
                             <div className="flex items-center gap-4 sm:gap-6 mb-10">
-                                <div className="h-px flex-1 bg-gradient-to-r from-transparent to-dark-200 dark:to-dark-800" />
-                                <h2 className="text-2xl md:text-3xl font-extrabold text-dark-900 dark:text-white tracking-tight text-center">{title}</h2>
-                                <div className="h-px flex-1 bg-gradient-to-l from-transparent to-dark-200 dark:to-dark-800" />
+                                <div className="h-px flex-1 bg-gradient-to-r from-transparent via-primary-200 to-primary-400/70 dark:via-primary-900 dark:to-primary-700/70" />
+                                <h2 className="inline-flex items-center gap-3 text-2xl md:text-3xl font-extrabold text-dark-900 dark:text-white tracking-tight text-center">
+                                    <span aria-hidden="true" className="w-3 h-3 petal bg-gradient-to-br from-primary-400 to-arupo-purple" />
+                                    {title}
+                                </h2>
+                                <div className="h-px flex-1 bg-gradient-to-l from-transparent via-primary-200 to-primary-400/70 dark:via-primary-900 dark:to-primary-700/70" />
                             </div>
 
                             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-8">
@@ -256,6 +262,7 @@ export default function Gallery() {
                                         key={album.id}
                                         album={album}
                                         eager={tagIndex === 0 && i < 3}
+                                        index={i}
                                         onOpen={() => open(album)}
                                     />
                                 ))}

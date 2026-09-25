@@ -173,6 +173,228 @@
 }
 
 /* ============================================================
+   Arupo orgánico — lenguaje visual común para todo lo que va
+   después de la portada: formas de pétalo, superficies cálidas,
+   bordes degradados y secciones que se superponen en curva.
+   ============================================================ */
+
+@theme {
+  --color-cream-50: #fffbf6;
+  --color-cream-100: #fdf3e6;
+  --color-cream-200: #f9e4cc;
+  --color-night-900: #0b1120;
+  --color-night-950: #060a16;
+}
+
+/* Formas: pétalo (esquinas alternas), gota orgánica y arco */
+@utility petal { border-radius: 2rem 0.875rem 2rem 0.875rem; }
+@utility petal-alt { border-radius: 0.875rem 2rem 0.875rem 2rem; }
+@utility petal-lg { border-radius: 3rem 1.25rem 3rem 1.25rem; }
+@utility blob { border-radius: 42% 58% 62% 38% / 46% 40% 60% 54%; }
+@utility arch { border-radius: 999px 999px 1.75rem 1.75rem; }
+
+/* Texto con el degradado de la marca (más oscuro en claro para mantener contraste) */
+@utility text-arupo {
+  background-image: linear-gradient(95deg, #c2410c 0%, #ea580c 45%, #b65c1b 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+.dark .text-arupo,
+.on-dark .text-arupo {
+  background-image: linear-gradient(95deg, #fdba74 0%, #fb923c 45%, #fcd34d 100%);
+}
+@utility text-arupo-alt {
+  background-image: linear-gradient(95deg, #b45309 0%, #9a3412 45%, #823d83 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+.dark .text-arupo-alt,
+.on-dark .text-arupo-alt {
+  background-image: linear-gradient(95deg, #fcd34d 0%, #fdba74 45%, #e9a8ea 100%);
+}
+
+/* Degradado del Centro Terapéutico (azul → morado del logo ARUPOCTI) */
+@utility text-cti {
+  background-image: linear-gradient(95deg, #0072bc 0%, #82368c 60%, #4b2773 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+.dark .text-cti,
+.on-dark .text-cti {
+  background-image: linear-gradient(95deg, #7cc4f2 0%, #d8b4fe 60%, #c084fc 100%);
+}
+
+@layer components {
+  /* Secciones como "hojas" que se montan sobre la anterior con curva */
+  .arupo-sheet {
+    position: relative;
+    z-index: 20;
+    margin-top: -3rem;
+    border-top-left-radius: 3rem;
+    border-top-right-radius: 3rem;
+    box-shadow: 0 -28px 50px -38px rgba(109, 73, 62, 0.35);
+  }
+  @media (min-width: 768px) {
+    .arupo-sheet {
+      margin-top: -4.5rem;
+      border-top-left-radius: 4.5rem;
+      border-top-right-radius: 4.5rem;
+    }
+  }
+  .dark .arupo-sheet { box-shadow: 0 -28px 50px -34px rgba(0, 0, 0, 0.8); }
+
+  /* Tarjeta con borde degradado sutil y elevación cálida */
+  .arupo-card {
+    --card-bg: #ffffff;
+    --card-edge: linear-gradient(140deg, rgba(234, 88, 12, 0.32), rgba(130, 61, 131, 0.14) 45%, rgba(148, 163, 184, 0.22));
+    position: relative;
+    border: 1px solid transparent;
+    background: linear-gradient(var(--card-bg), var(--card-bg)) padding-box, var(--card-edge) border-box;
+    box-shadow: 0 1px 2px rgba(15, 23, 42, 0.04), 0 18px 40px -26px rgba(109, 73, 62, 0.35);
+    transition: translate 0.45s cubic-bezier(0.22, 1, 0.36, 1), box-shadow 0.45s ease;
+  }
+  .dark .arupo-card {
+    --card-bg: #0d1426;
+    --card-edge: linear-gradient(140deg, rgba(251, 146, 60, 0.4), rgba(130, 61, 131, 0.3) 45%, rgba(51, 65, 85, 0.5));
+    box-shadow: 0 18px 44px -26px rgba(0, 0, 0, 0.75);
+  }
+  .arupo-card-hover:hover {
+    translate: 0 -6px;
+    box-shadow: 0 2px 4px rgba(15, 23, 42, 0.04), 0 30px 60px -28px rgba(234, 88, 12, 0.45);
+  }
+  .dark .arupo-card-hover:hover { box-shadow: 0 30px 60px -26px rgba(234, 88, 12, 0.35); }
+
+  /* Variante crema (para tarjetas sobre fondo blanco) */
+  .arupo-card.is-warm { --card-bg: #fffaf4; }
+  .dark .arupo-card.is-warm { --card-bg: #111a2e; }
+
+  /* Vidrio con borde degradado para secciones oscuras (el borde va en una
+     máscara para que el degradado no tiña el fondo translúcido) */
+  .arupo-glass {
+    position: relative;
+    background: linear-gradient(160deg, rgba(255, 255, 255, 0.075), rgba(255, 255, 255, 0.02));
+    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.06);
+    -webkit-backdrop-filter: blur(14px);
+    backdrop-filter: blur(14px);
+    transition: translate 0.45s cubic-bezier(0.22, 1, 0.36, 1), background 0.45s ease, box-shadow 0.45s ease;
+  }
+  .arupo-glass::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    padding: 1px;
+    border-radius: inherit;
+    background: linear-gradient(140deg, rgba(251, 146, 60, 0.6), rgba(130, 61, 131, 0.4) 50%, rgba(255, 255, 255, 0.08));
+    -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+    -webkit-mask-composite: xor;
+            mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+            mask-composite: exclude;
+    pointer-events: none;
+  }
+  .arupo-glass-hover:hover { background: linear-gradient(160deg, rgba(255, 255, 255, 0.11), rgba(255, 255, 255, 0.035)); }
+  .arupo-glass-hover:hover {
+    translate: 0 -5px;
+    box-shadow: 0 26px 50px -30px rgba(251, 146, 60, 0.55);
+  }
+
+  /* Contenedor de icono en forma de gota con degradado */
+  .arupo-icon {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    color: #fff;
+    background: linear-gradient(135deg, #fb923c 0%, #ea580c 55%, #a13d6d 100%);
+    border-radius: 42% 58% 62% 38% / 46% 40% 60% 54%;
+    box-shadow: 0 12px 24px -12px rgba(234, 88, 12, 0.7), inset 0 1px 0 rgba(255, 255, 255, 0.35);
+    transition: border-radius 0.6s ease, transform 0.45s cubic-bezier(0.22, 1, 0.36, 1);
+  }
+  .group:hover .arupo-icon { border-radius: 58% 42% 38% 62% / 40% 56% 44% 60%; transform: rotate(-6deg) scale(1.06); }
+  .arupo-icon.is-cti {
+    background: linear-gradient(135deg, #1d8fd8 0%, #0072bc 40%, #82368c 100%);
+    box-shadow: 0 12px 24px -12px rgba(0, 114, 188, 0.7), inset 0 1px 0 rgba(255, 255, 255, 0.35);
+  }
+  .arupo-icon.is-soft {
+    color: #ea580c;
+    background: linear-gradient(135deg, #ffedd5, #fde7f0);
+    box-shadow: inset 0 0 0 1px rgba(234, 88, 12, 0.14);
+  }
+  .dark .arupo-icon.is-soft {
+    color: #fdba74;
+    background: linear-gradient(135deg, rgba(234, 88, 12, 0.22), rgba(130, 61, 131, 0.22));
+    box-shadow: inset 0 0 0 1px rgba(251, 146, 60, 0.2);
+  }
+
+  /* Etiqueta superior (eyebrow) en píldora, como la de la portada */
+  .arupo-eyebrow {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.55rem;
+    padding: 0.4rem 0.95rem 0.4rem 0.75rem;
+    border-radius: 999px;
+    font-size: 0.72rem;
+    font-weight: 700;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: #c2410c;
+    background: rgba(255, 237, 213, 0.7);
+    box-shadow: inset 0 0 0 1px rgba(234, 88, 12, 0.18);
+  }
+  .arupo-eyebrow::before {
+    content: "";
+    width: 0.5rem;
+    height: 0.5rem;
+    border-radius: 999px;
+    background: linear-gradient(135deg, #fb923c, #a13d6d);
+    box-shadow: 0 0 0 3px rgba(251, 146, 60, 0.18);
+  }
+  .dark .arupo-eyebrow,
+  .on-dark .arupo-eyebrow {
+    color: #fdba74;
+    background: rgba(251, 146, 60, 0.1);
+    box-shadow: inset 0 0 0 1px rgba(251, 146, 60, 0.25);
+  }
+
+  /* Decoración: halos de color difuminados y flor de arupo */
+  .arupo-deco { position: absolute; pointer-events: none; z-index: 0; }
+  .arupo-halo {
+    position: absolute;
+    border-radius: 999px;
+    filter: blur(70px);
+    opacity: 0.5;
+    pointer-events: none;
+  }
+  .dark .arupo-halo { opacity: 0.35; }
+  .arupo-flower { animation: arupo-spin-slow 90s linear infinite; }
+  .arupo-orbit { animation: arupo-spin-slow 28s linear infinite; }
+  .arupo-orbit.is-reverse { animation-direction: reverse; animation-duration: 40s; }
+}
+
+@keyframes arupo-spin-slow { to { transform: rotate(360deg); } }
+@media (prefers-reduced-motion: reduce) { .arupo-flower, .arupo-orbit { animation: none; } }
+.a11y-reduced-motion .arupo-flower,
+.a11y-reduced-motion .arupo-orbit { animation: none !important; }
+
+/* Los modos de alto contraste / visual total no necesitan decoración */
+.a11y-high-contrast .arupo-deco,
+.a11y-high-contrast .arupo-halo,
+.a11y-visual-total .arupo-deco,
+.a11y-visual-total .arupo-halo { display: none !important; }
+.a11y-high-contrast .text-arupo,
+.a11y-high-contrast .text-arupo-alt,
+.a11y-high-contrast .text-cti,
+.a11y-visual-total .text-cti,
+.a11y-visual-total .text-arupo,
+.a11y-visual-total .text-arupo-alt { -webkit-text-fill-color: currentColor; }
+.a11y-high-contrast .arupo-eyebrow::before,
+.a11y-visual-total .arupo-eyebrow::before,
+.a11y-high-contrast .arupo-glass::before,
+.a11y-visual-total .arupo-glass::before { display: none; }
+
+/* ============================================================
    Magic UI (vendored, adapted to Tailwind v4 + framer-motion)
    ============================================================ */
 
@@ -243,7 +465,7 @@
    added to <html> and forces every reveal subtree visible. Only touches
    opacity/filter so layout and hover transforms are preserved. */
 html.arupo-motion-fallback [data-reveal],
-html.arupo-motion-fallback [data-reveal] * {
+html.arupo-motion-fallback [data-reveal] *:not(.arupo-halo, .arupo-deco, .arupo-deco *) {
   opacity: 1 !important;
   filter: none !important;
 }

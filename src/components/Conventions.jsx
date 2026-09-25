@@ -1,12 +1,22 @@
 import InfiniteMarquee from './motion/InfiniteMarquee';
 
+const VARIANTS = {
+    primary: { title: 'text-primary-600 dark:text-primary-400', hover: 'group-hover:text-primary-600 dark:group-hover:text-primary-400', line: 'via-primary-400/60' },
+    therapeutic: { title: 'text-therapeutic-600 dark:text-therapeutic-400', hover: 'group-hover:text-therapeutic-600 dark:group-hover:text-therapeutic-300', line: 'via-therapeutic-400/60' },
+};
+
 export default function Conventions({ variant = 'primary' }) {
+    const v = VARIANTS[variant] || VARIANTS.primary;
     return (
-        <section className="py-16 bg-white dark:bg-dark-950 border-t border-dark-100 dark:border-dark-800">
+        <section className="relative py-16 bg-white dark:bg-dark-950">
             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-                <h3 className={`text-center text-xl font-semibold text-${variant}-600 dark:text-${variant}-400 uppercase tracking-widest mb-10`}>
-                    Convenios y Alianzas Estratégicas
-                </h3>
+                <div className="flex items-center gap-4 sm:gap-6 mb-10">
+                    <span aria-hidden="true" className={`h-px flex-1 bg-gradient-to-r from-transparent ${v.line} to-transparent`} />
+                    <h3 className={`text-center text-lg sm:text-xl font-semibold ${v.title} uppercase tracking-widest`}>
+                        Convenios y Alianzas Estratégicas
+                    </h3>
+                    <span aria-hidden="true" className={`h-px flex-1 bg-gradient-to-r from-transparent ${v.line} to-transparent`} />
+                </div>
                 <InfiniteMarquee speed={40}>
                     {/* Placeholder for real logos */}
                     {[
@@ -23,9 +33,9 @@ export default function Conventions({ variant = 'primary' }) {
                     ].map((name, i) => (
                         <div
                             key={i}
-                            className={`w-48 h-24 bg-dark-50 dark:bg-dark-900 border border-dark-100 dark:border-dark-800 rounded-xl flex items-center justify-center mx-4 group hover:border-${variant}-200 dark:hover:border-${variant}-800 transition-colors duration-300`}
+                            className={`w-48 h-24 arupo-card ${i % 2 ? 'petal-alt' : 'petal'} flex items-center justify-center mx-3 my-4 group`}
                         >
-                            <span className={`text-dark-400 dark:text-dark-500 font-bold text-center px-4 group-hover:text-${variant}-600 dark:group-hover:text-${variant}-400 transition-colors duration-300`}>
+                            <span className={`text-dark-400 dark:text-dark-400 font-bold text-center px-4 ${v.hover} transition-colors duration-300`}>
                                 {name}
                             </span>
                         </div>

@@ -17,6 +17,9 @@ import Testimonials from '../components/Testimonials';
 import ImageCarousel from '../components/ImageCarousel';
 import CTA from '../components/CTA';
 
+// Desde la segunda sección, cada bloque se monta sobre el anterior con una curva.
+const SHEET = 'arupo-sheet overflow-hidden';
+
 export default function Home() {
     return (
         <PageTransition>
@@ -24,46 +27,46 @@ export default function Home() {
             <Reveal width="100%">
                 <About />
             </Reveal>
-            <Reveal width="100%">
+            <Reveal width="100%" className={SHEET}>
                 <MissionVision />
             </Reveal>
-            <Reveal width="100%">
+            <Reveal width="100%" className={SHEET}>
                 <Problem />
             </Reveal>
-            <Reveal width="100%">
+            <Reveal width="100%" className={SHEET}>
                 <ContextStats />
             </Reveal>
-            <Reveal width="100%">
+            <Reveal width="100%" className={SHEET}>
                 <Team /> {/* Added Team Section */}
             </Reveal>
-            <Reveal width="100%" delay={0.2}>
+            <Reveal width="100%" delay={0.2} className={SHEET}>
                 <Areas />
             </Reveal>
-            <Reveal width="100%">
+            <Reveal width="100%" className={SHEET}>
                 <Impact />
             </Reveal>
-            <Reveal width="100%">
+            <Reveal width="100%" className={SHEET}>
                 <PolicyAchievements />
             </Reveal>
-            <Reveal width="100%">
+            <Reveal width="100%" className={SHEET}>
                 <Projects />
             </Reveal>
-            <Reveal width="100%">
+            <Reveal width="100%" className={SHEET}>
                 <Cooperation />
             </Reveal>
-            <Reveal width="100%">
+            <Reveal width="100%" className={SHEET}>
                 <SustainabilityAlliance />
             </Reveal>
-            <Reveal width="100%">
+            <Reveal width="100%" className={SHEET}>
                 <Volunteer />
             </Reveal>
-            <Reveal width="100%">
+            <Reveal width="100%" className={SHEET}>
                 <ImageCarousel />
             </Reveal>
-            <Reveal width="100%">
+            <Reveal width="100%" className={SHEET}>
                 <Testimonials />
             </Reveal>
-            <Reveal width="100%">
+            <Reveal width="100%" className={SHEET}>
                 <CTA />
             </Reveal>
         </PageTransition>

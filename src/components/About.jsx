@@ -3,8 +3,7 @@ import { Stagger, StaggerItem } from './motion/Stagger';
 import Reveal from './motion/Reveal';
 import TiltCard from './motion/TiltCard';
 import { BorderBeam } from './magicui/BorderBeam';
-import DotPattern from './magicui/DotPattern';
-import { cn } from '../lib/utils';
+import SectionDecor, { ArupoFlower } from './ui/Decor';
 
 const enfoques = [
     {
@@ -61,19 +60,13 @@ export default function About() {
     return (
         <section
             id="nosotros"
-            className="relative py-24 bg-white dark:bg-dark-950 transition-colors duration-300 overflow-hidden"
+            className="relative py-24 lg:py-32 bg-white dark:bg-dark-950 transition-colors duration-300 overflow-hidden"
             aria-labelledby="about-heading"
         >
-            {/* Subtle dotted texture, faded toward the edges */}
-            <DotPattern
-                className={cn(
-                    'fill-dark-300/50 dark:fill-dark-700/40',
-                    '[mask-image:radial-gradient(60%_60%_at_50%_40%,white,transparent)]'
-                )}
-            />
+            <SectionDecor variant="warm" />
 
             <div className="relative z-10 mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-                <div className="grid lg:grid-cols-2 gap-12 lg:gap-16 items-center">
+                <div className="grid lg:grid-cols-2 gap-14 lg:gap-20 items-center">
                     {/* Text */}
                     <div>
                         <SectionHeading
@@ -81,23 +74,24 @@ export default function About() {
                             title="Enfoque Institucional"
                             titleId="about-heading"
                             align="left"
+                            accent={1}
                             subtitle="Nuestro trabajo se basa en los siguientes enfoques para transformar realidades y acompañar a personas en situación de discapacidad, movilidad humana y vulnerabilidad social:"
                             className="mb-10"
                         />
 
-                        <Stagger className="grid grid-cols-1 sm:grid-cols-2 gap-3" stagger={0.08}>
-                            {enfoques.map((enfoque) => (
+                        <Stagger className="grid grid-cols-1 sm:grid-cols-2 gap-3.5" stagger={0.08}>
+                            {enfoques.map((enfoque, i) => (
                                 <StaggerItem
                                     key={enfoque.label}
                                     variant="up"
-                                    className="group flex items-start gap-3 rounded-2xl border border-dark-100 dark:border-dark-800 bg-dark-50/40 dark:bg-dark-900/40 p-4 transition-all duration-300 hover:-translate-y-1 hover:border-primary-200 dark:hover:border-primary-800 hover:bg-white dark:hover:bg-dark-900 hover:shadow-lg hover:shadow-primary-500/5"
+                                    className={`group arupo-card arupo-card-hover is-warm ${i % 2 ? 'petal-alt' : 'petal'} flex items-center gap-3.5 p-3.5 pr-4`}
                                 >
-                                    <div className="mt-0.5 flex-shrink-0 w-9 h-9 rounded-xl bg-primary-100 dark:bg-primary-900/30 text-primary-600 dark:text-primary-400 flex items-center justify-center transition-transform duration-300 group-hover:scale-110 group-hover:bg-primary-600 group-hover:text-white">
+                                    <div className="arupo-icon w-11 h-11">
                                         <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                             {enfoque.icon}
                                         </svg>
                                     </div>
-                                    <p className="text-dark-800 dark:text-dark-200 font-medium text-sm leading-snug self-center">
+                                    <p className="text-dark-800 dark:text-dark-100 font-semibold text-sm leading-snug">
                                         {enfoque.label}
                                     </p>
                                 </StaggerItem>
@@ -107,25 +101,33 @@ export default function About() {
 
                     {/* Image / Visual */}
                     <Reveal delay={0.15} width="100%">
-                        <TiltCard className="group rounded-3xl" max={7}>
-                            <div className="relative rounded-3xl overflow-hidden aspect-[4/3] lg:aspect-square shadow-2xl">
-                                <BorderBeam
-                                    className="opacity-0 group-hover:opacity-100 transition-opacity duration-300"
-                                    duration={6}
-                                />
-                                <div className="absolute inset-0 bg-gradient-to-tr from-primary-600/40 to-accent-500/20 mix-blend-overlay z-10 transition-opacity duration-500 group-hover:opacity-0" />
-                                <img
-                                    src="https://images.unsplash.com/photo-1573164713714-d95e436ab8d6?auto=format&fit=crop&q=80"
-                                    alt="Trabajo comunitario"
-                                    className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
-                                />
-                                <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-dark-900/90 via-dark-900/50 to-transparent p-8 z-20">
-                                    <p className="text-white font-medium text-lg leading-relaxed">
-                                        Construimos una sociedad donde la diversidad sea celebrada y los derechos garantizados.
-                                    </p>
+                        <div className="relative px-2 sm:px-6 py-6">
+                            {/* Capas decorativas detrás de la foto */}
+                            <div aria-hidden="true" className="arupo-deco inset-0 petal-lg bg-gradient-to-br from-primary-400 via-primary-600 to-arupo-purple rotate-[-4deg] scale-[0.96] opacity-90" />
+                            <ArupoFlower className="-bottom-10 -left-8 w-40 h-40 text-primary-500/30 dark:text-primary-400/25" strokeWidth={2} />
+                            <div aria-hidden="true" className="arupo-deco -top-4 right-2 w-24 h-24 rounded-full border-2 border-dashed border-accent-400/60" />
+
+                            <TiltCard className="group petal-lg relative z-10" max={7}>
+                                <div className="relative petal-lg overflow-hidden aspect-[4/3] lg:aspect-[5/5.2] shadow-2xl shadow-primary-900/30 ring-1 ring-white/40">
+                                    <BorderBeam
+                                        className="opacity-0 group-hover:opacity-100 transition-opacity duration-300"
+                                        duration={6}
+                                    />
+                                    <div className="absolute inset-0 bg-gradient-to-tr from-primary-600/40 to-accent-500/20 mix-blend-overlay z-10 transition-opacity duration-500 group-hover:opacity-0" />
+                                    <img
+                                        src="https://images.unsplash.com/photo-1573164713714-d95e436ab8d6?auto=format&fit=crop&q=80"
+                                        alt="Trabajo comunitario"
+                                        className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
+                                    />
+                                    <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-dark-950/90 via-dark-900/50 to-transparent p-8 pt-20 z-20">
+                                        <span aria-hidden="true" className="block w-10 h-1 rounded-full bg-gradient-to-r from-primary-400 to-accent-400 mb-4" />
+                                        <p className="text-white font-semibold text-lg leading-relaxed">
+                                            Construimos una sociedad donde la diversidad sea celebrada y los derechos garantizados.
+                                        </p>
+                                    </div>
                                 </div>
-                            </div>
-                        </TiltCard>
+                            </TiltCard>
+                        </div>
                     </Reveal>
                 </div>
             </div>

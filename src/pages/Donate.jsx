@@ -3,6 +3,7 @@ import { Link, useSearchParams } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
 import PageTransition from '../components/motion/PageTransition';
 import { BorderBeam } from '../components/magicui/BorderBeam';
+import SectionDecor from '../components/ui/Decor';
 import {
     frequencies,
     currencies,
@@ -154,15 +155,16 @@ export default function Donate() {
 
     return (
         <PageTransition>
-            <div className="min-h-screen bg-dark-50 dark:bg-dark-950 pt-24 pb-24 px-4 sm:px-6 lg:px-8 transition-colors duration-300">
-                <div className="mx-auto max-w-3xl">
+            <div className="relative overflow-hidden min-h-screen bg-cream-50 dark:bg-night-900 pt-28 pb-28 px-4 sm:px-6 lg:px-8 transition-colors duration-300">
+                <SectionDecor variant="warm" />
+                <div className="relative z-10 mx-auto max-w-3xl">
                     {/* Encabezado */}
                     <div className="text-center mb-10">
-                        <span className="inline-flex items-center gap-2 rounded-full bg-primary-50 dark:bg-primary-900/20 px-4 py-1.5 text-sm font-semibold text-primary-600 dark:text-primary-300 mb-4">
+                        <span className="inline-flex items-center gap-2 rounded-full bg-primary-50/80 dark:bg-primary-500/10 ring-1 ring-primary-200/80 dark:ring-primary-500/25 px-4 py-1.5 text-sm font-semibold text-primary-700 dark:text-primary-300 mb-5">
                             <HeartIcon className="w-4 h-4" /> Tu apoyo transforma vidas
                         </span>
-                        <h1 className="text-3xl sm:text-4xl font-extrabold text-dark-900 dark:text-white tracking-tight">
-                            Haz tu donación
+                        <h1 className="text-4xl sm:text-5xl font-extrabold text-dark-900 dark:text-white tracking-tight">
+                            Haz tu <span className="text-arupo">donación</span>
                         </h1>
                         <p className="mt-3 text-dark-500 dark:text-dark-400 max-w-xl mx-auto">
                             Cada aporte sostiene el trabajo de la Fundación Arupo por un Ecuador
@@ -182,7 +184,7 @@ export default function Donate() {
                     <Stepper step={step} />
 
                     {/* Contenido de pasos */}
-                    <div className="relative mt-8 rounded-[2rem] bg-white dark:bg-dark-900 border border-dark-100 dark:border-dark-800 shadow-[0_20px_50px_rgba(0,0,0,0.06)] dark:shadow-none p-6 sm:p-9 overflow-hidden">
+                    <div className="relative mt-8 arupo-card petal-lg p-6 sm:p-9 overflow-hidden">
                         <BorderBeam duration={8} />
                         <AnimatePresence mode="wait">
                             <motion.div
@@ -307,12 +309,12 @@ function Stepper({ step }) {
                     <div key={s.id} className="flex items-center gap-2 sm:gap-4">
                         <div className="flex items-center gap-2">
                             <div
-                                className={`flex items-center justify-center w-8 h-8 rounded-full text-sm font-bold transition-all ${
+                                className={`flex items-center justify-center w-9 h-9 blob text-sm font-bold transition-all ${
                                     complete
-                                        ? 'bg-primary-500 text-white'
+                                        ? 'bg-gradient-to-br from-primary-400 to-primary-600 text-white'
                                         : active
-                                        ? 'bg-primary-500 text-white ring-4 ring-primary-500/20'
-                                        : 'bg-dark-100 dark:bg-dark-800 text-dark-400'
+                                        ? 'bg-gradient-to-br from-primary-400 via-primary-600 to-[#a13d6d] text-white shadow-[0_10px_20px_-8px_rgba(234,88,12,0.7)] ring-4 ring-primary-500/15'
+                                        : 'bg-white dark:bg-dark-800 ring-1 ring-dark-200 dark:ring-dark-700 text-dark-400'
                                 }`}
                             >
                                 {complete ? <CheckIcon className="w-4 h-4" /> : i + 1}
@@ -329,8 +331,8 @@ function Stepper({ step }) {
                         </div>
                         {i < STEPS.length - 1 && (
                             <div
-                                className={`h-0.5 w-6 sm:w-12 rounded-full ${
-                                    complete ? 'bg-primary-500' : 'bg-dark-200 dark:bg-dark-700'
+                                className={`h-1 w-6 sm:w-12 rounded-full ${
+                                    complete ? 'bg-gradient-to-r from-primary-400 to-primary-600' : 'bg-dark-200 dark:bg-dark-700'
                                 }`}
                             />
                         )}
@@ -408,9 +410,9 @@ function StepAmount({
                                 setIsCustom(false);
                                 setSelectedTier(tier.amount);
                             }}
-                            className={`text-left p-4 rounded-2xl border-2 transition-all ${
+                            className={`text-left p-4 ${tier.highlighted ? 'petal-alt' : 'petal'} border-2 transition-all hover:-translate-y-0.5 ${
                                 active
-                                    ? 'border-primary-500 bg-primary-50 dark:bg-primary-900/20'
+                                    ? 'border-primary-500 bg-gradient-to-br from-primary-50 to-[#fdf0f6] dark:from-primary-900/25 dark:to-therapeutic-900/20 shadow-[0_14px_30px_-18px_rgba(234,88,12,0.6)]'
                                     : 'border-dark-100 dark:border-dark-800 hover:border-primary-300 dark:hover:border-primary-700'
                             }`}
                         >
@@ -440,9 +442,9 @@ function StepAmount({
             <div>
                 <button
                     onClick={() => setIsCustom(true)}
-                    className={`w-full text-left p-4 rounded-2xl border-2 transition-all ${
+                    className={`w-full text-left p-4 petal border-2 transition-all ${
                         isCustom
-                            ? 'border-primary-500 bg-primary-50 dark:bg-primary-900/20'
+                            ? 'border-primary-500 bg-gradient-to-br from-primary-50 to-[#fdf0f6] dark:from-primary-900/25 dark:to-therapeutic-900/20 shadow-[0_14px_30px_-18px_rgba(234,88,12,0.6)]'
                             : 'border-dashed border-dark-200 dark:border-dark-700 hover:border-primary-300'
                     }`}
                 >
@@ -529,7 +531,7 @@ function StepDetails({ details, updateDetail }) {
             </div>
 
             {/* Suscripción */}
-            <label className="flex items-start gap-3 p-4 rounded-2xl bg-dark-50 dark:bg-dark-800/50 cursor-pointer border border-dark-100 dark:border-dark-800">
+            <label className="flex items-start gap-3 p-4 petal bg-cream-50 dark:bg-dark-800/50 cursor-pointer border border-primary-100 dark:border-dark-800">
                 <input
                     type="checkbox"
                     checked={details.subscribe}
@@ -569,13 +571,13 @@ function StepPayment({ method, setMethod, amount, currency, frequency, refCode, 
                     <button
                         key={m.id}
                         onClick={() => setMethod(m.id)}
-                        className={`flex items-center gap-4 text-left p-4 rounded-2xl border-2 transition-all ${
+                        className={`group flex items-center gap-4 text-left p-4 petal border-2 transition-all hover:-translate-y-0.5 ${
                             method === m.id
-                                ? 'border-primary-500 bg-primary-50 dark:bg-primary-900/20'
+                                ? 'border-primary-500 bg-gradient-to-br from-primary-50 to-[#fdf0f6] dark:from-primary-900/25 dark:to-therapeutic-900/20 shadow-[0_14px_30px_-18px_rgba(234,88,12,0.6)]'
                                 : 'border-dark-100 dark:border-dark-800 hover:border-primary-300'
                         }`}
                     >
-                        <div className="w-11 h-11 rounded-xl bg-white dark:bg-dark-950 border border-dark-100 dark:border-dark-800 flex items-center justify-center text-primary-600 shrink-0">
+                        <div className="arupo-icon is-soft w-12 h-12">
                             <MethodIcon id={m.id} />
                         </div>
                         <div className="flex-1">
@@ -596,7 +598,7 @@ function StepPayment({ method, setMethod, amount, currency, frequency, refCode, 
             </div>
 
             {/* Panel del método seleccionado */}
-            <div className="rounded-2xl bg-dark-50 dark:bg-dark-800/40 border border-dark-100 dark:border-dark-800 p-5">
+            <div className="petal bg-cream-50 dark:bg-dark-800/40 border border-primary-100 dark:border-dark-800 p-5">
                 {method === 'card' && <CardForm />}
                 {method === 'global66' && (
                     <Global66Panel
@@ -819,13 +821,14 @@ function ThankYou({ donation, emailSent, onDownload }) {
     const { code, amount, currency, frequency, donor } = donation;
     return (
         <PageTransition>
-            <div className="min-h-screen bg-dark-50 dark:bg-dark-950 pt-28 pb-24 px-4 flex items-center justify-center transition-colors duration-300">
-                <div className="max-w-lg w-full text-center">
+            <div className="relative overflow-hidden min-h-screen bg-cream-50 dark:bg-night-900 pt-28 pb-28 px-4 flex items-center justify-center transition-colors duration-300">
+                <SectionDecor variant="warm" />
+                <div className="relative z-10 max-w-lg w-full text-center">
                     <motion.div
                         initial={{ scale: 0 }}
                         animate={{ scale: 1 }}
                         transition={{ type: 'spring', stiffness: 200, damping: 15 }}
-                        className="mx-auto w-20 h-20 rounded-full bg-gradient-to-br from-primary-500 to-accent-500 flex items-center justify-center text-white shadow-xl shadow-primary-500/30 mb-6"
+                        className="mx-auto w-24 h-24 blob bg-gradient-to-br from-accent-400 via-primary-500 to-[#a13d6d] flex items-center justify-center text-white shadow-xl shadow-primary-500/30 mb-6"
                     >
                         <CheckIcon className="w-10 h-10" />
                     </motion.div>
@@ -842,7 +845,7 @@ function ThankYou({ donation, emailSent, onDownload }) {
                     </p>
 
                     {/* Código único */}
-                    <div className="mt-6 rounded-2xl bg-white dark:bg-dark-900 border border-dark-100 dark:border-dark-800 p-5">
+                    <div className="mt-6 arupo-card petal-lg p-5">
                         <p className="text-xs uppercase tracking-wide text-dark-400">
                             Código único de tu donación
                         </p>

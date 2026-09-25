@@ -1,3 +1,7 @@
+import SectionHeading from './SectionHeading';
+import SectionDecor from './ui/Decor';
+import { Stagger, StaggerItem } from './motion/Stagger';
+
 const projects = [
     'Programa de inclusión digital accesible.',
     'Programa de fortalecimiento económico para familias con discapacidad.',
@@ -12,39 +16,39 @@ const projects = [
 
 export default function Projects() {
     return (
-        <section id="proyectos" className="py-24 bg-white dark:bg-dark-950 transition-colors duration-300" aria-labelledby="projects-heading">
-            <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+        <section id="proyectos" className="relative py-24 lg:py-28 bg-cream-50 dark:bg-night-900 transition-colors duration-300 overflow-hidden" aria-labelledby="projects-heading">
+            <SectionDecor variant="warm" />
+
+            <div className="relative z-10 mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
                 {/* Header */}
-                <div className="text-center max-w-3xl mx-auto mb-16">
-                    <p className="text-sm font-semibold uppercase tracking-widest text-primary-600 mb-3">
-                        Proyectos Prioritarios
-                    </p>
-                    <h2 id="projects-heading" className="text-3xl sm:text-4xl font-bold text-dark-900 dark:text-white mb-4">
-                        Iniciativas estratégicas
-                    </h2>
-                    <p className="text-dark-500 dark:text-dark-300 text-lg">
-                        Fundación Arupo busca impulsar proyectos estratégicos con el apoyo de cooperación internacional en:
-                    </p>
-                </div>
+                <SectionHeading
+                    eyebrow="Proyectos Prioritarios"
+                    title="Iniciativas estratégicas"
+                    titleId="projects-heading"
+                    accent={1}
+                    subtitle="Fundación Arupo busca impulsar proyectos estratégicos con el apoyo de cooperación internacional en:"
+                />
 
                 {/* Grid */}
-                <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-4">
+                <Stagger className="grid md:grid-cols-2 lg:grid-cols-3 gap-5 lg:pb-8" stagger={0.07}>
                     {projects.map((project, index) => (
-                        <div
+                        <StaggerItem
                             key={index}
-                            className="group flex items-start gap-4 p-5 rounded-xl bg-dark-50 dark:bg-dark-900 border border-dark-100 dark:border-dark-800 transition-all duration-300 hover:shadow-md hover:border-primary-200 dark:hover:border-primary-800"
+                            variant="up"
+                            className={`group arupo-card arupo-card-hover ${index % 2 ? 'petal-alt' : 'petal'} relative overflow-hidden flex items-center gap-4 p-5 pr-6 ${index % 3 === 1 ? 'lg:translate-y-8' : ''}`}
                         >
-                            <div className="flex-shrink-0 mt-1 w-8 h-8 rounded-full bg-primary-100 dark:bg-primary-900/40 text-primary-600 flex items-center justify-center">
-                                <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <span aria-hidden="true" className="arupo-deco inset-0 bg-gradient-to-br from-primary-50 via-transparent to-[#fbeef6] dark:from-primary-500/10 dark:to-therapeutic-500/10 opacity-0 transition-opacity duration-500 group-hover:opacity-100" />
+                            <div className="relative arupo-icon is-soft w-11 h-11">
+                                <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
                                 </svg>
                             </div>
-                            <p className="text-dark-800 dark:text-dark-200 font-medium leading-snug">
+                            <p className="relative text-dark-800 dark:text-dark-100 font-semibold leading-snug">
                                 {project}
                             </p>
-                        </div>
+                        </StaggerItem>
                     ))}
-                </div>
+                </Stagger>
             </div>
         </section>
     );

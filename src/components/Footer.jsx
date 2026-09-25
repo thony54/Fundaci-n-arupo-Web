@@ -44,16 +44,20 @@ const socialLinks = [
         handle: '',
         icon: (
             <svg className="h-5 w-5" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
-                <path d="M12.525.02c1.31-.02 2.61-.01 3.91-.02.08 1.53.63 3.09 1.75 4.17 1.12 1.11 2.7 1.62 4.24 1.79v4.03c-1.44-.05-2.89-.35-4.2-.97-.57-.26-1.1-.59-1.62-.93-.01 2.92.01 5.84-.02 8.75-.08 1.4-.54 2.79-1.35 3.94-1.31 1.92-3.58 3.17-5.91 3.21-1.43.08-2.86-.31-4.08-1.03-2.02-1.19-3.44-3.37-3.65-5.71-.02-.5-.03-1-.01-1.49.18-1.9 1.12-3.72 2.58-4.96 1.66-1.44 3.98-2.13 6.15-1.72.02 1.48-.04 2.96-.04 4.44-.99-.32-2.15-.23-3.02.37-.63.41-1.11 1.04-1.36 1.75-.21.51-.15 1.07-.14 1.61.24 1.64 1.82 3.02 3.5 2.87 1.12-.01 2.19-.66 2.77-1.61.19-.33.4-.67.41-1.06.1-1.79.06-3.57.07-5.36.01-4.03-.01-8.05.02-12.07z" />
+                <path fillRule="evenodd" d="M19.812 5.418c.861.23 1.538.907 1.768 1.768C21.998 8.746 22 12 22 12s0 3.255-.418 4.814a2.504 2.504 0 01-1.768 1.768c-1.56.419-7.814.419-7.814.419s-6.255 0-7.814-.419a2.505 2.505 0 01-1.768-1.768C2 15.255 2 12 2 12s0-3.255.417-4.814a2.507 2.507 0 011.768-1.768C5.744 5 11.998 5 11.998 5s6.255 0 7.814.418zM15.194 12 10 15V9l5.194 3z" clipRule="evenodd" />
             </svg>
         ),
     },
 ];
 
+import SectionDecor from './ui/Decor';
+
 export default function Footer() {
     return (
-        <footer id="contacto" className="bg-dark-900 border-t border-dark-700/50" aria-label="Pie de página">
-            <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-16">
+        <footer id="contacto" className="on-dark arupo-sheet relative overflow-hidden bg-gradient-to-b from-night-900 to-night-950" aria-label="Pie de página">
+            <SectionDecor variant="dark" />
+            <div aria-hidden="true" className="arupo-deco top-0 inset-x-0 h-px bg-gradient-to-r from-transparent via-primary-400/60 to-transparent" />
+            <div className="relative z-10 mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 pt-24 pb-12">
                 <div className="grid md:grid-cols-3 gap-12">
                     {/* Institutional Info */}
                     <div>
@@ -61,7 +65,7 @@ export default function Footer() {
                             <img
                                 src="/logo-white.png"
                                 alt="Fundación Arupo"
-                                className="h-10 w-auto"
+                                className="h-16 w-auto"
                             />
                         </a>
                         <p className="mt-4 text-dark-400 leading-relaxed text-sm">
@@ -76,7 +80,8 @@ export default function Footer() {
 
                     {/* Quick Links */}
                     <div>
-                        <h3 className="text-white font-semibold text-sm uppercase tracking-wider mb-4">
+                        <h3 className="flex items-center gap-2 text-white font-semibold text-sm uppercase tracking-wider mb-5">
+                            <span aria-hidden="true" className="w-2 h-2 petal bg-gradient-to-br from-primary-400 to-arupo-purple" />
                             Enlaces Rápidos
                         </h3>
                         <nav aria-label="Enlaces del pie de página">
@@ -85,8 +90,9 @@ export default function Footer() {
                                     <li key={link.href}>
                                         <a
                                             href={link.href}
-                                            className="text-dark-400 hover:text-primary-400 transition-colors duration-200 text-sm"
+                                            className="group inline-flex items-center text-dark-300 hover:text-primary-300 transition-colors duration-200 text-sm"
                                         >
+                                            <span aria-hidden="true" className="w-0 h-px bg-primary-400 transition-all duration-300 group-hover:w-4 group-hover:mr-2" />
                                             {link.label}
                                         </a>
                                     </li>
@@ -97,20 +103,21 @@ export default function Footer() {
 
                     {/* Social Media */}
                     <div>
-                        <h3 className="text-white font-semibold text-sm uppercase tracking-wider mb-4">
+                        <h3 className="flex items-center gap-2 text-white font-semibold text-sm uppercase tracking-wider mb-5">
+                            <span aria-hidden="true" className="w-2 h-2 petal bg-gradient-to-br from-accent-300 to-primary-500" />
                             Síguenos
                         </h3>
-                        <div className="space-y-3">
+                        <div className="flex flex-wrap gap-3">
                             {socialLinks.map((social) => (
                                 <a
                                     key={social.label}
                                     href={social.href}
                                     target="_blank"
                                     rel="noopener noreferrer"
-                                    className="flex items-center gap-3 text-dark-400 hover:text-primary-400 transition-colors duration-200 group"
+                                    className="flex items-center gap-3 text-dark-300 hover:text-white transition-colors duration-200 group"
                                     aria-label={`Visitar ${social.label} de Fundación Arupo`}
                                 >
-                                    <span className="inline-flex items-center justify-center w-9 h-9 rounded-lg bg-dark-800 group-hover:bg-primary-600/20 transition-colors duration-200">
+                                    <span className="inline-flex items-center justify-center w-12 h-12 blob bg-white/[0.06] ring-1 ring-white/10 transition-all duration-300 group-hover:bg-gradient-to-br group-hover:from-primary-500 group-hover:to-[#a13d6d] group-hover:ring-transparent group-hover:-translate-y-1 group-hover:shadow-[0_12px_24px_-10px_rgba(234,88,12,0.7)]">
                                         {social.icon}
                                     </span>
                                     <span className="text-sm">{social.handle}</span>
@@ -121,7 +128,7 @@ export default function Footer() {
                 </div>
 
                 {/* Bottom bar */}
-                <div className="mt-12 pt-8 border-t border-dark-800 flex flex-col sm:flex-row justify-between items-center gap-4">
+                <div className="mt-14 pt-8 border-t border-white/[0.08] flex flex-col sm:flex-row justify-between items-center gap-4">
                     <p className="text-dark-500 text-xs text-center sm:text-left">
                         © {new Date().getFullYear()} Todos los derechos reservados - Desarrollado por <a href="https://www.quantumcode.art/" target="_blank" rel="noopener noreferrer" className="hover:text-primary-400 transition-colors">Quantum Code</a>
                     </p>
