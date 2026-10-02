@@ -2,7 +2,7 @@ import { useParams, Navigate, Link } from 'react-router-dom';
 import PageTransition from '../components/motion/PageTransition';
 import Reveal from '../components/motion/Reveal';
 import { territories } from '../data/territories';
-import SectionDecor, { ArupoFlower } from '../components/ui/Decor';
+import SectionDecor from '../components/ui/Decor';
 
 export default function TerritoryStory() {
     const { id } = useParams();
@@ -93,7 +93,6 @@ export default function TerritoryStory() {
                             {territory.projects.map((project, index) => (
                                 <Reveal key={index} delay={index * 0.1}>
                                     <article className={`group relative overflow-hidden arupo-card arupo-card-hover ${index % 2 ? 'petal-alt md:translate-y-10' : 'petal-lg'} p-8 sm:p-10`}>
-                                        <ArupoFlower className="-top-10 -right-10 w-40 h-40 text-primary-500/10 transition-transform duration-700 group-hover:rotate-45 group-hover:scale-110" strokeWidth={2} />
 
                                         <h3 className="relative text-3xl font-black tracking-tight mb-4 text-dark-900 dark:text-white group-hover:text-primary-600 dark:group-hover:text-primary-400 transition-colors">
                                             {project.title}

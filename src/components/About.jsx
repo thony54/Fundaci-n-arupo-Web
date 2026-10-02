@@ -3,7 +3,8 @@ import { Stagger, StaggerItem } from './motion/Stagger';
 import Reveal from './motion/Reveal';
 import TiltCard from './motion/TiltCard';
 import { BorderBeam } from './magicui/BorderBeam';
-import SectionDecor, { ArupoFlower } from './ui/Decor';
+import SectionDecor, { PhotoBackdrop } from './ui/Decor';
+import fotoEquipo from '../assets/secciones/quienes-somos.webp';
 
 const enfoques = [
     {
@@ -101,32 +102,31 @@ export default function About() {
 
                     {/* Image / Visual */}
                     <Reveal delay={0.15} width="100%">
-                        <div className="relative px-2 sm:px-6 py-6">
-                            {/* Capas decorativas detrás de la foto */}
-                            <div aria-hidden="true" className="arupo-deco inset-0 petal-lg bg-gradient-to-br from-primary-400 via-primary-600 to-arupo-purple rotate-[-4deg] scale-[0.96] opacity-90" />
-                            <ArupoFlower className="-bottom-10 -left-8 w-40 h-40 text-primary-500/30 dark:text-primary-400/25" strokeWidth={2} />
-                            <div aria-hidden="true" className="arupo-deco -top-4 right-2 w-24 h-24 rounded-full border-2 border-dashed border-accent-400/60" />
+                        <div className="relative mx-2 sm:mx-6 my-6">
+                            <PhotoBackdrop />
 
                             <TiltCard className="group petal-lg relative z-10" max={7}>
-                                <div className="relative petal-lg overflow-hidden aspect-[4/3] lg:aspect-[5/5.2] shadow-2xl shadow-primary-900/30 ring-1 ring-white/40">
+                                <div className="relative petal-lg overflow-hidden aspect-[3/2] shadow-2xl shadow-primary-900/25 ring-1 ring-white/40 dark:ring-white/10">
                                     <BorderBeam
                                         className="opacity-0 group-hover:opacity-100 transition-opacity duration-300"
                                         duration={6}
                                     />
-                                    <div className="absolute inset-0 bg-gradient-to-tr from-primary-600/40 to-accent-500/20 mix-blend-overlay z-10 transition-opacity duration-500 group-hover:opacity-0" />
                                     <img
-                                        src="https://images.unsplash.com/photo-1573164713714-d95e436ab8d6?auto=format&fit=crop&q=80"
-                                        alt="Trabajo comunitario"
+                                        src={fotoEquipo}
+                                        alt="Equipo de Fundación Arupo junto a voluntarias y voluntarios de salud"
+                                        loading="lazy"
+                                        decoding="async"
                                         className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
                                     />
-                                    <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-dark-950/90 via-dark-900/50 to-transparent p-8 pt-20 z-20">
-                                        <span aria-hidden="true" className="block w-10 h-1 rounded-full bg-gradient-to-r from-primary-400 to-accent-400 mb-4" />
-                                        <p className="text-white font-semibold text-lg leading-relaxed">
-                                            Construimos una sociedad donde la diversidad sea celebrada y los derechos garantizados.
-                                        </p>
-                                    </div>
                                 </div>
                             </TiltCard>
+                        </div>
+                        {/* Frase en tarjeta superpuesta, para no tapar a nadie en la foto */}
+                        <div className="relative z-20 -mt-14 sm:-mt-16 ml-6 sm:ml-14 mr-2 sm:mr-16 arupo-card petal p-5 sm:p-6">
+                            <span aria-hidden="true" className="block w-10 h-1 rounded-full bg-gradient-to-r from-primary-400 to-accent-400 mb-3" />
+                            <p className="text-dark-900 dark:text-white font-semibold text-base sm:text-lg leading-relaxed">
+                                Construimos una sociedad donde la diversidad sea celebrada y los derechos garantizados.
+                            </p>
                         </div>
                     </Reveal>
                 </div>

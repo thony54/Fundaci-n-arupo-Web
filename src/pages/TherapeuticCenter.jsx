@@ -9,7 +9,8 @@ import Team from '../components/Team'; // Added Team component import
 import InclusionNetwork from '../components/InclusionNetwork'; // Using the same network background
 import qrCentro from '../assets/QRs/QR Centro Terapéutico Integral Arupo.png';
 import arupoctiLogo from '../assets/ARUPOCTI LOGO.png';
-import SectionDecor, { ArupoFlower } from '../components/ui/Decor';
+import SectionDecor, { PhotoBackdrop } from '../components/ui/Decor';
+import ContactPanel from '../components/ContactPanel';
 
 const SOFT = 'bg-[#f6f4fb] dark:bg-night-900';
 
@@ -130,8 +131,6 @@ export default function TherapeuticCenter() {
                     <Reveal width="100%">
                     <div className="relative z-10 max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
                     <div className="relative arupo-card petal-lg overflow-hidden p-8 sm:p-14 text-center">
-                    <ArupoFlower className="-top-14 -left-14 w-56 h-56 text-therapeutic-500/10 dark:text-therapeutic-300/10" />
-                    <ArupoFlower className="-bottom-16 -right-12 w-48 h-48 text-[#0072BC]/10 dark:text-sky-300/10" />
                     <h2 className="relative text-3xl sm:text-4xl font-extrabold tracking-tight text-balance mb-8 text-dark-900 dark:text-white">¿Qué es el <span className="text-cti">Centro Terapéutico Arupo?</span></h2>
                     <p className="relative text-lg sm:text-xl leading-relaxed text-dark-600 dark:text-dark-300">
                         Somos una institución sin fines de lucro, prestadora de servicios terapéuticos integrales comprometida con la promoción, prevención, evaluación, diagnostico e intervención, orientada a optimizar las habilidades motoras, comunicativas, conductuales y sociales, a personas que tengan alteración en las diferentes áreas del desarrollo neurológico, beneficiándolos en la adaptación e integración social y escolar.
@@ -281,14 +280,15 @@ export default function TherapeuticCenter() {
                 <section className="arupo-sheet overflow-hidden py-24 lg:py-28 bg-white dark:bg-dark-950">
                     <SectionDecor variant="soft" />
                     <div className="relative z-10 max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col md:flex-row items-center gap-14">
-                        <div className="md:w-1/2 w-full relative p-3 sm:p-5">
-                            <div aria-hidden="true" className="arupo-deco inset-0 blob bg-gradient-to-br from-sky-300 via-[#0072BC] to-therapeutic-600 opacity-80 -rotate-6" />
-                            <ArupoFlower className="-bottom-8 -right-6 w-32 h-32 text-therapeutic-500/40" strokeWidth={2.2} />
-                            <img
-                                src="https://images.unsplash.com/photo-1516627145497-ae6968895b74?q=80&w=2040&auto=format&fit=crop"
-                                alt="Atención inclusiva"
-                                className="relative petal-lg shadow-2xl w-full object-cover aspect-[4/3] ring-4 ring-white dark:ring-dark-900"
-                            />
+                        <div className="md:w-1/2 w-full">
+                            <div className="relative mx-3 sm:mx-6 my-6">
+                                <PhotoBackdrop tone="cti" />
+                                <img
+                                    src="https://images.unsplash.com/photo-1516627145497-ae6968895b74?q=80&w=2040&auto=format&fit=crop"
+                                    alt="Atención inclusiva"
+                                    className="relative z-10 petal-lg shadow-2xl w-full object-cover aspect-[4/3] ring-1 ring-white/50 dark:ring-white/10"
+                                />
+                            </div>
                         </div>
                         <div className="md:w-1/2">
                             <h2 className="text-3xl sm:text-4xl font-extrabold tracking-tight mb-8">¿A quiénes <span className="text-cti">atendemos?</span></h2>
@@ -396,81 +396,16 @@ export default function TherapeuticCenter() {
                 {/* INFORMACIÓN DE CONTACTO Y HORARIOS (PREMIUM REDESIGN) */}
                 <section className="arupo-sheet overflow-hidden py-28 lg:py-32 bg-white dark:bg-dark-950 px-4 sm:px-6 lg:px-8">
                     <SectionDecor variant="cool" />
-                    <div className="relative z-10 max-w-6xl mx-auto arupo-card petal-lg overflow-hidden p-8 sm:p-10 md:p-16 flex flex-col md:flex-row gap-14 md:gap-16 items-center">
-                        <div aria-hidden="true" className="arupo-halo -top-32 -left-24 w-96 h-96" style={{ background: 'radial-gradient(circle, rgba(0,114,188,0.22), transparent 70%)' }} />
-                        <div aria-hidden="true" className="arupo-halo -bottom-32 right-0 w-96 h-96" style={{ background: 'radial-gradient(circle, rgba(130,61,131,0.22), transparent 70%)' }} />
-                        <div className="relative md:w-1/2 space-y-10">
-                            <div>
-                                <h2 className="text-4xl sm:text-[2.75rem] font-extrabold text-dark-900 dark:text-white tracking-tight leading-[1.1] text-balance mb-4">Estamos aquí para <span className="text-cti">ayudarte</span></h2>
-                                <p className="text-lg text-dark-500 dark:text-dark-400 font-light leading-relaxed">Ponte en contacto con nuestro equipo para agendar una cita o conocer más sobre nuestros servicios terapéuticos.</p>
-                            </div>
-
-                            <div className="space-y-3">
-                                {/* Horario */}
-                                <div className="group flex items-center gap-5 p-3 -mx-3 petal transition-colors duration-300 hover:bg-[#f6f4fb] dark:hover:bg-white/[0.04]">
-                                    <div className="arupo-icon is-cti w-12 h-12">
-                                        <svg className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
-                                    </div>
-                                    <div>
-                                        <h4 className="font-bold text-dark-900 dark:text-white text-lg">Horario de Atención</h4>
-                                        <p className="text-dark-500 dark:text-dark-400 mt-1">Lunes a Viernes</p>
-                                        <p className="text-dark-800 dark:text-dark-200 font-medium">08:00 - 12:45 | 14:15 - 18:00</p>
-                                    </div>
-                                </div>
-
-                                {/* Teléfono */}
-                                <div className="group flex items-center gap-5 p-3 -mx-3 petal transition-colors duration-300 hover:bg-[#f6f4fb] dark:hover:bg-white/[0.04]">
-                                    <div className="arupo-icon w-12 h-12">
-                                        <svg className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z" /></svg>
-                                    </div>
-                                    <div>
-                                        <h4 className="font-bold text-dark-900 dark:text-white text-lg">Llámanos</h4>
-                                        <p className="text-dark-500 dark:text-dark-400 mt-1">Central telefónica</p>
-                                        <a href="tel:+593996768228" className="text-dark-800 dark:text-dark-200 font-medium hover:text-therapeutic-600 transition-colors">+593 99 676 8228</a>
-                                    </div>
-                                </div>
-
-                                {/* WhatsApp */}
-                                <div className="group flex items-center gap-5 p-3 -mx-3 petal transition-colors duration-300 hover:bg-[#f6f4fb] dark:hover:bg-white/[0.04]">
-                                    <div className="arupo-icon w-12 h-12 !bg-gradient-to-br from-emerald-400 via-green-500 to-green-700 !shadow-[0_12px_24px_-12px_rgba(22,163,74,0.7)]">
-                                        <svg className="w-6 h-6" fill="currentColor" viewBox="0 0 24 24"><path d="M12.031 6.172c-3.181 0-5.767 2.586-5.768 5.766-.001 1.298.38 2.27 1.019 3.287l-.582 2.128 2.182-.573c.978.58 1.911.928 3.145.929 3.178 0 5.767-2.587 5.768-5.766.001-3.187-2.575-5.77-5.764-5.771zm3.392 8.244c-.144.405-.837.774-1.17.824-.299.045-.677.063-1.092-.111-.352-.148-.973-.397-1.943-1.272-1.084-.979-1.815-2.185-2.025-2.54-.21-.355-.022-.547.155-.724.161-.161.353-.414.53-.621.174-.207.234-.355.352-.591.118-.236.059-.443-.03-.621-.088-.178-.778-1.879-1.066-2.571-.274-.658-.553-.568-.778-.578-.207-.008-.445-.011-.682-.011-.237 0-.621.089-.947.443-.326.355-1.244 1.214-1.244 2.959s1.274 3.433 1.451 3.67c.178.237 2.493 3.823 6.035 5.356 2.308.995 3.109.845 3.626.702.597-.165 1.839-.751 2.097-1.477.258-.726.258-1.348.181-1.477-.077-.13-.279-.207-.633-.385z" /></svg>
-                                    </div>
-                                    <div>
-                                        <h4 className="font-bold text-dark-900 dark:text-white text-lg">WhatsApp Directo</h4>
-                                        <p className="text-dark-500 dark:text-dark-400 mt-1">Atención rápida por chat</p>
-                                        <a href="https://wa.me/593996768228" target="_blank" rel="noopener noreferrer" className="text-dark-800 dark:text-dark-200 font-medium hover:text-green-600 transition-colors">+593 99 676 8228</a>
-                                    </div>
-                                </div>
-
-                                {/* Email */}
-                                <div className="group flex items-center gap-5 p-3 -mx-3 petal transition-colors duration-300 hover:bg-[#f6f4fb] dark:hover:bg-white/[0.04]">
-                                    <div className="arupo-icon is-cti w-12 h-12">
-                                        <svg className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" /></svg>
-                                    </div>
-                                    <div>
-                                        <h4 className="font-bold text-dark-900 dark:text-white text-lg">Escríbenos</h4>
-                                        <p className="text-dark-500 dark:text-dark-400 mt-1">Correo electrónico</p>
-                                        <a href="mailto:rrpparupocti@gmail.com" className="text-dark-800 dark:text-dark-200 font-medium hover:text-therapeutic-600 transition-colors break-all">rrpparupocti@gmail.com</a>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-                        {/* QR Code Section */}
-                        <div className="relative md:w-1/2 flex flex-col items-center justify-center">
-                            <h3 className="text-2xl font-bold text-dark-900 dark:text-white mb-6 text-center">Conecta al instante</h3>
-                            <div className="relative mb-8 group">
-                                <div aria-hidden="true" className="arupo-deco inset-0 petal-lg bg-gradient-to-br from-sky-400 via-[#0072BC] to-therapeutic-600 rotate-6 scale-105 transition-transform duration-500 group-hover:rotate-12" />
-                                <ArupoFlower className="-top-10 -right-10 w-24 h-24 text-therapeutic-500/40" strokeWidth={2.4} />
-                                <div className="relative bg-white p-4 petal-lg shadow-2xl flex items-center justify-center w-64 h-64">
-                                    <img src={qrCentro} alt="Código QR Centro Terapéutico" className="w-full h-full object-contain transition-all duration-300 group-hover:scale-105" />
-                                </div>
-                            </div>
-                            <p className="text-sm font-medium text-dark-500 dark:text-dark-400 text-center max-w-xs">
-                                Escanea este código para enviarnos un mensaje directo y agendar tu cita
-                            </p>
-                        </div>
-                    </div>
+                    <ContactPanel
+                        tone="cti"
+                        intro="Ponte en contacto con nuestro equipo para agendar una cita o conocer más sobre nuestros servicios terapéuticos."
+                        qr={qrCentro}
+                        qrAlt="Código QR Centro Terapéutico"
+                        qrUrl="https://www.connexoapp.com/Centro%20Terap%C3%A9utico%20Integral%20Arupo"
+                        qrCaption="Escanea este código para enviarnos un mensaje directo y agendar tu cita"
+                        logo={arupoctiLogo}
+                        logoAlt="Centro Terapéutico Integral Arupo"
+                    />
                 </section>
 
                 {/* 9. CTA HUMANO Y DIRECTO - Buttons moved to Hero */}

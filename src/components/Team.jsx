@@ -23,13 +23,13 @@ const defaultMembers = [
 const VARIANTS = {
     primary: {
         role: 'text-primary-600 dark:text-primary-400',
-        backdrop: 'from-primary-400 via-primary-600 to-arupo-purple',
+        bar: 'from-primary-400 via-primary-600 to-arupo-purple',
         accent: 'text-arupo',
         decor: 'soft',
     },
     therapeutic: {
         role: 'text-therapeutic-600 dark:text-therapeutic-400',
-        backdrop: 'from-[#0072BC] via-therapeutic-600 to-therapeutic-800',
+        bar: 'from-[#0072BC] via-therapeutic-600 to-therapeutic-800',
         accent: 'text-cti',
         decor: 'cool',
     },
@@ -57,23 +57,21 @@ export default function Team({ variant = 'primary', members = defaultMembers, su
                             variant="up"
                             className={`group text-center ${index % 3 === 1 ? 'lg:translate-y-12' : ''}`}
                         >
-                            <div className="relative mx-auto w-full max-w-[19rem]">
-                                {/* Arco de color desplazado detrás de la foto */}
-                                <div aria-hidden="true" className={`arupo-deco inset-0 arch bg-gradient-to-br ${v.backdrop} opacity-90 translate-x-3 translate-y-3 transition-transform duration-500 group-hover:translate-x-5 group-hover:translate-y-5`} />
-                                <div className="relative arch overflow-hidden aspect-[3/4] ring-[6px] ring-white dark:ring-dark-900 shadow-xl">
-                                    <img
-                                        src={member.image}
-                                        alt={member.name}
-                                        loading="lazy"
-                                        decoding="async"
-                                        className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
-                                    />
-                                    <div className="absolute inset-0 bg-gradient-to-t from-dark-950/85 via-dark-900/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 flex items-end justify-center p-7">
-                                        <p className="text-white font-medium text-sm leading-snug translate-y-3 group-hover:translate-y-0 transition-transform duration-500">
-                                            "Trabajamos por un mundo donde nadie se quede atrás."
-                                        </p>
-                                    </div>
+                            <div className="relative mx-auto w-full max-w-[19rem] aspect-[3/4] rounded-[1.75rem] overflow-hidden bg-dark-100 dark:bg-dark-900 shadow-xl ring-1 ring-dark-900/5 dark:ring-white/10">
+                                <img
+                                    src={member.image}
+                                    alt={member.name}
+                                    loading="lazy"
+                                    decoding="async"
+                                    className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
+                                />
+                                <div className="absolute inset-0 bg-gradient-to-t from-dark-950/85 via-dark-900/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 flex items-end justify-center p-7">
+                                    <p className="text-white font-medium text-sm leading-snug translate-y-3 group-hover:translate-y-0 transition-transform duration-500">
+                                        "Trabajamos por un mundo donde nadie se quede atrás."
+                                    </p>
                                 </div>
+                                {/* Línea de color de la marca al pie de la foto */}
+                                <span aria-hidden="true" className={`absolute inset-x-0 bottom-0 h-1.5 bg-gradient-to-r ${v.bar}`} />
                             </div>
                             <div className="mt-7">
                                 <h3 className="text-xl font-bold text-dark-900 dark:text-white mb-1">

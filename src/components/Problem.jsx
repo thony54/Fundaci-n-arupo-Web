@@ -1,5 +1,5 @@
 import SectionHeading from './SectionHeading';
-import SectionDecor, { ArupoFlower } from './ui/Decor';
+import SectionDecor from './ui/Decor';
 import { Stagger, StaggerItem } from './motion/Stagger';
 import Reveal from './motion/Reveal';
 
@@ -59,7 +59,6 @@ export default function Problem() {
                 <Reveal width="100%">
                     <div className="mt-20 relative overflow-hidden petal-lg bg-gradient-to-br from-primary-500 via-primary-700 to-[#7a2c55] p-8 sm:p-14 shadow-2xl shadow-primary-700/30">
                         <div aria-hidden="true" className="arupo-halo -top-24 -right-10 w-96 h-96" style={{ background: 'radial-gradient(circle, rgba(252,211,77,0.45), transparent 70%)' }} />
-                        <ArupoFlower className="-right-16 -bottom-24 w-[22rem] h-[22rem] text-white/15" strokeWidth={1.4} />
                         <div aria-hidden="true" className="arupo-deco left-0 top-0 h-full w-2 bg-gradient-to-b from-accent-300 via-white/60 to-transparent" />
                         <div className="relative max-w-3xl">
                             <h3 className="text-2xl sm:text-3xl lg:text-4xl font-extrabold tracking-tight text-white mb-5 leading-tight">

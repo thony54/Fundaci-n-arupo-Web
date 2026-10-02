@@ -2,10 +2,12 @@ import SectionHeading from './SectionHeading';
 import SectionDecor from './ui/Decor';
 import { Stagger, StaggerItem } from './motion/Stagger';
 import Reveal from './motion/Reveal';
+import { motion } from 'framer-motion';
 
 const groups = [
     {
         place: 'Ibarra',
+        scope: 'Cantonal',
         items: [
             'Ordenanza para la Igualdad e Inclusión de Personas con Discapacidad, impulsada mediante un proceso de construcción participativa.',
             'Construcción del reglamento a la ordenanza para el cantón.',
@@ -13,6 +15,7 @@ const groups = [
     },
     {
         place: 'Otavalo',
+        scope: 'Cantonal',
         items: [
             'Construcción de la ordenanza para personas con discapacidad en el cantón.',
             'Capacitación y fortalecimiento en el sistema de protección de derechos.',
@@ -20,12 +23,14 @@ const groups = [
     },
     {
         place: 'Quito',
+        scope: 'Distrito Metropolitano',
         items: [
             'Construcción y validación de rutas y protocolos de atención para personas con discapacidad en el Distrito Metropolitano.',
         ],
     },
     {
         place: 'A nivel nacional',
+        scope: 'Nacional',
         items: [
             'Reforma a la Ley Orgánica de Discapacidad, mesas técnicas — Asamblea Nacional.',
             'Mesas técnicas nacionales para movilidad humana — Cancillería.',
@@ -50,40 +55,64 @@ export default function PolicyAchievements() {
                     className="max-w-4xl"
                 />
 
-                <div className="relative">
-                    {/* Ruta punteada que une los territorios */}
-                    <svg aria-hidden="true" className="arupo-deco hidden lg:block left-[12%] top-[26px] w-[76%] h-3 text-primary-300 dark:text-primary-700" preserveAspectRatio="none" viewBox="0 0 100 10" fill="none">
-                        <path d="M0 5 C 12 1, 22 9, 33.3 5 S 55 1, 66.6 5 S 88 9, 100 5" stroke="currentColor" vectorEffect="non-scaling-stroke" style={{ strokeWidth: 2, strokeDasharray: "6 7", strokeLinecap: "round" }} />
-                    </svg>
+                {/* Ruta de incidencia: del cantón al país. La línea une los cuatro
+                    territorios y avanza en el mismo sentido que crece su alcance. */}
+                <div className="relative mb-14">
+                    <div className="hidden lg:flex items-center justify-between gap-4 mb-6 text-xs font-bold uppercase tracking-[0.18em] text-dark-500 dark:text-dark-400">
+                        <span>Incidencia local</span>
+                        <span aria-hidden="true" className="flex-1 h-px bg-gradient-to-r from-dark-200 via-primary-300 to-dark-200 dark:from-dark-800 dark:via-primary-800 dark:to-dark-800" />
+                        <span>Incidencia nacional</span>
+                    </div>
 
-                    <Stagger className="relative grid sm:grid-cols-2 lg:grid-cols-4 gap-6 gap-y-10 mb-14" stagger={0.12}>
-                        {groups.map((group, i) => (
-                            <StaggerItem
-                                key={group.place}
-                                as="article"
-                                variant="up"
-                                className="group flex flex-col items-center"
-                            >
-                                <div className="relative z-10 arupo-icon w-16 h-16 border-[6px] border-white dark:border-dark-950">
-                                    <svg className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M15 10.5a3 3 0 11-6 0 3 3 0 016 0z" />
-                                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M19.5 10.5c0 7.142-7.5 11.25-7.5 11.25S4.5 17.642 4.5 10.5a7.5 7.5 0 1115 0z" />
-                                    </svg>
-                                </div>
-                                <div className={`-mt-8 w-full flex-1 arupo-card arupo-card-hover is-warm ${i % 2 ? 'petal-alt' : 'petal'} px-7 pt-12 pb-8`}>
-                                    <h3 className="text-lg font-bold text-dark-900 dark:text-white text-center mb-5">{group.place}</h3>
-                                    <ul className="space-y-3">
-                                        {group.items.map((item, j) => (
-                                            <li key={j} className="flex items-start gap-3">
-                                                <span aria-hidden="true" className="mt-[0.45rem] w-2 h-2 shrink-0 petal bg-gradient-to-br from-accent-400 to-primary-600" />
-                                                <span className="text-dark-600 dark:text-dark-300 text-sm leading-relaxed">{item}</span>
-                                            </li>
-                                        ))}
-                                    </ul>
-                                </div>
-                            </StaggerItem>
-                        ))}
-                    </Stagger>
+                    <div className="relative">
+                        {/* Riel: va del centro de la primera parada al de la última (a media altura de los números) */}
+                        <div aria-hidden="true" className="hidden lg:block absolute top-[1.625rem] left-[calc((100%-4.5rem)/8)] right-[calc((100%-4.5rem)/8)] h-1 rounded-full bg-primary-100 dark:bg-primary-950/60 overflow-hidden">
+                            <motion.div
+                                className="h-full origin-left rounded-full bg-gradient-to-r from-accent-400 via-primary-500 to-primary-700"
+                                initial={{ scaleX: 0 }}
+                                whileInView={{ scaleX: 1 }}
+                                viewport={{ once: true, margin: '-80px' }}
+                                transition={{ duration: 1.4, ease: [0.22, 1, 0.36, 1] }}
+                            />
+                        </div>
+
+                        <Stagger as="ol" className="relative grid sm:grid-cols-2 lg:grid-cols-4 gap-6 gap-y-10" stagger={0.12}>
+                            {groups.map((group, i) => (
+                                <StaggerItem
+                                    key={group.place}
+                                    as="li"
+                                    variant="up"
+                                    className="flex flex-col items-center"
+                                >
+                                    {/* En celular (una columna) la ruta sigue hacia abajo */}
+                                    {i > 0 && (
+                                        <span aria-hidden="true" className="sm:hidden -mt-8 mb-2 h-8 w-1 rounded-full bg-gradient-to-b from-primary-100 to-primary-400 dark:from-primary-950 dark:to-primary-600" />
+                                    )}
+                                    <div className="relative z-10 arupo-icon w-14 h-14 text-lg font-black ring-[6px] ring-white dark:ring-dark-950">
+                                        {i + 1}
+                                    </div>
+                                    <span className="mt-3 mb-4 inline-flex items-center gap-1.5 rounded-full bg-primary-50 dark:bg-primary-500/10 px-3 py-1 text-[0.7rem] font-bold uppercase tracking-[0.14em] text-primary-700 dark:text-primary-300 ring-1 ring-primary-200/80 dark:ring-primary-500/25">
+                                        <svg className="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
+                                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 10.5a3 3 0 11-6 0 3 3 0 016 0z" />
+                                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19.5 10.5c0 7.142-7.5 11.25-7.5 11.25S4.5 17.642 4.5 10.5a7.5 7.5 0 1115 0z" />
+                                        </svg>
+                                        {group.scope}
+                                    </span>
+                                    <article className={`w-full flex-1 arupo-card arupo-card-hover is-warm ${i % 2 ? 'petal-alt' : 'petal'} px-7 pt-7 pb-8`}>
+                                        <h3 className="text-lg font-bold text-dark-900 dark:text-white text-center mb-5">{group.place}</h3>
+                                        <ul className="space-y-3">
+                                            {group.items.map((item, j) => (
+                                                <li key={j} className="flex items-start gap-3">
+                                                    <span aria-hidden="true" className="mt-[0.45rem] w-2 h-2 shrink-0 petal bg-gradient-to-br from-accent-400 to-primary-600" />
+                                                    <span className="text-dark-600 dark:text-dark-300 text-sm leading-relaxed">{item}</span>
+                                                </li>
+                                            ))}
+                                        </ul>
+                                    </article>
+                                </StaggerItem>
+                            ))}
+                        </Stagger>
+                    </div>
                 </div>
 
                 {/* Highlight: legal wins */}

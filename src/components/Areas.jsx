@@ -1,5 +1,4 @@
 import SectionHeading from './SectionHeading';
-import TiltCard from './motion/TiltCard';
 import { Stagger, StaggerItem } from './motion/Stagger';
 import { BorderBeam } from './magicui/BorderBeam';
 import SectionDecor from './ui/Decor';
@@ -104,42 +103,37 @@ export default function Areas() {
                         return (
                             <StaggerItem
                                 key={idx}
-                                variant="card"
-                                className={`group h-full ${wide ? 'lg:col-span-3' : 'lg:col-span-2'} ${idx === 4 ? 'md:col-span-2 lg:col-span-3' : ''}`}
-                                style={{ transformStyle: 'preserve-3d' }}
+                                as="article"
+                                variant="up"
+                                className={`group/area arupo-card ${idx % 2 ? 'petal-alt' : 'petal-lg'} relative p-8 lg:p-9 overflow-hidden flex flex-col h-full ${wide ? 'lg:col-span-3' : 'lg:col-span-2'} ${idx === 4 ? 'md:col-span-2 lg:col-span-3' : ''}`}
                             >
-                                <TiltCard className={`group h-full ${idx % 2 ? 'petal-alt' : 'petal-lg'}`} max={5}>
-                                    <article
-                                        className={`arupo-sheen arupo-card group-hover:shadow-2xl ${idx % 2 ? 'petal-alt' : 'petal-lg'} relative p-8 lg:p-9 overflow-hidden flex flex-col h-full`}
-                                    >
-                                        <BorderBeam className="opacity-0 group-hover:opacity-100 transition-opacity duration-300" duration={5} />
-                                        <span aria-hidden="true" className="arupo-deco top-4 right-7 text-7xl font-black tracking-tighter text-primary-500/[0.09] dark:text-primary-300/[0.08] transition-transform duration-500 group-hover:-translate-y-1">
-                                            {String(idx + 1).padStart(2, '0')}
-                                        </span>
+                                {/* Única animación: la barra de luz que recorre el borde al pasar el mouse */}
+                                <BorderBeam className="opacity-0 group-hover/area:opacity-100 transition-opacity duration-300" duration={5} />
+                                <span aria-hidden="true" className="arupo-deco top-4 right-7 text-7xl font-black tracking-tighter text-primary-500/[0.09] dark:text-primary-300/[0.08]">
+                                    {String(idx + 1).padStart(2, '0')}
+                                </span>
 
-                                        <div className={`relative ${wide ? 'lg:flex lg:items-start lg:gap-8' : ''}`}>
-                                            <div className={wide ? 'lg:w-2/5 lg:shrink-0' : ''}>
-                                                <div className="arupo-icon w-16 h-16 mb-6">
-                                                    {area.icon}
-                                                </div>
-                                                <h3 className="text-xl font-bold text-dark-900 dark:text-white mb-5 group-hover:text-primary-600 dark:group-hover:text-primary-400 transition-colors leading-snug">
-                                                    {area.title}
-                                                </h3>
-                                            </div>
-
-                                            <ul className={`flex-1 space-y-3 ${wide ? 'lg:pt-2' : ''}`}>
-                                                {area.items.map((item, i) => (
-                                                    <li key={i} className="flex items-start gap-3">
-                                                        <span aria-hidden="true" className="mt-[0.45rem] w-2 h-2 shrink-0 petal bg-gradient-to-br from-accent-400 to-primary-600" />
-                                                        <span className="text-dark-600 dark:text-dark-300 text-sm leading-relaxed">
-                                                            {item}
-                                                        </span>
-                                                    </li>
-                                                ))}
-                                            </ul>
+                                <div className={`relative ${wide ? 'lg:flex lg:items-start lg:gap-8' : ''}`}>
+                                    <div className={wide ? 'lg:w-2/5 lg:shrink-0' : ''}>
+                                        <div className="arupo-icon w-16 h-16 mb-6">
+                                            {area.icon}
                                         </div>
-                                    </article>
-                                </TiltCard>
+                                        <h3 className="text-xl font-bold text-dark-900 dark:text-white mb-5 leading-snug">
+                                            {area.title}
+                                        </h3>
+                                    </div>
+
+                                    <ul className={`flex-1 space-y-3 ${wide ? 'lg:pt-2' : ''}`}>
+                                        {area.items.map((item, i) => (
+                                            <li key={i} className="flex items-start gap-3">
+                                                <span aria-hidden="true" className="mt-[0.45rem] w-2 h-2 shrink-0 petal bg-gradient-to-br from-accent-400 to-primary-600" />
+                                                <span className="text-dark-600 dark:text-dark-300 text-sm leading-relaxed">
+                                                    {item}
+                                                </span>
+                                            </li>
+                                        ))}
+                                    </ul>
+                                </div>
                             </StaggerItem>
                         );
                     })}

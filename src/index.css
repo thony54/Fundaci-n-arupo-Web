@@ -357,8 +357,23 @@
     background: rgba(251, 146, 60, 0.1);
     box-shadow: inset 0 0 0 1px rgba(251, 146, 60, 0.25);
   }
+  /* Variante azul del Centro Terapéutico */
+  .arupo-eyebrow.is-cti {
+    color: #005a96;
+    background: rgba(224, 242, 254, 0.75);
+    box-shadow: inset 0 0 0 1px rgba(0, 114, 188, 0.2);
+  }
+  .arupo-eyebrow.is-cti::before {
+    background: linear-gradient(135deg, #1d8fd8, #82368c);
+    box-shadow: 0 0 0 3px rgba(0, 114, 188, 0.15);
+  }
+  .dark .arupo-eyebrow.is-cti {
+    color: #7cc4f2;
+    background: rgba(0, 114, 188, 0.12);
+    box-shadow: inset 0 0 0 1px rgba(124, 196, 242, 0.25);
+  }
 
-  /* Decoración: halos de color difuminados y flor de arupo */
+  /* Decoración: halos de color difuminados */
   .arupo-deco { position: absolute; pointer-events: none; z-index: 0; }
   .arupo-halo {
     position: absolute;
@@ -368,12 +383,15 @@
     pointer-events: none;
   }
   .dark .arupo-halo { opacity: 0.35; }
-  .arupo-flower { animation: arupo-spin-slow 90s linear infinite; }
-    }
+}
 
-@keyframes arupo-spin-slow { to { transform: rotate(360deg); } }
-@media (prefers-reduced-motion: reduce) { .arupo-flower { animation: none; } }
-.a11y-reduced-motion .arupo-flower { animation: none !important; }
+/* Trama de puntos (detrás de fotos y QR); el color sale de text-* */
+@utility arupo-dots {
+  background-image: radial-gradient(currentColor 1.6px, transparent 1.9px);
+  background-size: 16px 16px;
+  -webkit-mask-image: radial-gradient(circle at center, #000 40%, transparent 72%);
+          mask-image: radial-gradient(circle at center, #000 40%, transparent 72%);
+}
 
 /* Los modos de alto contraste / visual total no necesitan decoración */
 .a11y-high-contrast .arupo-deco,
@@ -460,9 +478,10 @@
 /* Last-resort visibility guarantee: if the JS motion engine never reveals
    the content (e.g. animations don't run on a given device), this class is
    added to <html> and forces every reveal subtree visible. Only touches
-   opacity/filter so layout and hover transforms are preserved. */
-html.arupo-motion-fallback [data-reveal],
-html.arupo-motion-fallback [data-reveal] *:not(.arupo-halo, .arupo-deco, .arupo-deco *) {
+   elements whose opacity the motion engine set inline, so hover-only
+   overlays (opacity-0 classes) stay hidden until hover. */
+html.arupo-motion-fallback [data-reveal][style*="opacity"],
+html.arupo-motion-fallback [data-reveal] [style*="opacity"]:not(.arupo-halo, .arupo-deco) {
   opacity: 1 !important;
   filter: none !important;
 }

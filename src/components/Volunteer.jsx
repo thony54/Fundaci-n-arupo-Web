@@ -1,4 +1,5 @@
-import SectionDecor, { ArupoFlower } from './ui/Decor';
+import SectionDecor, { PhotoBackdrop } from './ui/Decor';
+import fotoVoluntariado from '../assets/secciones/voluntariado.webp';
 
 export default function Volunteer() {
     return (
@@ -53,23 +54,27 @@ export default function Volunteer() {
                         </a>
                     </div>
                     
-                    <div className="flex-1 w-full relative p-3 sm:p-6">
-                        {/* Capas orgánicas detrás de la imagen */}
-                        <div aria-hidden="true" className="arupo-deco inset-2 blob bg-gradient-to-br from-accent-300 via-primary-400 to-arupo-purple opacity-60 rotate-6" />
-                        <ArupoFlower className="-top-8 -right-6 w-36 h-36 text-primary-500/40" strokeWidth={2.2} />
-                        <div className="relative aspect-square sm:aspect-[4/3] lg:aspect-square petal-lg overflow-hidden shadow-2xl ring-4 ring-white/70 dark:ring-dark-900">
-                            {/* Abstract vibrant gradient background */}
-                            <div className="absolute inset-0 bg-gradient-to-br from-primary-400 via-primary-600 to-accent-600 dark:from-primary-600 dark:via-primary-800 dark:to-accent-800 mix-blend-multiply dark:mix-blend-color-burn opacity-90" />
-                            <div className="absolute top-0 right-0 w-full h-full bg-[url('https://images.unsplash.com/photo-1593113565214-80afcb4a45d7?auto=format&fit=crop&q=80')] bg-cover bg-center mix-blend-overlay opacity-50 dark:opacity-40" />
-                            <div className="absolute inset-0 bg-gradient-to-t from-dark-900/90 via-dark-900/20 to-transparent" />
-                            
-                            <div className="absolute bottom-8 left-8 right-8">
-                                <div className="bg-white/10 backdrop-blur-md border border-white/20 petal p-6 text-white transform transition-transform hover:-translate-y-1 duration-300">
-                                    <p className="font-medium text-lg italic">"El voluntariado en Arupo me enseñó el verdadero significado de la empatía y la transformación comunitaria."</p>
-                                    <p className="mt-3 text-primary-200 text-sm font-semibold tracking-wide uppercase">— Testimonio Voluntariado</p>
-                                </div>
+                    <div className="flex-1 w-full">
+                        <figure className="relative mx-3 sm:mx-6 my-6">
+                            <PhotoBackdrop />
+                            <div className="relative z-10 aspect-[3/2] petal-lg overflow-hidden shadow-2xl shadow-primary-900/20 ring-1 ring-white/50 dark:ring-white/10">
+                                <img
+                                    src={fotoVoluntariado}
+                                    alt="Voluntarias y voluntarios con el equipo de Fundación Arupo frente a las letras de Zuleta"
+                                    loading="lazy"
+                                    decoding="async"
+                                    className="w-full h-full object-cover"
+                                />
                             </div>
-                        </div>
+                        </figure>
+                        {/* Testimonio en tarjeta superpuesta, para no tapar la foto */}
+                        <blockquote className="relative z-20 -mt-14 sm:-mt-16 ml-6 sm:ml-14 mr-2 sm:mr-16 arupo-card petal p-5 sm:p-6">
+                            <svg aria-hidden="true" className="absolute -top-4 right-6 w-9 h-9 text-primary-500" fill="currentColor" viewBox="0 0 24 24">
+                                <path d="M9.983 3v7.391c0 5.704-3.731 9.57-8.983 10.609l-.995-2.151c2.432-.917 3.995-3.638 3.995-5.849h-4v-10h9.983zm14.017 0v7.391c0 5.704-3.748 9.571-9 10.609l-.996-2.151c2.433-.917 3.996-3.638 3.996-5.849h-3.983v-10h9.983z" />
+                            </svg>
+                            <p className="font-medium text-base sm:text-lg italic text-dark-800 dark:text-dark-100 leading-relaxed">"El voluntariado en Arupo me enseñó el verdadero significado de la empatía y la transformación comunitaria."</p>
+                            <footer className="mt-3 text-primary-600 dark:text-primary-300 text-sm font-semibold tracking-wide uppercase">— Testimonio Voluntariado</footer>
+                        </blockquote>
                     </div>
                 </div>
             </div>

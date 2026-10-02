@@ -1,6 +1,5 @@
-// Decoración de fondo para las secciones: halos de color difuminados y la flor
-// de arupo (cinco pétalos) como marca de agua. Todo es aria-hidden y se oculta
-// en los modos de alto contraste (ver .arupo-deco en index.css).
+// Decoración de fondo para las secciones: halos de color difuminados. Todo es
+// aria-hidden y se oculta en los modos de alto contraste (ver .arupo-deco en index.css).
 
 const HALO_COLORS = {
     orange: 'radial-gradient(circle, rgba(251,146,60,0.55), transparent 70%)',
@@ -13,18 +12,27 @@ export function Halo({ color = 'orange', className = '' }) {
     return <div aria-hidden="true" className={`arupo-halo ${className}`} style={{ background: HALO_COLORS[color] }} />;
 }
 
-export function ArupoFlower({ className = '', strokeWidth = 1.2 }) {
-    const petal = 'M0 0 C 20 -18, 24 -58, 0 -86 C -24 -58, -20 -18, 0 0 Z';
+// Fondo para fotos y QR: un marco fino desplazado hacia abajo a la derecha y una
+// trama de puntos asomando por la esquina opuesta. Va dentro de un contenedor
+// `relative` junto a la foto (que debe ser `relative`); `shape` copia su forma.
+const BACKDROP_TONES = {
+    primary: {
+        frame: 'border-primary-400/55 dark:border-primary-400/40',
+        dots: 'text-primary-500/50 dark:text-primary-400/40',
+    },
+    cti: {
+        frame: 'border-[#0072BC]/40 dark:border-sky-400/40',
+        dots: 'text-therapeutic-600/45 dark:text-therapeutic-300/40',
+    },
+};
+
+export function PhotoBackdrop({ tone = 'primary', shape = 'petal-lg' }) {
+    const t = BACKDROP_TONES[tone] || BACKDROP_TONES.primary;
     return (
-        <svg aria-hidden="true" viewBox="-100 -100 200 200" className={`arupo-deco ${className}`} fill="none" stroke="currentColor" strokeWidth={strokeWidth}>
-            <g className="arupo-flower" style={{ transformOrigin: 'center', transformBox: 'view-box' }}>
-                {[0, 72, 144, 216, 288].map((r) => (
-                    <path key={r} d={petal} transform={`rotate(${r})`} />
-                ))}
-                <circle r="9" />
-                <circle r="3" fill="currentColor" />
-            </g>
-        </svg>
+        <>
+            <div aria-hidden="true" className={`arupo-deco arupo-dots -top-7 -left-7 w-36 h-36 sm:w-44 sm:h-44 ${t.dots}`} />
+            <div aria-hidden="true" className={`arupo-deco inset-0 translate-x-3 translate-y-3 sm:translate-x-5 sm:translate-y-5 border-2 ${shape} ${t.frame}`} />
+        </>
     );
 }
 
@@ -34,14 +42,12 @@ const PRESETS = {
         <>
             <Halo color="orange" className="-top-24 -right-24 w-[26rem] h-[26rem]" />
             <Halo color="purple" className="-bottom-32 -left-24 w-[24rem] h-[24rem]" />
-            <ArupoFlower className="-top-10 -left-16 w-72 h-72 text-primary-500/10 dark:text-primary-400/10" />
         </>
     ),
     cool: (
         <>
             <Halo color="purple" className="-top-20 left-1/4 w-[22rem] h-[22rem]" />
             <Halo color="amber" className="bottom-0 -right-24 w-[24rem] h-[24rem]" />
-            <ArupoFlower className="bottom-8 -right-16 w-80 h-80 text-therapeutic-600/10 dark:text-therapeutic-400/10" />
         </>
     ),
     soft: (
@@ -54,7 +60,6 @@ const PRESETS = {
         <>
             <Halo color="orange" className="-top-24 right-1/4 w-[30rem] h-[30rem]" />
             <Halo color="purple" className="-bottom-32 -left-20 w-[28rem] h-[28rem]" />
-            <ArupoFlower className="top-16 -right-20 w-96 h-96 text-white/[0.05]" strokeWidth={1} />
         </>
     ),
 };

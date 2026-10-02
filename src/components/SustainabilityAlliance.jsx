@@ -1,5 +1,5 @@
 import Reveal from './motion/Reveal';
-import SectionDecor, { ArupoFlower } from './ui/Decor';
+import SectionDecor, { PhotoBackdrop } from './ui/Decor';
 import connexoIso from '../assets/CONNEXO ISO O.png';
 
 export default function SustainabilityAlliance() {
@@ -9,12 +9,10 @@ export default function SustainabilityAlliance() {
             <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                 <div className="grid lg:grid-cols-2 gap-16 items-center">
                     {/* Visual Side: Orbital Synergy with Logo */}
-                    <Reveal>
+                    <Reveal width="100%">
                         <div className="flex justify-center">
-                            <div className="relative w-full max-w-[26rem] p-4 sm:p-6">
-                                {/* Capa de color inclinada detrás de la tarjeta */}
-                                <div aria-hidden="true" className="arupo-deco inset-0 petal-lg bg-gradient-to-br from-primary-400 via-primary-600 to-arupo-purple -rotate-6 opacity-90 transition-transform duration-700" />
-                                <ArupoFlower className="-bottom-8 -left-8 w-32 h-32 text-primary-500/30 dark:text-primary-400/25" strokeWidth={2.2} />
+                            <div className="relative w-full max-w-[24rem] m-6">
+                                <PhotoBackdrop />
                                 <a
                                     href="https://web.connexoapp.com/"
                                     target="_blank"
