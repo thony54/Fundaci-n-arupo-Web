@@ -349,13 +349,14 @@ export default function TherapeuticCenter() {
                     variant="therapeutic"
                     surface={SOFT}
                     members={[
-                        { name: "Paola Sarabia", role: "Psicóloga Clínica", image: "https://images.unsplash.com/photo-1594824476967-48c8b964273f?q=80&w=1887&auto=format&fit=crop" },
-                        { name: "Clara Peñafiel", role: "Psicóloga", image: "https://images.unsplash.com/photo-1559839734-2b71ea197ec2?q=80&w=2070&auto=format&fit=crop" },
-                        { name: "Maria Narvaez", role: "Psicóloga", image: "https://images.unsplash.com/photo-1573497019940-1c28c88b4f3e?q=80&w=1887&auto=format&fit=crop" },
-                        { name: "Anshi Rodriguez", role: "Terapia del lenguaje", image: "https://images.unsplash.com/photo-1580489944761-15a19d654956?q=80&w=1961&auto=format&fit=crop" },
-                        { name: "Byron Pergueza", role: "Terapia del lenguaje", image: "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?q=80&w=1887&auto=format&fit=crop" },
-                        { name: "Antonio Monar", role: "Psicólogo", image: "https://images.unsplash.com/photo-1544005313-94ddf0286df2?q=80&w=1888&auto=format&fit=crop" },
-                        { name: "Andres Ortega", role: "Fisioterapeuta", image: "https://images.unsplash.com/photo-1567532939604-b6c5b0ad2e01?q=80&w=1887&auto=format&fit=crop" },
+                        { name: "Paola Arboleda", role: "Psicóloga Clínica", image: "/TeamCTI/Paola%20Arboleda.webp" },
+                        { name: "Clara Peñafiel", role: "Psicóloga", image: "/TeamCTI/Clara%20Penafiel.webp" },
+                        { name: "Antonio Monar", role: "Psicólogo", image: "/TeamCTI/Antonio%20Monar.webp" },
+                        { name: "Anshi Rodriguez", role: "Terapia del lenguaje", image: "/TeamCTI/Anshi%20Rodriguez.webp" },
+                        { name: "Byron Pergueza", role: "Terapia del lenguaje", image: "/TeamCTI/Byron%20Pergueza.webp" },
+                        // Sin foto todavía (se muestran sus iniciales)
+                        { name: "Maria Narvaez", role: "Psicóloga" },
+                        { name: "Andres Ortega", role: "Fisioterapeuta" },
                     ]}
                 />
                 </div>
