@@ -49,7 +49,6 @@ export default function MissionVision() {
                     title="Misión y Visión"
                     titleId="mv-heading"
                     accent={1}
-                    subtitle="Lo que hacemos cada día y el país que queremos construir junto a las personas con discapacidad y sus familias."
                 />
 
                 {/* ── Misión ─────────────────────────────────────────── */}

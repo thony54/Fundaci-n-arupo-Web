@@ -15,7 +15,7 @@ import ContactPanel from '../components/ContactPanel';
 const SOFT = 'bg-[#f6f4fb] dark:bg-night-900';
 
 export default function TherapeuticCenter() {
-    const [activeSection, setActiveSection] = useState(null); // 'medica' or 'terapeutica'
+    const [activeArea, setActiveArea] = useState('medica');
 
     const medicalServices = [
         { name: 'Neuropediatría', icon: '🧠' },
@@ -27,11 +27,32 @@ export default function TherapeuticCenter() {
 
     const therapeuticServices = [
         { name: 'Neuropsicología', icon: '🧩' },
-        { name: 'Psicología Familiar', icon: '🫂' },
+        { name: 'Psicología Familiar', icon: '👪' },
         { name: 'Terapia Ocupacional', icon: '👐' },
         { name: 'Terapia Física', icon: '🏃' },
         { name: 'Terapia de Lenguaje', icon: '💬' },
     ];
+
+    // Áreas de atención: pestaña activa + sus especialidades
+    const areas = {
+        medica: {
+            label: 'Área Médica',
+            services: medicalServices,
+            pill: 'from-[#0072BC] to-[#005a96] shadow-[#0072BC]/30',
+            tile: 'bg-sky-50 dark:bg-sky-500/10',
+            hover: 'hover:border-[#0072BC]/50',
+            iconPath: 'M19.428 15.428a2 2 0 00-1.022-.547l-2.387-.477a6 6 0 00-3.86.517l-.318.158a6 6 0 01-3.86.517L6.05 15.21a2 2 0 00-1.806.547M8 4h8l-1 1v5.172a2 2 0 00.586 1.414l5 5c1.26 1.26.367 3.414-1.415 3.414H4.828c-1.782 0-2.674-2.154-1.414-3.414l5-5A2 2 0 009 10.172V5L8 4z',
+        },
+        terapeutica: {
+            label: 'Área Terapéutica',
+            services: therapeuticServices,
+            pill: 'from-[#82368C] to-[#581c87] shadow-[#82368C]/30',
+            tile: 'bg-purple-50 dark:bg-purple-500/10',
+            hover: 'hover:border-[#82368C]/50',
+            iconPath: 'M14.828 14.828a4 4 0 01-5.656 0M9 10h.01M15 10h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z',
+        },
+    };
+    const area = areas[activeArea];
 
     return (
         <PageTransition>
@@ -142,10 +163,10 @@ export default function TherapeuticCenter() {
                 </section>
 
                 {/* 4. NUESTROS SERVICIOS ESPECIALIZADOS */}
-                <section id="servicios" className={`arupo-sheet overflow-hidden py-24 lg:py-28 ${SOFT}`}>
+                <section id="servicios" className={`arupo-sheet overflow-hidden pt-24 lg:pt-28 pb-32 lg:pb-40 ${SOFT}`}>
                     <SectionDecor variant="cool" />
                     <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-                        <div className="text-center mb-16">
+                        <div className="text-center mb-10">
                             <h2 className="text-3xl md:text-[2.75rem] font-extrabold mb-5 text-dark-900 dark:text-white tracking-tight text-balance">
                                 Áreas de Atención <span className="text-cti">Especializada</span>
                             </h2>
@@ -154,124 +175,70 @@ export default function TherapeuticCenter() {
                             </p>
                         </div>
 
-                        <div className="flex flex-col lg:flex-row gap-6 lg:gap-8 min-h-[500px]">
-                            {/* Área Médica Panel */}
-                            <motion.div
-                                layout
-                                transition={{ type: "spring", stiffness: 200, damping: 25 }}
-                                onClick={() => setActiveSection(activeSection === 'medica' ? null : 'medica')}
-                                onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); setActiveSection(activeSection === 'medica' ? null : 'medica'); } }}
-                                role="button"
-                                tabIndex={0}
-                                className={`group cursor-pointer petal-lg border transition-colors duration-500 flex flex-col p-8 sm:p-10 overflow-hidden relative
-                                    ${activeSection === 'medica' ? 'lg:flex-[2.5] bg-white dark:bg-dark-900 border-[#0072BC] shadow-[0_20px_50px_rgba(0,114,188,0.15)] z-10' :
-                                        activeSection === 'terapeutica' ? 'lg:flex-[0.5] opacity-40 bg-white/40 dark:bg-dark-900/40 border-transparent hover:opacity-100 grayscale-[0.5] hover:grayscale-0' :
-                                            'lg:flex-1 bg-white dark:bg-dark-900 border-dark-100 dark:border-dark-800 hover:border-[#0072BC] shadow-lg hover:shadow-xl hover:-translate-y-2 transform transition-transform'}`}
-                            >
-                                <motion.div layout className="flex flex-col items-start gap-5 relative z-10">
-                                    <div className={`w-16 h-16 blob flex items-center justify-center transition-all duration-500
-                                        ${activeSection === 'medica' ? 'bg-gradient-to-br from-[#0072BC] to-[#005a96] text-white shadow-lg shadow-[#0072BC]/40 scale-110' : 'bg-blue-50 dark:bg-blue-900/30 text-[#0072BC] group-hover:scale-110'}`}>
-                                        <svg className="w-8 h-8" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M19.428 15.428a2 2 0 00-1.022-.547l-2.387-.477a6 6 0 00-3.86.517l-.318.158a6 6 0 01-3.86.517L6.05 15.21a2 2 0 00-1.806.547M8 4h8l-1 1v5.172a2 2 0 00.586 1.414l5 5c1.26 1.26.367 3.414-1.415 3.414H4.828c-1.782 0-2.674-2.154-1.414-3.414l5-5A2 2 0 009 10.172V5L8 4z" /></svg>
-                                    </div>
-                                    <motion.h3 layout className={`font-black tracking-tight transition-all duration-500 ${activeSection === 'medica' ? 'text-4xl text-[#0072BC] dark:text-white' : 'text-2xl text-dark-800 dark:text-white'}`}>
-                                        Área Médica
-                                    </motion.h3>
-                                </motion.div>
-
-                                <AnimatePresence mode="wait">
-                                    {activeSection === 'medica' && (
-                                        <motion.div
-                                            initial={{ opacity: 0, y: 30 }}
-                                            animate={{ opacity: 1, y: 0 }}
-                                            exit={{ opacity: 0, y: -20, transition: { duration: 0.2 } }}
-                                            transition={{ duration: 0.5, delay: 0.2, type: "spring" }}
-                                            className="w-full mt-10 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-5 relative z-10"
+                        {/* Selector de área: la píldora de color se desliza a la pestaña activa */}
+                        <div className="flex justify-center mb-10">
+                            <div role="tablist" aria-label="Áreas de atención" className="inline-flex gap-1 p-1.5 rounded-full bg-white dark:bg-dark-900 ring-1 ring-dark-100 dark:ring-dark-800 shadow-lg shadow-therapeutic-900/5">
+                                {Object.entries(areas).map(([key, a]) => {
+                                    const selected = activeArea === key;
+                                    return (
+                                        <button
+                                            key={key}
+                                            id={`tab-${key}`}
+                                            role="tab"
+                                            type="button"
+                                            aria-selected={selected}
+                                            aria-controls="panel-areas"
+                                            onClick={() => setActiveArea(key)}
+                                            className={`relative inline-flex items-center gap-2 sm:gap-2.5 rounded-full px-4 sm:px-7 py-3 text-sm sm:text-base font-bold transition-colors duration-300 ${selected ? 'text-white' : 'text-dark-600 dark:text-dark-300 hover:text-dark-900 dark:hover:text-white'}`}
                                         >
-                                            {medicalServices.map((item, idx) => (
-                                                <motion.div
-                                                    key={idx}
-                                                    initial={{ opacity: 0, scale: 0.8 }}
-                                                    animate={{ opacity: 1, scale: 1 }}
-                                                    transition={{ delay: 0.3 + idx * 0.08, type: "spring", stiffness: 300 }}
-                                                    className={`flex items-center gap-4 p-5 ${idx % 2 ? 'petal-alt' : 'petal'} bg-[#f7fbff] dark:bg-dark-950 border border-sky-100 dark:border-dark-800 hover:border-[#0072BC] hover:shadow-[0_16px_32px_-18px_rgba(0,114,188,0.5)] transition-all hover:-translate-y-1 group/item`}
-                                                >
-                                                    <span className="w-12 h-12 shrink-0 blob bg-white dark:bg-dark-900 shadow-sm flex items-center justify-center text-2xl group-hover/item:scale-110 transition-transform duration-300">{item.icon}</span>
-                                                    <span className="text-sm md:text-base font-bold text-dark-700 dark:text-dark-200">{item.name}</span>
-                                                </motion.div>
-                                            ))}
-                                        </motion.div>
-                                    )}
-                                </AnimatePresence>
-                                
-                                {/* Background Decorative Circle */}
-                                {activeSection === 'medica' && (
-                                    <motion.div 
-                                        initial={{ opacity: 0, scale: 0 }}
-                                        animate={{ opacity: 1, scale: 1 }}
-                                        transition={{ duration: 0.8 }}
-                                        className="absolute -bottom-20 -right-20 w-96 h-96 bg-[#0072BC]/5 rounded-full blur-3xl z-0 pointer-events-none"
-                                    />
-                                )}
-                            </motion.div>
+                                            {selected && (
+                                                <motion.span
+                                                    layoutId="area-pill"
+                                                    aria-hidden="true"
+                                                    className={`absolute inset-0 rounded-full bg-gradient-to-r shadow-lg ${a.pill}`}
+                                                    transition={{ type: 'spring', stiffness: 380, damping: 32 }}
+                                                />
+                                            )}
+                                            <svg className="relative w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
+                                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d={a.iconPath} />
+                                            </svg>
+                                            <span className="relative">{a.label}</span>
+                                        </button>
+                                    );
+                                })}
+                            </div>
+                        </div>
 
-                            {/* Área Terapéutica Panel */}
-                            <motion.div
-                                layout
-                                transition={{ type: "spring", stiffness: 200, damping: 25 }}
-                                onClick={() => setActiveSection(activeSection === 'terapeutica' ? null : 'terapeutica')}
-                                onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); setActiveSection(activeSection === 'terapeutica' ? null : 'terapeutica'); } }}
-                                role="button"
-                                tabIndex={0}
-                                className={`group cursor-pointer petal-alt border transition-colors duration-500 flex flex-col p-8 sm:p-10 overflow-hidden relative
-                                    ${activeSection === 'terapeutica' ? 'lg:flex-[2.5] bg-white dark:bg-dark-900 border-[#82368C] shadow-[0_20px_50px_rgba(130,54,140,0.15)] z-10' :
-                                        activeSection === 'medica' ? 'lg:flex-[0.5] opacity-40 bg-white/40 dark:bg-dark-900/40 border-transparent hover:opacity-100 grayscale-[0.5] hover:grayscale-0' :
-                                            'lg:flex-1 bg-white dark:bg-dark-900 border-dark-100 dark:border-dark-800 hover:border-[#82368C] shadow-lg hover:shadow-xl hover:-translate-y-2 transform transition-transform'}`}
-                            >
-                                <motion.div layout className="flex flex-col items-start gap-5 relative z-10">
-                                    <div className={`w-16 h-16 blob flex items-center justify-center transition-all duration-500
-                                        ${activeSection === 'terapeutica' ? 'bg-gradient-to-br from-[#82368C] to-[#581c87] text-white shadow-lg shadow-[#82368C]/40 scale-110' : 'bg-purple-50 dark:bg-purple-900/30 text-[#82368C] group-hover:scale-110'}`}>
-                                        <svg className="w-8 h-8" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M14.828 14.828a4 4 0 01-5.656 0M9 10h.01M15 10h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
-                                    </div>
-                                    <motion.h3 layout className={`font-black tracking-tight transition-all duration-500 ${activeSection === 'terapeutica' ? 'text-4xl text-[#82368C] dark:text-white' : 'text-2xl text-dark-800 dark:text-white'}`}>
-                                        Área Terapéutica
-                                    </motion.h3>
-                                </motion.div>
-
-                                <AnimatePresence mode="wait">
-                                    {activeSection === 'terapeutica' && (
-                                        <motion.div
-                                            initial={{ opacity: 0, y: 30 }}
-                                            animate={{ opacity: 1, y: 0 }}
-                                            exit={{ opacity: 0, y: -20, transition: { duration: 0.2 } }}
-                                            transition={{ duration: 0.5, delay: 0.2, type: "spring" }}
-                                            className="w-full mt-10 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-5 relative z-10"
+                        {/* Especialidades del área activa: aparecen con un fundido suave y escalonado */}
+                        <div id="panel-areas" role="tabpanel" aria-labelledby={`tab-${activeArea}`}>
+                            <AnimatePresence mode="wait" initial={false}>
+                                <motion.ul
+                                    key={activeArea}
+                                    className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4 sm:gap-5"
+                                    initial="hidden"
+                                    animate="visible"
+                                    exit="exit"
+                                    variants={{
+                                        hidden: {},
+                                        visible: { transition: { staggerChildren: 0.06 } },
+                                        exit: { opacity: 0, transition: { duration: 0.15 } },
+                                    }}
+                                >
+                                    {area.services.map((item, idx) => (
+                                        <motion.li
+                                            key={item.name}
+                                            variants={{
+                                                hidden: { opacity: 0, y: 14 },
+                                                visible: { opacity: 1, y: 0, transition: { duration: 0.35, ease: [0.22, 1, 0.36, 1] } },
+                                            }}
+                                            className={`arupo-card ${idx % 2 ? 'petal-alt' : 'petal'} ${area.hover} flex flex-col items-center text-center gap-4 px-4 py-7 transition-colors duration-300 ${idx === area.services.length - 1 ? 'col-span-2 md:col-span-1' : ''}`}
                                         >
-                                            {therapeuticServices.map((item, idx) => (
-                                                <motion.div
-                                                    key={idx}
-                                                    initial={{ opacity: 0, scale: 0.8 }}
-                                                    animate={{ opacity: 1, scale: 1 }}
-                                                    transition={{ delay: 0.3 + idx * 0.08, type: "spring", stiffness: 300 }}
-                                                    className={`flex items-center gap-4 p-5 ${idx % 2 ? 'petal-alt' : 'petal'} bg-[#fbf7fd] dark:bg-dark-950 border border-purple-100 dark:border-dark-800 hover:border-[#82368C] hover:shadow-[0_16px_32px_-18px_rgba(130,54,140,0.5)] transition-all hover:-translate-y-1 group/item`}
-                                                >
-                                                    <span className="w-12 h-12 shrink-0 blob bg-white dark:bg-dark-900 shadow-sm flex items-center justify-center text-2xl group-hover/item:scale-110 transition-transform duration-300">{item.icon}</span>
-                                                    <span className="text-sm md:text-base font-bold text-dark-700 dark:text-dark-200">{item.name}</span>
-                                                </motion.div>
-                                            ))}
-                                        </motion.div>
-                                    )}
-                                </AnimatePresence>
-                                
-                                {/* Background Decorative Circle */}
-                                {activeSection === 'terapeutica' && (
-                                    <motion.div 
-                                        initial={{ opacity: 0, scale: 0 }}
-                                        animate={{ opacity: 1, scale: 1 }}
-                                        transition={{ duration: 0.8 }}
-                                        className="absolute -bottom-20 -right-20 w-96 h-96 bg-[#82368C]/5 rounded-full blur-3xl z-0 pointer-events-none"
-                                    />
-                                )}
-                            </motion.div>
+                                            <span aria-hidden="true" className={`w-14 h-14 blob flex items-center justify-center text-2xl ${area.tile}`}>{item.icon}</span>
+                                            <span className="text-sm sm:text-base font-bold text-dark-800 dark:text-dark-100 leading-snug">{item.name}</span>
+                                        </motion.li>
+                                    ))}
+                                </motion.ul>
+                            </AnimatePresence>
                         </div>
                     </div>
                 </section>
