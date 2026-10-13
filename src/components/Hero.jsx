@@ -7,6 +7,7 @@ import { useReveal } from './motion/useReveal';
 import { NumberTicker } from './magicui/NumberTicker';
 import { AnimatedShinyText } from './magicui/AnimatedShinyText';
 import { ShimmerButton } from './magicui/ShimmerButton';
+import arupoLogo from '../assets/Logo Fundacion Arupo Color/Logo Fundacion Arupo.png';
 
 const stats = [
     { value: 33568, label: 'Atenciones' },
@@ -29,6 +30,12 @@ const headline = [
 const fadeUp = {
     hidden: { opacity: 0, y: 16 },
     visible: { opacity: 1, y: 0, transition: { duration: 0.6, ease: [0.22, 1, 0.36, 1] } },
+};
+
+// Entrada del logo igual a la del hero del Centro Terapéutico
+const logoIn = {
+    hidden: { opacity: 0, scale: 0.8, y: 20 },
+    visible: { opacity: 1, scale: 1, y: 0, transition: { duration: 0.8, ease: 'easeOut', type: 'spring', bounce: 0.4 } },
 };
 
 export default function Hero() {
@@ -95,6 +102,14 @@ export default function Hero() {
                     animate={revealed ? 'visible' : 'hidden'}
                     variants={{ visible: { transition: { staggerChildren: 0.12, delayChildren: 0.05 } } }}
                 >
+                    {/* Logo (mismo tratamiento que en el Centro Terapéutico) */}
+                    <motion.img
+                        variants={logoIn}
+                        src={arupoLogo}
+                        alt="Fundación Arupo"
+                        className="mx-auto h-32 sm:h-40 md:h-48 mb-8 object-contain drop-shadow-[0_10px_20px_rgba(0,0,0,0.5)] hover:scale-105 transition-transform duration-500"
+                    />
+
                     {/* Badge */}
                     <motion.div
                         variants={fadeUp}
