@@ -5,7 +5,6 @@ import MeshGradient from './motion/MeshGradient';
 import WordReveal from './motion/WordReveal';
 import { useReveal } from './motion/useReveal';
 import { NumberTicker } from './magicui/NumberTicker';
-import { AnimatedShinyText } from './magicui/AnimatedShinyText';
 import { ShimmerButton } from './magicui/ShimmerButton';
 import arupoLogo from '../assets/Logo Fundacion Arupo Color/Logo Fundacion Arupo.png';
 
@@ -48,9 +47,6 @@ export default function Hero() {
     // Layered parallax: content drifts up and fades; background layers move slower.
     const yContent = useTransform(scrollYProgress, [0, 1], ['0%', '30%']);
     const opacity = useTransform(scrollYProgress, [0, 0.75], [1, 0]);
-    // El indicador "Descubre" desaparece apenas se empieza a bajar, para que el
-    // contenido (que se desplaza hacia abajo con el parallax) nunca lo pise.
-    const cueOpacity = useTransform(scrollYProgress, [0, 0.08], [1, 0]);
     const yMesh = useTransform(scrollYProgress, [0, 1], ['0%', '18%']);
     const yBlobFar = useTransform(scrollYProgress, [0, 1], ['0%', '55%']);
     const scaleMesh = useTransform(scrollYProgress, [0, 1], [1, 1.15]);
@@ -110,17 +106,6 @@ export default function Hero() {
                         className="mx-auto h-32 sm:h-40 md:h-48 mb-8 object-contain drop-shadow-[0_10px_20px_rgba(0,0,0,0.5)] hover:scale-105 transition-transform duration-500"
                     />
 
-                    {/* Badge */}
-                    <motion.div
-                        variants={fadeUp}
-                        className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-primary-500/10 border border-primary-500/20 text-primary-300 text-sm font-medium mb-8 backdrop-blur-sm"
-                    >
-                        <span className="inline-block w-2 h-2 rounded-full bg-primary-400 animate-pulse" aria-hidden="true" />
-                        <AnimatedShinyText style={{ '--shine-base': '#fdba74' }}>
-                            Innovación Social desde Ecuador
-                        </AnimatedShinyText>
-                    </motion.div>
-
                     <WordReveal
                         as="h1"
                         segments={headline}
@@ -173,18 +158,6 @@ export default function Hero() {
                         ))}
                     </motion.div>
                 </motion.div>
-            </motion.div>
-
-            {/* Scroll cue */}
-            <motion.div
-                style={{ opacity: cueOpacity }}
-                className="absolute bottom-7 left-1/2 -translate-x-1/2 z-10 hidden md:flex flex-col items-center gap-2 pointer-events-none"
-                aria-hidden="true"
-            >
-                <span className="text-[11px] uppercase tracking-[0.2em] text-dark-400">Descubre</span>
-                <div className="w-6 h-10 rounded-full border-2 border-dark-500/70 flex justify-center pt-2">
-                    <span className="block w-1 h-2 rounded-full bg-primary-400" style={{ animation: 'arupo-scroll-cue 1.6s ease-in-out infinite' }} />
-                </div>
             </motion.div>
         </section>
     );
