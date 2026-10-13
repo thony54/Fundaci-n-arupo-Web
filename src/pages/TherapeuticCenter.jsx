@@ -91,7 +91,7 @@ export default function TherapeuticCenter() {
                             transition={{ duration: 0.8, ease: "easeOut", type: "spring", bounce: 0.4 }}
                             src={arupoctiLogo} 
                             alt="Centro Terapéutico Integral Arupo" 
-                            className="h-32 sm:h-40 md:h-48 mb-8 object-contain drop-shadow-[0_10px_20px_rgba(0,0,0,0.5)] hover:scale-105 transition-transform duration-500" 
+                            className="h-24 sm:h-32 md:h-36 mb-8 object-contain drop-shadow-[0_10px_20px_rgba(0,0,0,0.5)] hover:scale-105 transition-transform duration-500" 
                         />
 
                         <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-5xl font-black text-white leading-[1.2] tracking-tight max-w-5xl mx-auto">
