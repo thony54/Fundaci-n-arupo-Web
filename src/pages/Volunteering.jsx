@@ -3,18 +3,18 @@ import PageTransition from '../components/motion/PageTransition';
 import SectionHeading from '../components/SectionHeading';
 import { Stagger, StaggerItem } from '../components/motion/Stagger';
 import SectionDecor, { PhotoBackdrop } from '../components/ui/Decor';
-import AlbumGrid from '../components/AlbumGrid';
 import fotoVoluntariado from '../assets/secciones/voluntariado.webp';
 import {
     VOLUNTEER_FORM_URL,
     ongoingActivities,
+    pastActivities,
     volunteerAlbums,
-    volunteerPhotoCount,
 } from '../data/volunteering';
 
 // Página del Voluntariado: quiénes somos como voluntarios, lo que se está haciendo
-// ahora, lo que ya se hizo (fotos de la Galería) y cómo sumarse.
-// Los datos viven en src/data/volunteering.js.
+// ahora, lo que ya se hizo y cómo sumarse. Las fotos de la Galería con la etiqueta
+// "Voluntariado y comunidad" adornan las secciones y cada una invita a verla en la
+// Galería (no hay una segunda galería aquí). Los datos viven en src/data/volunteering.js.
 
 const Icon = ({ d, className = 'w-5 h-5' }) => (
     <svg className={className} fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
@@ -50,7 +50,7 @@ function JoinLink({ className = '' }) {
 }
 
 // Espacio reservado para cuando todavía no hay contenido que mostrar.
-function EmptySlot({ icon, title, children }) {
+function EmptySlot({ icon, title, children, cta = true }) {
     return (
         <div className="mx-auto max-w-3xl arupo-card is-warm petal-lg p-8 sm:p-12 text-center">
             <div className="flex justify-center mb-6">
@@ -60,14 +60,51 @@ function EmptySlot({ icon, title, children }) {
             </div>
             <h3 className="text-xl sm:text-2xl font-bold text-dark-900 dark:text-white text-balance">{title}</h3>
             <p className="mt-3 text-dark-600 dark:text-dark-300 leading-relaxed text-pretty">{children}</p>
-            <div className="mt-8 flex justify-center">
-                <JoinLink />
-            </div>
+            {cta && (
+                <div className="mt-8 flex justify-center">
+                    <JoinLink />
+                </div>
+            )}
         </div>
     );
 }
 
-function OngoingCard({ activity, index }) {
+// Foto de la Galería como adorno de la página: la leyenda dice de qué actividad es y
+// toda la tarjeta lleva al álbum en /galeria (?album=… lo abre directamente).
+function GalleryPhoto({ album, aspect = 'aspect-[4/3]', index = 0 }) {
+    return (
+        <Link
+            to={`/galeria?album=${encodeURIComponent(album.id)}`}
+            aria-label={`${album.title}: ver en la galería`}
+            className={`group relative block overflow-hidden ${index % 2 ? 'petal-alt' : 'petal-lg'} ${aspect} bg-dark-100 dark:bg-dark-950 shadow-xl shadow-primary-900/15 ring-1 ring-white/50 dark:ring-white/10 focus:outline-none focus-visible:ring-4 focus-visible:ring-primary-500/50`}
+        >
+            <img
+                src={album.cover.thumb}
+                alt={album.title}
+                loading="lazy"
+                decoding="async"
+                className="absolute inset-0 w-full h-full object-cover group-hover:scale-105 transition-transform duration-700 ease-in-out"
+            />
+            <div className="absolute inset-x-0 bottom-0 p-4 sm:p-5 pt-16 bg-gradient-to-t from-dark-950/90 via-dark-950/55 to-transparent text-white">
+                <p className="text-sm sm:text-base font-bold leading-snug line-clamp-2">{album.title}</p>
+                {album.location && (
+                    <p className="mt-0.5 flex items-center gap-1.5 text-xs text-white/75">
+                        <Icon d={PATHS.pin} className="w-3.5 h-3.5 flex-shrink-0" />
+                        {album.location}
+                    </p>
+                )}
+                <span className="mt-3 inline-flex items-center gap-1.5 rounded-full bg-white/15 backdrop-blur-sm px-3 py-1 text-xs font-semibold ring-1 ring-white/25 transition-colors group-hover:bg-primary-500/80">
+                    Ver en galería
+                    <span aria-hidden="true" className="transition-transform duration-300 group-hover:translate-x-0.5">→</span>
+                </span>
+            </div>
+        </Link>
+    );
+}
+
+// Tarjeta de una actividad escrita a mano en src/data/volunteering.js.
+// `badge`: etiqueta de arriba; `live` pone el punto de "en marcha".
+function ActivityCard({ activity, index, badge, live }) {
     return (
         <StaggerItem as="article" variant="up" className="h-full">
             <div className={`group arupo-card arupo-card-hover ${index % 2 ? 'petal-alt' : 'petal-lg'} h-full flex flex-col overflow-hidden`}>
@@ -84,12 +121,12 @@ function OngoingCard({ activity, index }) {
                 )}
                 <div className="p-6 lg:p-7 flex-grow flex flex-col gap-3">
                     <span className="self-start inline-flex items-center gap-2 rounded-full bg-primary-50 dark:bg-primary-500/10 px-3 py-1 text-[11px] font-bold uppercase tracking-widest text-primary-700 dark:text-primary-300 ring-1 ring-primary-200/80 dark:ring-primary-500/25">
-                        <span aria-hidden="true" className="w-1.5 h-1.5 rounded-full bg-primary-500" />
-                        En marcha
+                        {live && <span aria-hidden="true" className="w-1.5 h-1.5 rounded-full bg-primary-500" />}
+                        {badge}
                     </span>
                     <h3 className="text-lg lg:text-xl font-bold text-dark-900 dark:text-white leading-snug">{activity.title}</h3>
                     <p className="text-dark-600 dark:text-dark-300 leading-relaxed">{activity.description}</p>
-                    {(activity.location || activity.schedule) && (
+                    {(activity.location || activity.when) && (
                         <ul className="mt-auto pt-2 space-y-1.5 text-sm text-dark-500 dark:text-dark-400">
                             {activity.location && (
                                 <li className="flex items-center gap-2">
@@ -97,10 +134,10 @@ function OngoingCard({ activity, index }) {
                                     {activity.location}
                                 </li>
                             )}
-                            {activity.schedule && (
+                            {activity.when && (
                                 <li className="flex items-center gap-2">
                                     <Icon d={PATHS.calendar} className="w-4 h-4 flex-shrink-0 text-primary-500" />
-                                    {activity.schedule}
+                                    {activity.when}
                                 </li>
                             )}
                         </ul>
@@ -116,8 +153,11 @@ const WAYS = [
     { title: 'Voluntariado Internacional', desc: 'Oportunidades globales de colaboración con aliados.', icon: PATHS.globe },
 ];
 
+const GRID = 'grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-8';
+
 export default function Volunteering() {
-    const albumCount = volunteerAlbums.length;
+    // La primera foto acompaña a "En marcha"; el resto va en "Lo que hemos hecho".
+    const [featuredAlbum, ...otherAlbums] = volunteerAlbums;
 
     return (
         <PageTransition>
@@ -185,21 +225,30 @@ export default function Volunteering() {
                         subtitle="Lo que nuestras voluntarias y voluntarios están haciendo ahora mismo."
                     />
                     {ongoingActivities.length > 0 ? (
-                        <Stagger className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-8" stagger={0.1}>
+                        <Stagger className={GRID} stagger={0.1}>
                             {ongoingActivities.map((activity, i) => (
-                                <OngoingCard key={activity.id} activity={activity} index={i} />
+                                <ActivityCard key={activity.id} activity={activity} index={i} badge="En marcha" live />
                             ))}
                         </Stagger>
                     ) : (
-                        <EmptySlot icon={PATHS.heart} title="Pronto compartiremos aquí lo que está pasando">
-                            Este espacio mostrará las actividades de voluntariado que están en marcha:
-                            dónde se realizan, qué hacemos y cómo puedes sumarte.
-                        </EmptySlot>
+                        <div className={featuredAlbum ? 'grid lg:grid-cols-5 gap-10 lg:gap-14 items-center' : ''}>
+                            <div className="lg:col-span-3">
+                                <EmptySlot icon={PATHS.heart} title="Pronto compartiremos aquí lo que está pasando">
+                                    Este espacio mostrará las actividades de voluntariado que están en marcha:
+                                    dónde se realizan, qué hacemos y cómo puedes sumarte.
+                                </EmptySlot>
+                            </div>
+                            {featuredAlbum && (
+                                <div className="lg:col-span-2 w-full max-w-md mx-auto lg:max-w-none">
+                                    <GalleryPhoto album={featuredAlbum} aspect="aspect-[4/5]" />
+                                </div>
+                            )}
+                        </div>
                     )}
                 </div>
             </section>
 
-            {/* 3. LO QUE HEMOS HECHO (fotos de la Galería con la etiqueta Voluntariado) */}
+            {/* 3. LO QUE HEMOS HECHO */}
             <section id="historial" className="arupo-sheet scroll-mt-24 overflow-hidden pt-24 lg:pt-28 pb-32 lg:pb-36 bg-cream-50 dark:bg-night-900 transition-colors duration-300" aria-labelledby="past-heading">
                 <SectionDecor variant="soft" />
                 <div className="relative z-10 mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
@@ -210,27 +259,40 @@ export default function Volunteering() {
                         accent={1}
                         subtitle="Las actividades de voluntariado y comunidad que ya forman parte de nuestra historia."
                     />
-                    {albumCount > 0 ? (
-                        <>
-                            <AlbumGrid albums={volunteerAlbums} eagerCount={3} />
-                            <div className="mt-12 flex flex-col items-center gap-5">
-                                <p className="text-sm font-semibold text-dark-400 dark:text-dark-500 tracking-wide">
-                                    {albumCount} {albumCount === 1 ? 'actividad' : 'actividades'} · {volunteerPhotoCount} {volunteerPhotoCount === 1 ? 'fotografía' : 'fotografías'}
-                                </p>
-                                <Link
-                                    to="/galeria"
-                                    className="group inline-flex items-center gap-2 px-6 py-3 rounded-full bg-white dark:bg-dark-900 ring-1 ring-primary-200 dark:ring-dark-700 text-sm font-semibold text-primary-700 dark:text-primary-300 hover:ring-primary-400 hover:text-primary-600 shadow-sm transition-colors"
-                                >
-                                    Ver toda la galería
-                                    <span aria-hidden="true" className="transition-transform duration-300 group-hover:translate-x-1">→</span>
-                                </Link>
-                            </div>
-                        </>
+
+                    {otherAlbums.length > 0 && (
+                        <div className="flex flex-wrap justify-center gap-6 lg:gap-8 mb-14">
+                            {otherAlbums.map((album, i) => (
+                                <div key={album.id} className="w-full sm:w-[calc(50%-0.75rem)] lg:w-[calc(33.333%-1.34rem)]">
+                                    <GalleryPhoto album={album} index={i + 1} />
+                                </div>
+                            ))}
+                        </div>
+                    )}
+
+                    {pastActivities.length > 0 ? (
+                        <Stagger className={GRID} stagger={0.1}>
+                            {pastActivities.map((activity, i) => (
+                                <ActivityCard key={activity.id} activity={activity} index={i} badge={activity.when || 'Realizada'} />
+                            ))}
+                        </Stagger>
                     ) : (
-                        <EmptySlot icon={PATHS.photos} title="Aquí vivirá la memoria del voluntariado">
-                            Las jornadas, brigadas y visitas de voluntariado irán apareciendo en este espacio,
-                            con sus fotografías.
+                        <EmptySlot icon={PATHS.photos} title="Pronto contaremos cada jornada" cta={false}>
+                            Este espacio reunirá, jornada por jornada, lo que hemos hecho con nuestras
+                            voluntarias y voluntarios: qué pasó, dónde y con quiénes.
                         </EmptySlot>
+                    )}
+
+                    {volunteerAlbums.length > 0 && (
+                        <div className="mt-12 text-center">
+                            <Link
+                                to="/galeria"
+                                className="group inline-flex items-center gap-2 px-6 py-3 rounded-full bg-white dark:bg-dark-900 ring-1 ring-primary-200 dark:ring-dark-700 text-sm font-semibold text-primary-700 dark:text-primary-300 hover:ring-primary-400 hover:text-primary-600 shadow-sm transition-colors"
+                            >
+                                Ver toda la galería
+                                <span aria-hidden="true" className="transition-transform duration-300 group-hover:translate-x-1">→</span>
+                            </Link>
+                        </div>
                     )}
                 </div>
             </section>
