@@ -4,7 +4,7 @@ const quickLinks = [
     { label: 'Áreas de Trabajo', href: '#areas' },
     { label: 'Impacto', href: '#impacto' },
     { label: 'Proyectos', href: '#proyectos' },
-    { label: 'Voluntariado', href: '#voluntariado' },
+    { label: 'Voluntariado', href: '/voluntariado' },
 ];
 
 const socialLinks = [
@@ -50,6 +50,7 @@ const socialLinks = [
     },
 ];
 
+import { Link } from 'react-router-dom';
 import SectionDecor from './ui/Decor';
 
 export default function Footer() {
@@ -86,17 +87,21 @@ export default function Footer() {
                         </h3>
                         <nav aria-label="Enlaces del pie de página">
                             <ul className="space-y-2.5">
-                                {quickLinks.map((link) => (
-                                    <li key={link.href}>
-                                        <a
-                                            href={link.href}
-                                            className="group inline-flex items-center text-dark-300 hover:text-primary-300 transition-colors duration-200 text-sm"
-                                        >
-                                            <span aria-hidden="true" className="w-0 h-px bg-primary-400 transition-all duration-300 group-hover:w-4 group-hover:mr-2" />
-                                            {link.label}
-                                        </a>
-                                    </li>
-                                ))}
+                                {quickLinks.map((link) => {
+                                    const Tag = link.href.startsWith('/') ? Link : 'a';
+                                    const target = Tag === Link ? { to: link.href } : { href: link.href };
+                                    return (
+                                        <li key={link.href}>
+                                            <Tag
+                                                {...target}
+                                                className="group inline-flex items-center text-dark-300 hover:text-primary-300 transition-colors duration-200 text-sm"
+                                            >
+                                                <span aria-hidden="true" className="w-0 h-px bg-primary-400 transition-all duration-300 group-hover:w-4 group-hover:mr-2" />
+                                                {link.label}
+                                            </Tag>
+                                        </li>
+                                    );
+                                })}
                             </ul>
                         </nav>
                     </div>

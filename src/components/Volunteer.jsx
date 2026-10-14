@@ -1,4 +1,6 @@
+import { Link } from 'react-router-dom';
 import SectionDecor, { PhotoBackdrop } from './ui/Decor';
+import { VOLUNTEER_FORM_URL } from '../data/volunteering';
 import fotoVoluntariado from '../assets/secciones/voluntariado.webp';
 
 export default function Volunteer() {
@@ -42,16 +44,25 @@ export default function Volunteer() {
                             ))}
                         </div>
 
-                        <a
-                            href="https://enketo.unhcr.org/x/Eo942fQl"
-                            className="group inline-flex items-center px-9 py-4 text-base font-bold rounded-full bg-gradient-to-r from-dark-900 to-[#2a1a3a] dark:from-white dark:to-cream-100 text-white dark:text-dark-900 hover:scale-105 transition-transform duration-300 shadow-[0_18px_40px_-16px_rgba(15,23,42,0.6)] ring-1 ring-primary-500/30"
-                            aria-label="Postularse como voluntario"
-                        >
-                            Únete Ahora
-                            <svg className="ml-2 w-5 h-5 transition-transform duration-300 group-hover:translate-x-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
-                            </svg>
-                        </a>
+                        <div className="flex flex-col items-start sm:flex-row sm:flex-wrap sm:items-center gap-4 sm:gap-x-6">
+                            <a
+                                href={VOLUNTEER_FORM_URL}
+                                className="group inline-flex items-center whitespace-nowrap px-9 py-4 text-base font-bold rounded-full bg-gradient-to-r from-dark-900 to-[#2a1a3a] dark:from-white dark:to-cream-100 text-white dark:text-dark-900 hover:scale-105 transition-transform duration-300 shadow-[0_18px_40px_-16px_rgba(15,23,42,0.6)] ring-1 ring-primary-500/30"
+                                aria-label="Postularse como voluntario"
+                            >
+                                Únete Ahora
+                                <svg className="ml-2 w-5 h-5 transition-transform duration-300 group-hover:translate-x-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
+                                </svg>
+                            </a>
+                            <Link
+                                to="/voluntariado"
+                                className="group inline-flex items-center gap-2 text-base font-semibold text-primary-700 dark:text-primary-300 hover:text-primary-600 dark:hover:text-primary-200 transition-colors"
+                            >
+                                Ver lo que hacen nuestros voluntarios
+                                <span aria-hidden="true" className="transition-transform duration-300 group-hover:translate-x-1">→</span>
+                            </Link>
+                        </div>
                     </div>
                     
                     <div className="flex-1 w-full">

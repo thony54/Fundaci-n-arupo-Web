@@ -7,6 +7,7 @@ import Impact from './components/Impact';
 import TerritoryStory from './pages/TerritoryStory';
 import TherapeuticCenter from './pages/TherapeuticCenter';
 import Gallery from './pages/Gallery';
+import Volunteering from './pages/Volunteering';
 import Donate from './pages/Donate';
 import ReadingRuler from './components/ReadingRuler';
 import SpeechReader from './components/SpeechReader';
@@ -25,6 +26,7 @@ export default function App() {
             <Route path="impacto/:id" element={<TerritoryStory />} />
             <Route path="centro-terapeutico" element={<TherapeuticCenter />} />
             <Route path="galeria" element={<Gallery />} />
+            <Route path="voluntariado" element={<Volunteering />} />
             <Route path="donar" element={<Donate />} />
           </Route>
         </Routes>

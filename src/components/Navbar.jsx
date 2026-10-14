@@ -11,7 +11,7 @@ const navLinks = [
     { label: 'Centro Terapéutico', href: '/centro-terapeutico' },
     { label: 'Impacto', href: '/impacto' },
     { label: 'Galería', href: '/galeria' },
-    { label: 'Voluntariado', href: '/#voluntariado' },
+    { label: 'Voluntariado', href: '/voluntariado' },
     { label: 'Contacto', href: '/#contacto' },
 ];
 
